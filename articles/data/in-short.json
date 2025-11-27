@@ -1,0 +1,48 @@
+{
+  "articles": [
+    {
+  "id": "delhi-air-turns-hazardous-again-even-after-grap-curbs-eased-migzuaqk",
+  "title": "Delhi Air Turns Hazardous Again Even After GRAP Curbs Eased",
+  "category": "Health",
+  "excerpt": "Delhi moved to GRAP-II after AQI improved, but many zones still touch 500, as officials face criticism over gaps in regional pollution control.",
+  "image": "images/delpol.jpg",
+  "slug": "delhi-air-turns-hazardous-again-even-after-grap-curbs-eased",
+  "publish_date": "Nov 27, 2025 – 10:59 am",
+  "timestamp": "2025-11-27T05:29:11.131Z",
+  "content": "Delhi’s air quality continues to remain in the hazardous range, even as authorities eased restrictions by rolling back GRAP-III measures on November 26. The decision came after the city’s overall AQI improved to 327, placed in the Very Poor category, prompting a downgrade to the milder GRAP-II rules. This relaxation allows halted construction activities to resume, and restores full physical attendance in offices.\n\nDespite the official improvement, several neighbourhoods are still recording AQI levels close to 500, signalling severe health risks. Adding to the concern, independent air quality monitors have reported significantly higher pollution readings than the government’s official figures, raising questions about the consistency of data.\n\nChief Minister Rekha Gupta said that anti smog operations, including road misting, dust suppression, and the use of electric heaters at hotspots, are ongoing, however experts and critics argue that local measures alone are insufficient. They are urging stronger coordination with neighbouring states to curb vehicle emissions, roadside dust, and stubble burning, which remain major contributors to the crisis.\n\nEven with the easing of restrictions, Delhi residents continue to battle toxic air as winter sets in, highlighting the urgency for sustained, and regionally aligned, pollution control strategies."
+},
+    {
+  "id": "celebrate-the-spirit-of-prosperity-manabasa-gurubara-festival-migydb94",
+  "title": "Celebrate the Spirit of Prosperity: Manabasa Gurubara Festival",
+  "category": "Culture",
+  "excerpt": "Manabasa Gurubara is a revered festival in Odisha celebrated every Thursday in Margashira month, dedicated to Goddess Lakshmi who symbolizes wealth and prosperity. ",
+  "image": "images/manabasa.jpg",
+  "slug": "celebrate-the-spirit-of-prosperity-manabasa-gurubara-festival",
+  "publish_date": "Nov 27, 2025 – 10:17 am",
+  "timestamp": "2025-11-27T04:47:59.031Z",
+  "content": "Manabasa Gurubara is not just a festival it is a vibrant cultural celebration deeply rooted in the traditions of Odisha. Observed every Thursday in the Margashira month November December this sacred festival honors Goddess Lakshmi the deity of wealth and prosperity. For Odia households especially women it is a time to seek blessings for abundance well-being and harmony through time-honored rituals and devotion.Preparations begin with thorough cleaning of the home to welcome Goddess Lakshmi symbolizing purity and readiness to receive prosperity. Intricate rice-paste designs called Jhoti Chita adorn doorsteps featuring motifs like lotuses and the goddess’s footprints a visual prayer inviting divine grace. The bamboo basket Mana filled with freshly harvested paddy represents the Goddess herself and is placed on a wooden pedestal with offerings symbolizing gratitude for the seasons bounty.A central highlight is the reading of the Lakshmi Purana a sacred text that conveys a profound social message of equality and human dignity. It depicts how Goddess Lakshmi was cast out by Lord Jagannath after she supported a devotee from an untouchable caste Sriya Chandaluni. This narrative challenges caste discrimination encouraging righteousness and inclusivity regardless of social standing making the festival relevant in todays world.The celebration is complemented by special offerings and traditional delicacies prepared with love and faith reflecting the community's agricultural heritage and devotion. Ultimately Manabasa Gurubara is a heartfelt festival that fosters family bonds spiritual growth and a commitment to social harmony. It embodies the essence of Odisha’s cultural heritage inspiring virtues of cleanliness equality and prosperity through collective devotion and joyous observance.This festival is a beautiful reminder that prosperity comes not only from wealth but from unity humility and respect for all making Manabasa Gurubara a timeless celebration of lifes richest blessings."
+},
+    {
+      "id": "ai-breakthrough-2025-11-25",
+      "title": "New AI Technology Revolutionizes Healthcare Diagnostics",
+      "category": "Technology",
+      "excerpt": "Groundbreaking artificial intelligence system achieves 99% accuracy in early disease detection, promising to transform medical diagnostics.",
+      "image": "images/img2.jpg",
+      "slug": "ai-healthcare-revolution",
+      "publish_date": "Nov 25, 2025 – 8:15 pm",
+      "timestamp": "2025-11-25T20:15:00",
+      "content": "Full article content about AI in healthcare and medical technology..."
+    },
+    {
+      "id": "climate-policy-2025-11-24",
+      "title": "Government Announces New Climate Action Plan",
+      "category": "Politics",
+      "excerpt": "Comprehensive climate policy unveiled with ambitious targets for carbon reduction and renewable energy adoption.",
+      "image": "images/img3.jpg",
+      "slug": "climate-action-plan",
+      "publish_date": "Nov 24, 2025 – 7:30 pm",
+      "timestamp": "2025-11-24T19:30:00",
+      "content": "Full article content about climate policies and environmental initiatives..."
+    }
+  ]
+}
