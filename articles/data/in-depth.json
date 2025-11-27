@@ -1,0 +1,37 @@
+{
+  "articles": [
+    {
+      "id": "climate-analysis-2025-11-20",
+      "title": "Comprehensive Analysis of Global Climate Change Policies",
+      "category": "Politics",
+      "excerpt": "In-depth examination of international climate agreements and their effectiveness in addressing global warming challenges.",
+      "image": "images/img7.jpg",
+      "slug": "climate-policies-analysis",
+      "publish_date": "Nov 20, 2025 – 5:30 pm",
+      "timestamp": "2025-11-20T17:30:00",
+      "content": "Full in-depth analysis of climate policies and international agreements..."
+    },
+    {
+      "id": "healthcare-future-2025-11-19",
+      "title": "The Future of Healthcare: Technology, Ethics, and Accessibility",
+      "category": "Health",
+      "excerpt": "Exploring how emerging technologies are reshaping healthcare delivery while raising important ethical considerations.",
+      "image": "images/img8.jpg",
+      "slug": "future-healthcare-technology",
+      "publish_date": "Nov 19, 2025 – 4:15 pm",
+      "timestamp": "2025-11-19T16:15:00",
+      "content": "Full in-depth analysis of healthcare technology and ethics..."
+    },
+    {
+      "id": "cybersecurity-2025-11-18",
+      "title": "Cybersecurity in the Age of Quantum Computing",
+      "category": "Technology",
+      "excerpt": "Detailed analysis of how quantum computing advancements are forcing a complete overhaul of current cybersecurity protocols.",
+      "image": "images/img9.jpg",
+      "slug": "quantum-cybersecurity",
+      "publish_date": "Nov 18, 2025 – 3:45 pm",
+      "timestamp": "2025-11-18T15:45:00",
+      "content": "Full in-depth analysis of quantum computing and cybersecurity..."
+    }
+  ]
+}
