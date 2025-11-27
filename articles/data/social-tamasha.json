@@ -1,0 +1,37 @@
+{
+  "articles": [
+    {
+      "id": "viral-challenge-2025-11-23",
+      "title": "Social Media Challenge Promotes Cultural Awareness",
+      "category": "Culture",
+      "excerpt": "New viral social media challenge encourages users to share cultural traditions, gaining millions of participants worldwide.",
+      "image": "images/img4.jpg",
+      "slug": "viral-cultural-challenge",
+      "publish_date": "Nov 23, 2025 – 7:00 pm",
+      "timestamp": "2025-11-23T19:00:00",
+      "content": "Full article content about viral challenges and social media trends..."
+    },
+    {
+      "id": "sports-scandal-2025-11-22",
+      "title": "Major Sports League Investigates Match-Fixing Allegations",
+      "category": "Sports",
+      "excerpt": "Professional sports league launches investigation into match-fixing claims that could impact championship results.",
+      "image": "images/img5.jpg",
+      "slug": "sports-investigation",
+      "publish_date": "Nov 22, 2025 – 6:45 pm",
+      "timestamp": "2025-11-22T18:45:00",
+      "content": "Full article content about sports integrity and league investigations..."
+    },
+    {
+      "id": "mental-health-2025-11-21",
+      "title": "Digital Wellness Movement Gains Momentum Among Youth",
+      "category": "Health",
+      "excerpt": "Growing awareness about digital addiction leads to new wellness practices and social media detox trends.",
+      "image": "images/img6.jpg",
+      "slug": "digital-wellness-trends",
+      "publish_date": "Nov 21, 2025 – 6:20 pm",
+      "timestamp": "2025-11-21T18:20:00",
+      "content": "Full article content about digital wellness and mental health..."
+    }
+  ]
+}
