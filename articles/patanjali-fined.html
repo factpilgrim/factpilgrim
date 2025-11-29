@@ -14,18 +14,10 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css"> 
-    
-    <style>
-        /* CRITICAL FIX: Pushes content down so Header doesn't cover it */
-        body { padding-top: 130px; } /* Desktop gap */
-        
-        @media (max-width: 900px) {
-            body { padding-top: 240px; } /* Mobile/Tablet gap (Header is taller here) */
-        }
-    </style>
 </head>
 <body>
-    <header class="header">
+    <!-- FIXED HEADER: position: relative !important overrides the CSS file -->
+    <header class="header" style="position: relative !important; top: auto; z-index: 1;">
         <div class="container">
             <div class="logo">
                 <div class="logo-image">
@@ -37,9 +29,9 @@
         </div>
     </header>
 
-    <article class="container" style="margin-bottom: 60px;">
+    <article class="container" style="margin-top: 40px; margin-bottom: 60px;">
         <header class="article-content-header" style="border-bottom: 2px solid #4f46e5; padding-bottom: 20px; margin-bottom: 30px;">
-            <span class="article-category">national</span>
+            <span class="article-category">culture</span>
             <h1 style="color: #111; font-size: 2.5em; margin: 20px 0 10px 0;">Patanjali Fined for Substandard Ghee as Outrage Grows Over Delayed Action and Lenient Penalty</h1>
             <div class="article-date-display" style="color: #666; font-size: 0.95em; font-weight: bold; margin-bottom: 15px;">Published on November 30, 2025</div>
         </header>
@@ -76,7 +68,7 @@
     <script type="application/json" id="article-metadata">
         {
             "title": "Patanjali Fined for Substandard Ghee as Outrage Grows Over Delayed Action and Lenient Penalty",
-            "category": "national",
+            "category": "culture",
             "summary": "A Uttarakhand court on November 27, 2025, fined Patanjali Ayurved ₹1 lakh after a 2020 sample of its desi cow ghee failed quality tests in two government labs. The ghee was declared substandard, and unfit for h...",
             "date": "2025-11-30",
             "image": "patanjali-fined.jpg",
