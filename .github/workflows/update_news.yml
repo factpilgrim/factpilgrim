@@ -1,0 +1,73 @@
+name: Update News Feed
+
+on:
+  push:
+    paths:
+      - 'articles/*.html'
+  workflow_dispatch:
+
+jobs:
+  build-feed:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install beautifulsoup4
+
+    - name: Generate News JSON
+      run: |
+        python -c "
+        import os
+        import json
+        from bs4 import BeautifulSoup
+        from datetime import datetime
+
+        articles_dir = 'articles'
+        json_path = 'articles/data/news.json'
+        articles_data = []
+
+        if os.path.exists(articles_dir):
+            for filename in os.listdir(articles_dir):
+                if filename.endswith('.html'):
+                    filepath = os.path.join(articles_dir, filename)
+                    try:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            soup = BeautifulSoup(f.read(), 'html.parser')
+                            meta_tag = soup.find('script', id='article-metadata')
+                            if meta_tag and meta_tag.string:
+                                data = json.loads(meta_tag.string)
+                                data['filename'] = filename
+                                articles_data.append(data)
+                                print(f'Processed: {filename}')
+                    except Exception as e:
+                        print(f'Error processing {filename}: {e}')
+
+        try:
+            articles_data.sort(key=lambda x: datetime.strptime(x.get('date', '2000-01-01'), '%Y-%m-%d'), reverse=True)
+        except Exception as e:
+            print(f'Warning: Date sorting issue: {e}')
+
+        os.makedirs(os.path.dirname(json_path), exist_ok=True)
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(articles_data, f, indent=2, ensure_ascii=False)
+        print(f'Updated news.json with {len(articles_data)} articles')
+        "
+
+    - name: Commit and Push changes
+      run: |
+        git config --global user.name 'Fact Pilgrim Bot'
+        git config --global user.email 'bot@factpilgrim.com'
+        git add articles/data/news.json
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update news feed" && git push)
