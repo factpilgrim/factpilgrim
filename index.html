@@ -3,172 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fact Pilgrim - Exploring Truths, Ideas & Stories</title>
-    <meta name="description" content="Fact Pilgrim - Your trusted source for news, analysis, and stories across politics, technology, sports, health, culture and more.">
+    <title>Fact Pilgrim - Latest News & Updates</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Updated to 6.5.1 to ensure X-Twitter icon renders correctly -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <h1>Fact Pilgrim</h1>
-            </div>
-            <div class="nav-links" id="navLinks">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#in-short" class="nav-link">In Short</a>
-                <a href="#social-tamasha" class="nav-link">Social Tamasha</a>
-                <a href="#in-depth" class="nav-link">In Depth</a>
-            </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header id="home" class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Fact Pilgrim</h1>
-            <p class="hero-subtitle">Exploring truths, ideas & stories</p>
-            <div class="search-container">
-                <div class="search-bar">
-                    <input type="text" placeholder="Search for articles..." class="search-input" id="searchInput">
-                    <button class="search-btn" id="searchBtn" aria-label="Search">
-                        <i class="fas fa-search"></i>
-                    </button>
+    <!-- Breaking News Ticker -->
+    <div class="breaking-news">
+        <div class="container">
+            <div class="ticker-label">Breaking News</div>
+            <div class="ticker-mask">
+                <div class="ticker-track" id="tickerTrack">
+                    <span>Loading latest headlines...</span>
                 </div>
             </div>
         </div>
-        <div class="hero-decoration"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-image">
+                    <img src="./images/logo.png" alt="Fact Pilgrim Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                    <div class="logo-fallback">Fact Pilgrim</div>
+                </div>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search for news...">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <nav class="main-nav">
+                <button class="home-btn">
+                    <i class="fas fa-home"></i>
+                    Home
+                </button>
+            </nav>
+        </div>
     </header>
 
-    <!-- Breaking News Ticker -->
-    <section class="breaking-news-ticker">
-        <div class="ticker-container">
-            <div class="breaking-label">
-                <i class="fas fa-bolt"></i>
-                <span>BREAKING NEWS</span>
-            </div>
-            <div class="ticker-content" id="breakingNewsTicker">
-                <!-- Breaking news items will be loaded here -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Content Sections -->
-    <main class="main-content">
-        <!-- In Short Section -->
-        <section id="in-short" class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <i class="fas fa-bolt"></i>
-                    In Short
-                </h2>
-                <button class="section-toggle-btn" data-section="in-short">
-                    <span class="btn-text">View All</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-            <div class="articles-grid" id="in-short-articles">
-                <!-- Articles loaded by JavaScript -->
-            </div>
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero-section" id="heroSection">
+            <!-- Hero article will be dynamically inserted here -->
         </section>
 
-        <!-- Social Tamasha Section -->
-        <section id="social-tamasha" class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <i class="fas fa-users"></i>
-                    Social Tamasha
-                </h2>
-                <button class="section-toggle-btn" data-section="social-tamasha">
-                    <span class="btn-text">View All</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
+        <!-- Articles Grid -->
+        <section class="articles-grid">
+            <div class="grid-container" id="articlesGrid">
+                <!-- Articles will be dynamically inserted here -->
             </div>
-            <div class="articles-grid" id="social-tamasha-articles">
-                <!-- Articles loaded by JavaScript -->
-            </div>
-        </section>
-
-        <!-- In Depth Section -->
-        <section id="in-depth" class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <i class="fas fa-chart-line"></i>
-                    In Depth
-                </h2>
-                <button class="section-toggle-btn" data-section="in-depth">
-                    <span class="btn-text">View All</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-            <div class="articles-grid" id="in-depth-articles">
-                <!-- Articles loaded by JavaScript -->
+            
+            <div class="load-more-container">
+                <button id="loadMoreBtn" class="load-more-btn">Load More Articles</button>
+                <button id="collapseBtn" class="collapse-btn" style="display: none;">Show Less</button>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-grid">
-                <!-- About Section -->
-                <div class="footer-section">
-                    <h3 class="footer-title">Fact Pilgrim</h3>
-                    <p class="footer-description">
-                        Exploring truths, ideas, and stories from around the world. 
-                        Our mission is to provide thoughtful analysis and insights 
-                        on the topics that shape our lives.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Categories Section -->
-                <div class="footer-section">
-                    <h3 class="footer-title">Categories</h3>
-                    <div class="category-filters">
-                        <button class="category-filter" data-category="Politics">Politics</button>
-                        <button class="category-filter" data-category="Crime">Crime</button>
-                        <button class="category-filter" data-category="Technology">Technology</button>
-                        <button class="category-filter" data-category="Sports">Sports</button>
-                        <button class="category-filter" data-category="Health">Health</button>
-                        <button class="category-filter" data-category="Culture">Culture</button>
-                        <button class="category-filter" data-category="Breaking">Breaking</button>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="footer-section">
-                    <h3 class="footer-title">Quick Links</h3>
-                    <nav class="footer-nav">
-                        <a href="#home" class="footer-link">Home</a>
-                        <a href="#in-short" class="footer-link">In Short</a>
-                        <a href="#social-tamasha" class="footer-link">Social Tamasha</a>
-                        <a href="#in-depth" class="footer-link">In Depth</a>
-                    </nav>
-                </div>
-            </div>
-
-            <!-- Copyright -->
-            <div class="footer-bottom">
-                <p class="copyright">&copy; 2025 Fact Pilgrim. All rights reserved.</p>
-            </div>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Fact Pilgrim. All rights reserved.</p>
         </div>
     </footer>
 
