@@ -5,23 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fact Pilgrim - Latest News & Updates</title>
     <link rel="stylesheet" href="css/style.css">
-    <!-- Updated to 6.5.1 to ensure X-Twitter icon renders correctly -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <!-- Breaking News Ticker -->
     <div class="breaking-news">
         <div class="container">
             <div class="ticker-label">Breaking News</div>
             <div class="ticker-mask">
-                <div class="ticker-track" id="tickerTrack">
-                    <span>Loading latest headlines...</span>
-                </div>
+                <div class="ticker-track" id="tickerTrack"><span>Loading latest headlines...</span></div>
             </div>
         </div>
     </div>
 
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="logo">
@@ -30,36 +25,21 @@
                     <div class="logo-fallback">Fact Pilgrim</div>
                 </div>
             </div>
-            
             <div class="search-container">
                 <input type="text" id="searchInput" class="search-input" placeholder="Search for news...">
-                <button class="search-btn">
-                    <i class="fas fa-search"></i>
-                </button>
+                <button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
-            
-            <nav class="main-nav">
-                <button class="home-btn">
-                    <i class="fas fa-home"></i>
-                    Home
-                </button>
-            </nav>
+            <nav class="main-nav"><button class="home-btn"><i class="fas fa-home"></i> Home</button></nav>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="container">
         <!-- Hero Section -->
-        <section class="hero-section" id="heroSection">
-            <!-- Hero article will be dynamically inserted here -->
-        </section>
+        <section class="hero-section" id="heroSection"></section>
 
         <!-- Articles Grid -->
         <section class="articles-grid">
-            <div class="grid-container" id="articlesGrid">
-                <!-- Articles will be dynamically inserted here -->
-            </div>
-            
+            <div class="grid-container" id="articlesGrid"></div>
             <div class="load-more-container">
                 <button id="loadMoreBtn" class="load-more-btn">Load More Articles</button>
                 <button id="collapseBtn" class="collapse-btn" style="display: none;">Show Less</button>
@@ -67,13 +47,8 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Fact Pilgrim. All rights reserved.</p>
-        </div>
-    </footer>
-
+    <footer class="footer"><div class="container"><p>&copy; <span id="year"></span> Fact Pilgrim. All rights reserved.</p></div></footer>
     <script src="js/script.js"></script>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
