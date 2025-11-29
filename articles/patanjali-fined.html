@@ -15,11 +15,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css"> 
     
-    <!-- SMART SPACING FIX -->
     <style>
-        .article-spacer { height: 40px; }
+        /* CRITICAL FIX: Pushes content down so Header doesn't cover it */
+        body { padding-top: 130px; } /* Desktop gap */
+        
         @media (max-width: 900px) {
-            .article-spacer { height: 160px; } /* Pushes content down on mobile */
+            body { padding-top: 240px; } /* Mobile/Tablet gap (Header is taller here) */
         }
     </style>
 </head>
@@ -35,9 +36,6 @@
             <nav class="main-nav"><a href="../index.html" class="home-btn">Home</a></nav>
         </div>
     </header>
-
-    <!-- SPACER to stop Header overlap -->
-    <div class="article-spacer"></div>
 
     <article class="container" style="margin-bottom: 60px;">
         <header class="article-content-header" style="border-bottom: 2px solid #4f46e5; padding-bottom: 20px; margin-bottom: 30px;">
