@@ -16,13 +16,13 @@
     <link rel="stylesheet" href="../css/style.css"> 
     
     <style>
-        /* FORCE FIELD SPACER: Pushes content down safely */
-        .header-spacer { height: 120px; } /* Desktop gap */
-        @media (max-width: 900px) {
-            .header-spacer { height: 220px; } /* Mobile gap (Header is taller) */
+        /* BASE PADDING for Desktop */
+        body { padding-top: 140px; }
+
+        /* INCREASED PADDING for Mobile/Tablet to clear tall header */
+        @media (max-width: 1024px) {
+            body { padding-top: 280px; } 
         }
-        .article-category { font-weight: bold; color: #eab308; text-transform: uppercase; font-size: 0.9em; letter-spacing: 1px; }
-        .article-title { color: #111; font-size: 2.2em; margin: 10px 0; line-height: 1.2; }
     </style>
 </head>
 <body>
@@ -38,14 +38,11 @@
         </div>
     </header>
 
-    <!-- THE FORCE FIELD (Invisible Spacer) -->
-    <div class="header-spacer"></div>
-
     <article class="container" style="margin-bottom: 60px;">
         <header class="article-content-header" style="border-bottom: 2px solid #4f46e5; padding-bottom: 20px; margin-bottom: 30px;">
-            <div class="article-category">national</div>
-            <h1 class="article-title">Patanjali Fined for Substandard Ghee as Outrage Grows Over Delayed Action and Lenient Penalty</h1>
-            <div class="article-date-display" style="color: #666; font-size: 0.95em; font-weight: bold;">Published on November 30, 2025</div>
+            <span class="article-category">culture</span>
+            <h1 style="color: #111; font-size: 2.5em; margin: 20px 0 10px 0;">Patanjali Fined for Substandard Ghee as Outrage Grows Over Delayed Action and Lenient Penalty</h1>
+            <div class="article-date-display" style="color: #666; font-size: 0.95em; font-weight: bold; margin-bottom: 15px;">Published on November 30, 2025</div>
         </header>
 
         <img src="../images/patanjali-fined.jpg" alt="Patanjali Fined for Substandard Ghee as Outrage Grows Over Delayed Action and Lenient Penalty" class="article-image" style="width: 100%; height: auto; max-height: 500px; object-fit: contain; background: #f0f0f0; margin-bottom: 30px; border-radius: 8px;" onerror="this.style.display='none'">
@@ -70,6 +67,17 @@
     <footer class="footer"><div class="container"><p>&copy; <span id="year"></span> Fact Pilgrim. All rights reserved.</p></div></footer>
 
     <script>
+        // AUTO-ADJUST: Measures header height and pushes body down
+        function adjustSpacing() {
+            const header = document.querySelector('.header');
+            if(header) {
+                const height = header.offsetHeight;
+                document.body.style.paddingTop = (height + 40) + 'px';
+            }
+        }
+        window.addEventListener('load', adjustSpacing);
+        window.addEventListener('resize', adjustSpacing);
+
         document.getElementById('year').textContent = new Date().getFullYear();
         function shareOnTwitter() { window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + '&url=' + encodeURIComponent(window.location.href), '_blank', 'width=600,height=400'); }
         function shareOnFacebook() { window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank', 'width=600,height=400'); }
@@ -80,7 +88,7 @@
     <script type="application/json" id="article-metadata">
         {
             "title": "Patanjali Fined for Substandard Ghee as Outrage Grows Over Delayed Action and Lenient Penalty",
-            "category": "national",
+            "category": "culture",
             "summary": "A Uttarakhand court on November 27, 2025, fined Patanjali Ayurved ₹1 lakh after a 2020 sample of its desi cow ghee failed quality tests in two government labs. The ghee was declared substandard, and unfit for h...",
             "date": "2025-11-30",
             "image": "patanjali-fined.jpg",
