@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css"> 
     
-    <!-- Scripts for Embeds -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script async src="//www.instagram.com/embed.js"></script>
     
@@ -23,9 +22,11 @@
         .header { position: relative !important; top: auto !important; }
         .detail-image { width: 100%; height: auto; max-height: 500px; object-fit: contain; background: #f0f0f0; margin-bottom: 30px; border-radius: 8px; display: block; }
 
-        /* TYPOGRAPHY FIXES */
+        /* FIXED TYPOGRAPHY */
         .article-content { font-size: 20px; line-height: 1.8; color: #333; }
-        .article-content p { margin-bottom: 1.5em; } /* Added Paragraph Spacing */
+        .article-content p { margin-bottom: 1.5em; } /* Space restored */
+        .article-content ul, .article-content ol { padding-left: 25px; margin-bottom: 1.5em; }
+        .article-content li { margin-bottom: 0.5em; }
         
         .article-content h3 {
             font-size: 24px; color: #4f46e5; margin-top: 50px; margin-bottom: 20px;
@@ -58,14 +59,19 @@
 
         <div class="article-content">
             <p><b>Subarnapur</b>, a remote village in <b>Ganjam district, Odisha,</b> has finally been electrified after <b>25 years of darkness</b>.</p>
+            
             <p>What began as a development update quickly became a political flashpoint, triggered primarily by the BJP, which now governs Odisha (since 2024), and is aggressively promoting the electrification as proof of its governance success.</p>
+            
             <p>BJP supporters argue:</p>
             <ul>
                 <li>this achievement exposes “24 years of BJD failure”, and</li>
                 <li>the new BJP government deserves credit for finishing the job.</li>
             </ul>
+            
+            <!-- FIXED: Added Paragraph Break -->
             <p>But the moment BJP opened this debate, a counter-question emerged:</p>
             <p><b>If a village in Odisha still lacked electricity in 2025, how did Prime Minister Modi declare “every village electrified” back in 2018?</b></p>
+            
             <p>This report analyses the claim, the central verification system, and independent media reports to understand whether this is a state failure, a central failure, or a contradiction in BJP’s own narrative.</p>
             
             <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
@@ -74,9 +80,9 @@
             <p>On<b> 29 April 2018</b>, Prime Minister Narendra Modi tweeted:</p>
             <p><i>&gt; “I am delighted that every single village of India now has access to electricity.”</i></p>
             
-            <!-- FIXED TWITTER EMBED: Using twitter.com link instead of x.com -->
-            <div style="margin: 20px auto; width: 100%; display:flex; justify-content:center;">
-                <blockquote class="twitter-tweet" style="width: 100%;"><a href="https://twitter.com/narendramodi/status/990455176581517312?t=o0RmGQrVvwfk1akIUI6vwg&amp;s=19"></a></blockquote>
+            <!-- FIXED TWITTER EMBED: Clean URL -->
+            <div style="margin: 30px auto; width: 100%; display:flex; justify-content:center;">
+                <blockquote class="twitter-tweet" style="width: 100%;"><a href="https://twitter.com/narendramodi/status/990455176581517312"></a></blockquote>
             </div>
 
             <p>This formed the basis of the widely publicised <b>“100% village electrification”</b> claim.</p>
@@ -87,14 +93,16 @@
 
             <h3>2. Electrification Monitoring Was Controlled by the Centre, Not the Odisha Government</h3>
             
-            <img src="../images/recn1.jpg" style="width:100%; height:auto; border-radius:8px; margin:20px 0; display:block;" alt="Image">
+            <img src="../images/recn1.jpg" style="width:100%; height:auto; border-radius:8px; margin:30px 0; display:block;" alt="Image">
             
             <p>Under the <b>Deen Dayal Upadhyaya Gram Jyoti Yojana</b> (DDUGJY):</p>
             <ul>
                 <li><b>Rural Electrification Corporation</b> (REC), a Central PSU, was the nodal agency.</li>
                 <li>REC supervised <b>project appraisal, funding, monitoring, MIS development, and audits</b>.</li>
-                <li>Verification was conducted by <b>central-appointed Gram Vidyut Abhiyantas (GVAs)</b></li>
+                <!-- FIXED: Made Verification a Bullet Item -->
+                <li>Verification was conducted by <b>central-appointed Gram Vidyut Abhiyantas (GVAs)</b>.</li>
             </ul>
+            
             <p>This means:</p>
             <p><b>The Centre, not the Odisha government, was responsible for verifying whether a village was electrified</b>.</p>
             <p>The data used for Modi’s 2018 announcement was <b>centrally collected, centrally verified, and centrally approved</b>.</p>
@@ -124,7 +132,7 @@
 
             <h3>4. Odisha Data Recorded by the Centre (2022)</h3>
             
-            <img src="../images/recn2.jpg" style="width:100%; height:auto; border-radius:8px; margin:20px 0; display:block;" alt="Image">
+            <img src="../images/recn2.jpg" style="width:100%; height:auto; border-radius:8px; margin:30px 0; display:block;" alt="Image">
             
             <p>According to GARV:</p>
             <ul>
@@ -144,7 +152,7 @@
 
             <h3>5. Independent Media Reports (2021–2022) Already Exposed Gaps</h3>
             
-            <img src="../images/recn3.jpg" style="width:100%; height:auto; border-radius:8px; margin:20px 0; display:block;" alt="Image">
+            <img src="../images/recn3.jpg" style="width:100%; height:auto; border-radius:8px; margin:30px 0; display:block;" alt="Image">
             
             <p>Years after the national declaration, multiple media outlets found unelectrified villages across India:</p>
             <p><b>Uttar Pradesh (2021)</b></p>
