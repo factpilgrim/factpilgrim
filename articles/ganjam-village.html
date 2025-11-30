@@ -20,39 +20,17 @@
     <script async src="//www.instagram.com/embed.js"></script>
     
     <style>
-        /* Force Header to sit in normal flow (Not Sticky) */
         .header { position: relative !important; top: auto !important; }
-        
-        /* Ensure Main Image sits in flow (Not Absolute) */
-        .detail-image {
-            width: 100%; 
-            height: auto; 
-            max-height: 500px; 
-            object-fit: contain; 
-            background: #f0f0f0; 
-            margin-bottom: 30px; 
-            border-radius: 8px;
-            display: block;
-        }
+        .detail-image { width: 100%; height: auto; max-height: 500px; object-fit: contain; background: #f0f0f0; margin-bottom: 30px; border-radius: 8px; display: block; }
 
         /* TYPOGRAPHY FIXES */
-        .article-content { 
-            font-size: 20px; /* Bigger Text for Readability */
-            line-height: 1.8; 
-            color: #333; 
-        }
+        .article-content { font-size: 20px; line-height: 1.8; color: #333; }
+        .article-content p { margin-bottom: 1.5em; } /* Added Paragraph Spacing */
         
         .article-content h3 {
-            font-size: 24px;
-            color: #4f46e5; /* Indigo Color */
-            margin-top: 40px;
-            margin-bottom: 15px;
-            border-left: 5px solid #4f46e5; /* Side Bar */
-            padding-left: 15px;
-            line-height: 1.3;
+            font-size: 24px; color: #4f46e5; margin-top: 50px; margin-bottom: 20px;
+            border-left: 5px solid #4f46e5; padding-left: 15px; line-height: 1.3;
         }
-
-        /* Heading Colors */
         h1 { color: #4f46e5 !important; }
     </style>
 </head>
@@ -96,8 +74,9 @@
             <p>On<b> 29 April 2018</b>, Prime Minister Narendra Modi tweeted:</p>
             <p><i>&gt; “I am delighted that every single village of India now has access to electricity.”</i></p>
             
+            <!-- FIXED TWITTER EMBED: Using twitter.com link instead of x.com -->
             <div style="margin: 20px auto; width: 100%; display:flex; justify-content:center;">
-                <blockquote class="twitter-tweet" style="width: 100%;"><a href="https://x.com/narendramodi/status/990455176581517312?t=o0RmGQrVvwfk1akIUI6vwg&amp;s=19"></a></blockquote>
+                <blockquote class="twitter-tweet" style="width: 100%;"><a href="https://twitter.com/narendramodi/status/990455176581517312?t=o0RmGQrVvwfk1akIUI6vwg&amp;s=19"></a></blockquote>
             </div>
 
             <p>This formed the basis of the widely publicised <b>“100% village electrification”</b> claim.</p>
@@ -248,4 +227,5 @@
     </script>
 </body>
 </html>
+
 
