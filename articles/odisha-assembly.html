@@ -21,12 +21,13 @@
 .article-content p { margin-bottom: 1.5em; }
 .article-content ul, .article-content ol { padding-left: 25px; margin-bottom: 1.5em; }
 .article-content li { margin-bottom: 0.5em; }
-.article-content h2 { font-size: 28px; color: #4f46e5; margin-top: 40px; margin-bottom: 20px; font-weight: 800; line-height: 1.3; }
-.article-content h3 { font-size: 24px; color: #4f46e5; margin-top: 30px; margin-bottom: 15px; border-left: 5px solid #4f46e5; padding-left: 15px; line-height: 1.3; font-weight: 600; }
+/* H2 & H3 with Sidebar & Tight Height */
+.article-content h2 { font-size: 28px; color: #4f46e5; margin-top: 40px; margin-bottom: 20px; font-weight: 800; line-height: 1.1; border-left: 5px solid #4f46e5; padding-left: 15px; }
+.article-content h3 { font-size: 24px; color: #4f46e5; margin-top: 30px; margin-bottom: 15px; font-weight: 600; line-height: 1.1; border-left: 5px solid #4f46e5; padding-left: 15px; }
 h1 { color: #4f46e5 !important; }
-/* TABLE FIX */
+/* TABLE FIX (Auto width + Min Width) */
 .table-wrapper { width: 100%; overflow-x: auto; margin-bottom: 20px; padding-bottom: 5px; }
-table { width: 100%; border-collapse: collapse; font-size: 16px; background: #fff; }
+table { width: auto; min-width: 50%; max-width: 100%; border-collapse: collapse; font-size: 16px; background: #fff; }
 th, td { border: 1px solid #ddd; padding: 12px; text-align: left; vertical-align: top; word-wrap: break-word; }
 th { background-color: #f4f4f5; color: #4f46e5; font-weight: bold; text-transform: uppercase; font-size: 14px; }
 tr:nth-child(even) { background-color: #fafafa; }
@@ -43,7 +44,7 @@ tr:nth-child(even) { background-color: #fafafa; }
 <img src="../images/odisha-assembly.jpg" alt="Odisha Assembly Elections 2024 - Comprehensive Expenditure Analysis" class="detail-image" onerror="this.style.display='none'">
 <div class="article-content">
 <p>The 2024 Odisha Assembly election expenditure affidavits reveal how political parties financed and executed their campaigns, offering an unprecedented look into spending patterns across BJD, BJP, INC, CPI(M), and others. The data exposes sharp contrasts in campaign styles, from high-intensity public meetings to minimal digital outreach, while highlighting the dominance of party-funded machinery, significant self-financing gaps, and emerging transparency concerns in election spending.</p>
-<h3>1. Executive Summary</h3>
+<h2>1. Executive Summary</h2>
 <p>The 2024 Odisha Assembly election expenditure affidavits of 147 elected MLAs show:</p>
 <p>Average spending: ₹26.22 lakh (66 percent of the ₹40 lakh limit)</p>
 <p>BJD MLAs: highest average spending among major parties</p>
@@ -51,9 +52,10 @@ tr:nth-child(even) { background-color: #fafafa; }
 <p>INC MLAs: lowest average spending, and the highest self-funding dependency</p>
 <p>Public meetings dominate costs, virtual campaigns remain negligible (less than 1 percent)</p>
 <p>Party funding contributes 84 percent of all MLA financing, indicating strong party-controlled campaign structures.</p>
-<h3>2. Party-Wise Average Spending</h3>
+<h2>2. Party-Wise Average Spending</h2>
+<p>Text table:</p>
 <div class="table-wrapper">
-    <table border="1" cellpadding="6" style="width: 100%;">
+    <table border="1" cellpadding="6" style="width: auto;">
         <thead>
             <tr>
                 <th>Party</th>
@@ -90,9 +92,10 @@ tr:nth-child(even) { background-color: #fafafa; }
         </tbody>
     </table>
 </div>
-<h3>3. Top 10 Highest-Spending MLAs (with Constituencies)</h3>
+<h2>3. Top 10 Highest-Spending MLAs (with Constituencies)</h2>
+<p>Text table:</p>
 <div class="table-wrapper">
-    <table border="1" cellpadding="6" style="width: 100%;">
+    <table border="1" cellpadding="6" style="width: auto;">
         <thead>
             <tr>
                 <th>Rank</th>
@@ -176,9 +179,10 @@ tr:nth-child(even) { background-color: #fafafa; }
         </tbody>
     </table>
 </div>
-<h3>4. Bottom 10 Lowest-Spending MLAs (with Constituencies)</h3>
+<h2>4. Bottom 10 Lowest-Spending MLAs (with Constituencies)</h2>
+<p>Text table:</p>
 <div class="table-wrapper">
-    <table border="1" cellpadding="6" style="width: 100%;">
+    <table border="1" cellpadding="6" style="width: auto;">
         <thead>
             <tr>
                 <th>Rank</th>
@@ -264,9 +268,12 @@ tr:nth-child(even) { background-color: #fafafa; }
 </div>
 <p>Observation: 7 of the bottom 10 belong to INC.</p>
 <h2>5. FULL THEMATIC EXPENDITURE, PARTY-WISE TOP AND BOTTOM</h2>
+<p>(This is the section you wanted restored, now presented in full depth.)</p>
+<p>Below, each expenditure category shows which party spent the most and which spent the least, based solely on the party-wise averages extracted from your dataset.</p>
 <h3>A. Public Meetings and Processions with Star Campaigners</h3>
+<p>Text table:</p>
 <div class="table-wrapper">
-    <table border="1" cellpadding="6" style="width: 100%;">
+    <table border="1" cellpadding="6" style="width: auto;">
         <thead>
             <tr>
                 <th>Party</th>
@@ -297,11 +304,12 @@ tr:nth-child(even) { background-color: #fafafa; }
         </tbody>
     </table>
 </div>
-<p>Top party: BJD</p>
-<p>Bottom parties: Independents and CPI(M)</p>
+<p>Top party: BJD - spends the most on star campaigners</p>
+<p>Bottom parties: Independents and CPI(M) - reported zero spending</p>
 <h3>B. Public Meetings and Processions without Star Campaigners</h3>
+<p>Text table:</p>
 <div class="table-wrapper">
-    <table border="1" cellpadding="6" style="width: 100%;">
+    <table border="1" cellpadding="6" style="width: auto;">
         <thead>
             <tr>
                 <th>Party</th>
@@ -332,11 +340,12 @@ tr:nth-child(even) { background-color: #fafafa; }
         </tbody>
     </table>
 </div>
-<p>Top party: CPI(M)</p>
+<p>Top party: CPI(M) - heavy ground mobilisation</p>
 <p>Bottom party: INC</p>
 <h3>C. Campaign Materials (Posters, Banners, Flags, Printables)</h3>
+<p>Text table:</p>
 <div class="table-wrapper">
-    <table border="1" cellpadding="6" style="width: 100%;">
+    <table border="1" cellpadding="6" style="width: auto;">
         <thead>
             <tr>
                 <th>Party</th>
@@ -370,8 +379,10 @@ tr:nth-child(even) { background-color: #fafafa; }
 <p>Top party: CPI(M)</p>
 <p>Bottom party: INC</p>
 <h3>D. Campaign Through Electronic or Print Media</h3>
+<p>(Values approximate in ₹)</p>
+<p>Text table:</p>
 <div class="table-wrapper">
-    <table border="1" cellpadding="6" style="width: 100%;">
+    <table border="1" cellpadding="6" style="width: auto;">
         <thead>
             <tr>
                 <th>Party</th>
@@ -381,32 +392,33 @@ tr:nth-child(even) { background-color: #fafafa; }
         <tbody>
             <tr>
                 <td>Independents</td>
-                <td>105000</td>
+                <td>1,05,000</td>
             </tr>
             <tr>
                 <td>BJP</td>
-                <td>24283</td>
+                <td>24,283</td>
             </tr>
             <tr>
                 <td>BJD</td>
-                <td>22647</td>
+                <td>22,647</td>
             </tr>
             <tr>
                 <td>INC</td>
-                <td>12715</td>
+                <td>12,715</td>
             </tr>
             <tr>
                 <td>CPI(M)</td>
-                <td>5000</td>
+                <td>5,000</td>
             </tr>
         </tbody>
     </table>
 </div>
-<p>Top party: Independents</p>
+<p>Top party: Independents - highest per-capita media use</p>
 <p>Bottom party: CPI(M)</p>
 <h3>E. Campaign Vehicles</h3>
+<p>Text table:</p>
 <div class="table-wrapper">
-    <table border="1" cellpadding="6" style="width: 100%;">
+    <table border="1" cellpadding="6" style="width: auto;">
         <thead>
             <tr>
                 <th>Party</th>
@@ -440,8 +452,9 @@ tr:nth-child(even) { background-color: #fafafa; }
 <p>Top party: CPI(M)</p>
 <p>Bottom party: Independents</p>
 <h3>F. Campaign Workers</h3>
+<p>Text table:</p>
 <div class="table-wrapper">
-    <table border="1" cellpadding="6" style="width: 100%;">
+    <table border="1" cellpadding="6" style="width: auto;">
         <thead>
             <tr>
                 <th>Party</th>
@@ -476,14 +489,16 @@ tr:nth-child(even) { background-color: #fafafa; }
 <p>Bottom party: Independents</p>
 <h3>G. Virtual Campaign Expenditure</h3>
 <p>Only 8 MLAs statewide reported spending.</p>
-<p>Dataset does not list names or party averages.</p>
+<p>The kit you provided does not list the names or party-wise averages, so party tops and bottoms cannot be computed.</p>
+<p>If you want, I can extract them by pulling each affidavit.</p>
 <h3>H. Publishing Criminal Case Declarations</h3>
 <p>81 of 85 MLAs facing criminal cases reported expenditure.</p>
-<p>Party-wise amounts not available.</p>
-<h2>6. Funding Sources — Party Patterns</h2>
+<p>Party-wise amounts not provided in your dataset, so tops and bottoms cannot be computed.</p>
+<h2>6. Funding Sources - Party Patterns</h2>
 <h3>A. Share of Party Funds</h3>
+<p>Text table:</p>
 <div class="table-wrapper">
-    <table border="1" cellpadding="6" style="width: 100%;">
+    <table border="1" cellpadding="6" style="width: auto;">
         <thead>
             <tr>
                 <th>Party</th>
@@ -514,10 +529,12 @@ tr:nth-child(even) { background-color: #fafafa; }
         </tbody>
     </table>
 </div>
-<p>Inference: BJD and BJP candidates are overwhelmingly dependent on party funding.</p>
+<p>Inference:</p>
+<p>BJD and BJP candidates are overwhelmingly dependent on party funding.</p>
 <h3>B. Self-Funding</h3>
+<p>Text table:</p>
 <div class="table-wrapper">
-    <table border="1" cellpadding="6" style="width: 100%;">
+    <table border="1" cellpadding="6" style="width: auto;">
         <thead>
             <tr>
                 <th>Party</th>
@@ -548,10 +565,11 @@ tr:nth-child(even) { background-color: #fafafa; }
         </tbody>
     </table>
 </div>
-<p>INC MLAs rely heavily on personal funds.</p>
+<p>Inference: INC MLAs run their campaigns largely through personal funds.</p>
 <h3>C. Funds from Other Sources</h3>
+<p>Text table:</p>
 <div class="table-wrapper">
-    <table border="1" cellpadding="6" style="width: 100%;">
+    <table border="1" cellpadding="6" style="width: auto;">
         <thead>
             <tr>
                 <th>Party</th>
@@ -582,26 +600,28 @@ tr:nth-child(even) { background-color: #fafafa; }
         </tbody>
     </table>
 </div>
-<h3>7. Compliance Gaps</h3>
-<p>Late upload of statements</p>
-<p>Missing totals</p>
-<p>Illegible entries</p>
-<p>Petition window too narrow without timely uploads</p>
-<h3>8. Recommendations</h3>
+<h2>7. Compliance Gaps</h2>
+<p>Late uploading of statements on CEO website</p>
+<p>Missing totals, ADR had to compute from sub-totals</p>
+<p>Illegible, overwritten entries</p>
+<p>Petition window of 45 days is too narrow if uploads are delayed</p>
+<h2>8. Recommendations</h2>
 <p>Mandatory upload within 72 hours</p>
-<p>Auto-validation digital forms</p>
-<p>Extend petition window</p>
-<p>Machine-readable formats</p>
-<p>Random audits</p>
-<p>Public dashboard</p>
-<h3>9. Conclusion</h3>
-<p>BJD and BJP run structured, party-funded campaigns.</p>
-<p>INC MLAs spend much less and rely on self-funding.</p>
-<p>CPI(M)'s sole MLA dramatically outspends INC averages.</p>
-<p>Public meetings comprise the largest cost component.</p>
-<p>Star campaigner spending is primarily driven by BJD and BJP.</p>
-<h3>END NOTE</h3>
+<p>Auto-validation digital forms, no blanks allowed</p>
+<p>Extend petition window or enforce timely uploads</p>
+<p>Provide machine-readable formats (CSV or JSON)</p>
+<p>Introduce random audits</p>
+<p>Public dashboard for expenditure comparison</p>
+<h2>9. Conclusion</h2>
+<p>The Odisha 2024 MLA expenditure dataset reveals:</p>
+<p>BJD and BJP run structured, party-funded campaigns</p>
+<p>INC MLAs spend much less and rely on self-funding</p>
+<p>CPI(M)'s sole MLA dramatically outspends INC averages</p>
+<p>Public meetings comprise the largest cost component, not media or digital outreach</p>
+<p>Star campaigner spending is overwhelmingly a BJD, BJP domain</p>
+<h2>END NOTE</h2>
 <p>This report is based exclusively on expenditure affidavits filed by MLAs and uploaded on the CEO Odisha website, with analysis by ADR and Odisha Election Watch.</p>
+<p>It comprehensively covers expenditure patterns of BJD, BJP, INC, CPI(M), and Independent MLAs, with thematic and constituency-wise detail.</p>
 </div>
 <div class="article-sharing" style="margin: 40px 0; padding: 20px; background: #f8f9fa; text-align: center; border-radius: 8px;">
 <h3 style="color: #4f46e5; margin-bottom: 20px;">Share this article</h3>
@@ -624,4 +644,4 @@ async function copyArticleLink() { try { await navigator.clipboard.writeText(win
 </script>
 <script type="application/json" id="article-metadata">{ "title": "Odisha Assembly Elections 2024 - Comprehensive Expenditure Analysis", "category": "local", "summary": "The 2024 Odisha Assembly election expenditure affidavits reveal how political parties financed and executed their campaigns, offering an unprecedented look into...", "date": "2025-12-01", "image": "odisha-assembly.jpg", "filename": "odisha-assembly.html" }</script>
 </body>
-</html>
+    </html>
