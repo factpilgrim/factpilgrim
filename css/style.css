@@ -8,15 +8,13 @@
 }
 
 body {
-    /* MODERN, READABLE FONT STACK */
+    /* MODERN SYSTEM FONTS */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     
-    /* READABILITY: Larger base size (18px) for easy reading */
+    /* READABILITY: 18px base size */
     font-size: 18px; 
     line-height: 1.6;
-    
-    /* Dark text on Light Gray background */
-    color: #333; 
+    color: #333;
     background-color: #f3f4f6; 
     overflow-x: hidden;
 }
@@ -31,10 +29,10 @@ body {
    2. BREAKING NEWS TICKER
    ========================================= */
 .breaking-news {
-    background: #b91c1c; /* Deep Red */
+    background: #b91c1c;
     color: white;
     padding: 8px 0;
-    height: 44px; /* Slightly taller for larger text */
+    height: 44px;
     width: 100%;
     overflow: hidden;
 }
@@ -46,7 +44,7 @@ body {
 }
 
 .ticker-label {
-    background: #7f1d1d; /* Very Dark Red */
+    background: #7f1d1d;
     padding: 4px 16px;
     font-weight: 800;
     font-size: 13px;
@@ -72,7 +70,7 @@ body {
     display: flex;
     white-space: nowrap;
     animation: tickerScroll var(--ticker-duration, 30s) linear infinite;
-    font-size: 15px; /* Readable ticker text */
+    font-size: 15px;
 }
 
 .ticker-track span {
@@ -90,7 +88,7 @@ body {
    ========================================= */
 .header {
     background: #ffffff;
-    border-bottom: 1px solid #d1d5db; /* Definitive line */
+    border-bottom: 1px solid #d1d5db;
     padding: 20px 0;
     position: sticky;
     top: 0;
@@ -159,18 +157,17 @@ body {
 .home-btn:hover { background: #b91c1c; }
 
 /* =========================================
-   4. HERO SECTION (SPLIT + FRAMED)
+   4. HERO SECTION (Responsive 70/30)
    ========================================= */
 .hero-section { margin: 40px 0; }
 
 .hero-card {
     display: flex;
-    height: 550px; /* Taller to accommodate larger text */
+    /* Desktop Height: 480px ensures 16:9 ratio for the 70% width image */
+    height: 480px; 
     
-    /* FRAMED: Both Border AND Shadow */
-    border: 1px solid #d1d5db; /* Grey Border */
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Deep Shadow */
-    
+    border: 1px solid #d1d5db;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     border-radius: 12px;
     overflow: hidden;
     background: #fff;
@@ -178,12 +175,12 @@ body {
 
 .hero-card:hover { 
     transform: translateY(-2px); 
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
 
 .hero-image-container {
-    flex: 1.5; /* Image is 60% */
+    flex: 7; /* 70% Width */
     height: 100%;
     position: relative;
     background: #e5e7eb;
@@ -193,60 +190,63 @@ body {
 .hero-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* SMART FIT: Fills box perfectly */
+    object-fit: cover; /* Ensures filling without distortion */
     position: absolute;
     top: 0; left: 0;
 }
 
 .hero-content {
-    flex: 1; /* Text is 40% */
-    padding: 40px;
+    flex: 3; /* 30% Width */
+    padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     background: #fff;
-    color: #111; /* Nearly black text */
+    color: #111;
+    z-index: 2;
 }
 
-/* Category Tag */
 .hero-category {
     display: inline-block;
     background: #fee2e2; 
     color: #991b1b;
-    padding: 6px 14px;
-    font-size: 13px;
+    padding: 5px 12px;
+    font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 800;
     border-radius: 4px;
     align-self: flex-start;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-/* Hero Headline */
 .hero-title {
-    font-size: 2.6em; /* Very Large for readability */
-    margin-bottom: 20px;
-    line-height: 1.2;
+    font-size: 1.8em; /* Adjusted for narrower column */
+    margin-bottom: 15px;
+    line-height: 1.3;
     cursor: pointer;
     font-weight: 800;
-    color: #111827; /* High Contrast Black */
+    color: #111827; 
     text-shadow: none;
 }
 .hero-title:hover { color: #dc2626; }
 
 .hero-summary {
-    font-size: 1.2em; /* Larger summary text */
-    line-height: 1.6;
-    margin-bottom: 25px;
-    color: #4b5563; /* Dark Gray */
-    max-width: 100%;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #4b5563; 
+    /* Clamp text to prevent overflow */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .hero-date {
-    font-size: 1rem;
+    font-size: 0.9em;
     color: #6b7280;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     font-weight: 500;
 }
 
@@ -254,19 +254,18 @@ body {
     display: inline-block;
     background: #dc2626;
     color: white;
-    padding: 12px 28px;
+    padding: 10px 24px;
     text-decoration: none;
     font-weight: 700;
     border-radius: 6px;
     align-self: flex-start;
-    font-size: 16px;
+    font-size: 15px;
 }
 .hero-read-more:hover { background: #b91c1c; }
 
-/* Social Icons */
-.social-sharing { display: flex; gap: 12px; border-top: 1px solid #f3f4f6; padding-top: 25px; margin-top: auto; }
+.social-sharing { display: flex; gap: 10px; border-top: 1px solid #f3f4f6; padding-top: 15px; margin-top: auto; }
 .social-btn {
-    width: 40px; height: 40px; border-radius: 50%; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: transform 0.2s;
+    width: 32px; height: 32px; border-radius: 50%; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: transform 0.2s;
 }
 .social-btn:hover { transform: scale(1.1); background-color: #dc2626 !important; }
 .social-btn.twitter { background: #000; }
@@ -281,7 +280,7 @@ body {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); /* Slightly wider cards */
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 30px;
     margin-bottom: 50px;
 }
@@ -289,7 +288,6 @@ body {
 .article-card {
     background: #ffffff;
     overflow: hidden;
-    /* Framed: Border + Shadow */
     border: 1px solid #e5e7eb;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
@@ -343,12 +341,11 @@ body {
 }
 
 .article-title {
-    font-size: 1.5em; /* Larger Card Titles */
+    font-size: 1.5em;
     margin-bottom: 12px;
     color: #111827;
     cursor: pointer;
     font-weight: 700;
-    /* Sidebar Fix */
     line-height: 1.3; 
     display: inline-block;
     width: 100%;
@@ -357,7 +354,7 @@ body {
 
 .article-summary {
     color: #4b5563;
-    font-size: 1rem; /* 16px readable summary */
+    font-size: 1rem;
     margin-bottom: auto; 
     line-height: 1.6;
     padding-bottom: 20px;
@@ -379,7 +376,6 @@ body {
 .article-social .social-btn { width: 34px; height: 34px; font-size: 14px; background: #9ca3af; }
 .article-social .social-btn:hover { background: #dc2626; }
 
-/* Load More Button */
 .load-more-container { text-align: center; margin: 50px 0; display: flex; justify-content: center; gap: 15px; }
 .load-more-btn, .collapse-btn {
     color: white; border: none; padding: 14px 35px; font-size: 17px; cursor: pointer; border-radius: 6px; transition: background 0.3s; font-weight: 700;
@@ -389,7 +385,6 @@ body {
 .collapse-btn { background: #6b7280; }
 .load-more-btn:disabled { background: #ccc; }
 
-/* Footer */
 .footer {
     background: #fff;
     text-align: center;
@@ -406,23 +401,22 @@ body {
 .toast.show { transform: translateX(0); }
 
 /* =========================================
-   7. TYPOGRAPHY & ARTICLE DETAIL PAGE
+   7. TYPOGRAPHY & ARTICLE DETAILS
    ========================================= */
 .article-content { 
-    font-size: 20px; /* Big readable body text */
+    font-size: 20px; 
     line-height: 1.7; 
     color: #333; 
 }
 
 .article-content p { margin-bottom: 1.4em; }
 
-/* Red Sidebar Headers - Height Fixed */
 .article-content h2, 
 .article-content h3 {
     color: #b91c1c;
     margin-top: 40px;
     margin-bottom: 20px;
-    border-left: 6px solid #dc2626; /* Thicker Red Line */
+    border-left: 6px solid #dc2626;
     padding-left: 18px;
     line-height: 1.1; 
     display: inline-block;
@@ -439,7 +433,6 @@ body {
 }
 .article-content li { margin-bottom: 0.5em; }
 
-/* TABLE STYLING - Responsive & Full Width */
 .table-wrapper {
     width: 100%;
     overflow-x: auto; 
@@ -456,7 +449,7 @@ table {
     width: 100%; 
     min-width: 600px;
     border-collapse: collapse;
-    font-size: 17px; /* Larger table text */
+    font-size: 17px; 
     background: #fff;
     table-layout: auto; 
 }
@@ -470,7 +463,7 @@ th, td {
 }
 
 th {
-    background-color: #fef2f2; /* Light Red Tint */
+    background-color: #fef2f2; 
     color: #991b1b;
     font-weight: 800;
     text-transform: uppercase;
@@ -481,58 +474,56 @@ th {
 tr:nth-child(even) { background-color: #f9fafb; }
 
 /* =========================================
-   8. RESPONSIVE LAYOUTS
+   8. RESPONSIVE BREAKPOINTS (PC / Tablet / Mobile)
    ========================================= */
 
-/* Tablet */
-@media (max-width: 1024px) {
-    .container { padding: 0 30px; } 
-    .header .container { flex-wrap: wrap; gap: 15px; }
-    .logo { margin-right: auto; }
-    .search-container { width: 100%; max-width: 100%; order: 3; margin-top: 10px; }
-    .main-nav { order: 2; }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .container { padding: 0 15px; }
-    .header { padding: 15px 0; }
+/* Tablet & Mobile (Max width 900px) */
+/* Breaking Point: We switch from Side-by-Side to Stacked here */
+@media (max-width: 900px) {
+    .container { padding: 0 20px; }
     .header .container { flex-direction: column; align-items: stretch; gap: 15px; }
     .logo { justify-content: center; }
     .logo-image img { height: 60px; }
     .main-nav { justify-content: center; }
-    .search-container { order: 3; }
+    .search-container { order: 3; margin-top: 10px; }
     .home-btn { width: 100%; justify-content: center; }
     
-    /* Stack Hero Card */
+    /* HERO CARD STACKING */
     .hero-card { 
-        flex-direction: column;
-        height: auto; 
+        flex-direction: column; /* Stack vertically */
+        height: auto; /* Let height adapt to content */
     }
     .hero-image-container {
-        flex: none; width: 100%; height: 250px;
-        border-right: none; border-bottom: 1px solid #e5e7eb;
+        flex: none; 
+        width: 100%; 
+        /* Maintain 16:9 Aspect Ratio even on mobile */
+        aspect-ratio: 16/9;
+        height: auto;
+        border-right: none; 
+        border-bottom: 1px solid #e5e7eb;
     }
     .hero-content {
-        flex: none; width: 100%; padding: 25px;
+        flex: none; 
+        width: 100%; 
+        padding: 25px;
     }
-    .hero-title { font-size: 2em; } /* Larger on mobile too */
-    .hero-summary { display: block; } 
-    .hero-card .social-sharing { display: none; } 
+    .hero-title { font-size: 2em; }
+    .hero-summary { 
+        -webkit-line-clamp: unset; /* Show full text on mobile */
+        display: block;
+    } 
     .hero-read-more { width: 100%; text-align: center; }
 
+    /* Grid becomes 1 column on small phones */
     .grid-container { 
-        grid-template-columns: 1fr; /* Single column */
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 25px; 
     }
     
-    .article-title { font-size: 1.4em; }
-    
-    /* Table Scroll Hint */
     .table-wrapper::after {
         content: 'Scroll →';
         position: absolute; right: 10px; top: 10px;
         font-size: 10px; color: #999;
-        display: none; /* Can enable if needed */
+        display: none; 
     }
 }
