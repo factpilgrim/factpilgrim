@@ -401,12 +401,49 @@ body {
     .main-nav { justify-content: center; }
     .search-container { order: 3; }
     .home-btn { width: 100%; justify-content: center; }
-    
-    /* FIX: Increased Height to 550px to fit long titles + category */
-    .hero-card { height: 550px; }
-    
+    .hero-card { height: 350px; }
     .hero-title { font-size: 1.6em; }
     .hero-summary { display: none; }
     .hero-content { padding: 20px; }
     .grid-container { gap: 20px; }
+}
+
+/* =========================================
+   8. TABLE STYLES (NEW ADDITION)
+   ========================================= */
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 20px 0; 
+    font-size: 16px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+}
+
+th, td { 
+    border: 1px solid #e5e7eb; 
+    padding: 12px; 
+    text-align: left; 
+}
+
+th { 
+    background-color: #f3f4f6; 
+    color: #4f46e5; 
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+tr:nth-child(even) { 
+    background-color: #f9fafb; 
+}
+
+/* Responsive Table: Allows scrolling on small screens */
+@media (max-width: 768px) {
+    .article-content { 
+        overflow-x: auto; 
+    }
+    table { 
+        min-width: 600px; /* Forces scroll if screen is too narrow */
+    }
 }
