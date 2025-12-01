@@ -8,19 +8,20 @@
 }
 
 body {
-    /* MODERN SYSTEM FONTS */
+    /* Modern Font Stack */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     
-    /* READABILITY: 18px base size */
-    font-size: 18px; 
+    /* INCREASED FONT SIZE for easy reading */
+    font-size: 20px; 
     line-height: 1.6;
+    
     color: #333;
     background-color: #f3f4f6; 
     overflow-x: hidden;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1280px; /* Slightly wider to accommodate 70/30 split better */
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -89,7 +90,7 @@ body {
 .header {
     background: #ffffff;
     border-bottom: 1px solid #d1d5db;
-    padding: 20px 0;
+    padding: 15px 0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -100,12 +101,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
 }
 
 .logo { display: flex; align-items: center; }
 .logo-image { display: flex; align-items: center; gap: 15px; }
-.logo-image img { height: 75px; width: auto; display: block; }
+.logo-image img { height: 65px; width: auto; display: block; }
 .logo-fallback { font-size: 28px; font-weight: 800; color: #dc2626; display: none; }
 .logo-image img[style*="display: none"] + .logo-fallback { display: block; }
 
@@ -126,7 +127,6 @@ body {
     border-radius: 6px;
     background: #f9fafb;
 }
-
 .search-input:focus { border-color: #dc2626; background: #fff; }
 
 .search-btn {
@@ -141,7 +141,7 @@ body {
 
 .main-nav { display: flex; align-items: center; }
 .home-btn {
-    padding: 12px 24px;
+    padding: 10px 20px;
     background: #dc2626;
     color: white;
     text-decoration: none;
@@ -157,20 +157,20 @@ body {
 .home-btn:hover { background: #b91c1c; }
 
 /* =========================================
-   4. HERO SECTION (Responsive 70/30)
+   4. HERO SECTION (16:9 Perfect Fit)
    ========================================= */
 .hero-section { margin: 40px 0; }
 
 .hero-card {
     display: flex;
-    /* Desktop Height: 480px ensures 16:9 ratio for the 70% width image */
-    height: 480px; 
-    
+    /* Height is AUTO so it adapts to the image ratio, preventing cropping */
+    height: auto; 
     border: 1px solid #d1d5db;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     overflow: hidden;
     background: #fff;
+    align-items: stretch; /* Forces text box to match image height */
 }
 
 .hero-card:hover { 
@@ -180,50 +180,56 @@ body {
 }
 
 .hero-image-container {
-    flex: 7; /* 70% Width */
-    height: 100%;
+    /* 70% Width */
+    flex: 0 0 70%; 
     position: relative;
     background: #e5e7eb;
     border-right: 1px solid #e5e7eb;
+    /* Force 16:9 Ratio */
+    aspect-ratio: 16/9;
 }
 
 .hero-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures filling without distortion */
+    /* Object Fit Cover ensures no white bars, but aspect-ratio keeps it uncropped */
+    object-fit: cover; 
     position: absolute;
     top: 0; left: 0;
 }
 
 .hero-content {
-    flex: 3; /* 30% Width */
-    padding: 30px;
+    /* 30% Width */
+    flex: 0 0 30%; 
+    padding: 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     background: #fff;
     color: #111;
     z-index: 2;
+    /* Ensure text doesn't overflow if image is short */
+    min-height: 100%;
 }
 
 .hero-category {
     display: inline-block;
     background: #fee2e2; 
     color: #991b1b;
-    padding: 5px 12px;
-    font-size: 12px;
+    padding: 5px 10px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 800;
     border-radius: 4px;
     align-self: flex-start;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .hero-title {
-    font-size: 1.8em; /* Adjusted for narrower column */
-    margin-bottom: 15px;
-    line-height: 1.3;
+    font-size: 1.6em; /* Optimized for 30% width */
+    margin-bottom: 12px;
+    line-height: 1.25;
     cursor: pointer;
     font-weight: 800;
     color: #111827; 
@@ -234,19 +240,19 @@ body {
 .hero-summary {
     font-size: 1rem;
     line-height: 1.5;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     color: #4b5563; 
-    /* Clamp text to prevent overflow */
+    /* Limit lines to prevent layout breaking */
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 .hero-date {
-    font-size: 0.9em;
+    font-size: 0.85em;
     color: #6b7280;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     font-weight: 500;
 }
 
@@ -254,16 +260,16 @@ body {
     display: inline-block;
     background: #dc2626;
     color: white;
-    padding: 10px 24px;
+    padding: 10px 20px;
     text-decoration: none;
     font-weight: 700;
     border-radius: 6px;
     align-self: flex-start;
-    font-size: 15px;
+    font-size: 14px;
 }
 .hero-read-more:hover { background: #b91c1c; }
 
-.social-sharing { display: flex; gap: 10px; border-top: 1px solid #f3f4f6; padding-top: 15px; margin-top: auto; }
+.social-sharing { display: flex; gap: 8px; border-top: 1px solid #f3f4f6; padding-top: 15px; margin-top: auto; }
 .social-btn {
     width: 32px; height: 32px; border-radius: 50%; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: transform 0.2s;
 }
@@ -303,7 +309,9 @@ body {
     position: relative;
     background: #f3f4f6;
     overflow: hidden;
-    border-bottom: 1px solid #e5e7eb;
+    
+    /* THE STYLISH RED SEPARATOR LINE */
+    border-bottom: 4px solid #dc2626; 
 }
 
 .article-image {
@@ -376,6 +384,7 @@ body {
 .article-social .social-btn { width: 34px; height: 34px; font-size: 14px; background: #9ca3af; }
 .article-social .social-btn:hover { background: #dc2626; }
 
+/* Load More */
 .load-more-container { text-align: center; margin: 50px 0; display: flex; justify-content: center; gap: 15px; }
 .load-more-btn, .collapse-btn {
     color: white; border: none; padding: 14px 35px; font-size: 17px; cursor: pointer; border-radius: 6px; transition: background 0.3s; font-weight: 700;
@@ -385,6 +394,7 @@ body {
 .collapse-btn { background: #6b7280; }
 .load-more-btn:disabled { background: #ccc; }
 
+/* Footer */
 .footer {
     background: #fff;
     text-align: center;
@@ -401,11 +411,11 @@ body {
 .toast.show { transform: translateX(0); }
 
 /* =========================================
-   7. TYPOGRAPHY & ARTICLE DETAILS
+   7. TYPOGRAPHY (Larger Fonts)
    ========================================= */
 .article-content { 
-    font-size: 20px; 
-    line-height: 1.7; 
+    font-size: 21px; /* Increased for readability */
+    line-height: 1.8; 
     color: #333; 
 }
 
@@ -423,7 +433,7 @@ body {
     width: 100%;
 }
 
-.article-content h2 { font-size: 30px; font-weight: 800; }
+.article-content h2 { font-size: 32px; font-weight: 800; }
 .article-content h3 { font-size: 26px; font-weight: 700; }
 
 .article-content ul, .article-content ol { 
@@ -433,54 +443,16 @@ body {
 }
 .article-content li { margin-bottom: 0.5em; }
 
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto; 
-    -webkit-overflow-scrolling: touch;
-    margin-bottom: 30px;
-    padding-bottom: 5px;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    box-sizing: border-box;
-    display: block;
-}
-
-table {
-    width: 100%; 
-    min-width: 600px;
-    border-collapse: collapse;
-    font-size: 17px; 
-    background: #fff;
-    table-layout: auto; 
-}
-
-th, td {
-    border: 1px solid #e5e7eb;
-    padding: 15px;
-    text-align: left;
-    vertical-align: top;
-    white-space: normal;
-}
-
-th {
-    background-color: #fef2f2; 
-    color: #991b1b;
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size: 14px;
-    letter-spacing: 0.5px;
-}
-
-tr:nth-child(even) { background-color: #f9fafb; }
-
 /* =========================================
    8. RESPONSIVE BREAKPOINTS (PC / Tablet / Mobile)
    ========================================= */
 
-/* Tablet & Mobile (Max width 900px) */
-/* Breaking Point: We switch from Side-by-Side to Stacked here */
-@media (max-width: 900px) {
+/* TABLET & MOBILE STACKING LOGIC (< 1100px) */
+/* We stack sooner to prevent "Squashed" text on tablets */
+@media (max-width: 1100px) {
     .container { padding: 0 20px; }
+    
+    /* Header Stacking */
     .header .container { flex-direction: column; align-items: stretch; gap: 15px; }
     .logo { justify-content: center; }
     .logo-image img { height: 60px; }
@@ -488,15 +460,15 @@ tr:nth-child(even) { background-color: #f9fafb; }
     .search-container { order: 3; margin-top: 10px; }
     .home-btn { width: 100%; justify-content: center; }
     
-    /* HERO CARD STACKING */
+    /* HERO CARD STACKING (Image Top / Text Bottom) */
     .hero-card { 
         flex-direction: column; /* Stack vertically */
-        height: auto; /* Let height adapt to content */
+        height: auto; 
     }
     .hero-image-container {
         flex: none; 
         width: 100%; 
-        /* Maintain 16:9 Aspect Ratio even on mobile */
+        /* Maintain 16:9 on mobile/tablet */
         aspect-ratio: 16/9;
         height: auto;
         border-right: none; 
@@ -505,11 +477,11 @@ tr:nth-child(even) { background-color: #f9fafb; }
     .hero-content {
         flex: none; 
         width: 100%; 
-        padding: 25px;
+        padding: 30px;
     }
     .hero-title { font-size: 2em; }
     .hero-summary { 
-        -webkit-line-clamp: unset; /* Show full text on mobile */
+        -webkit-line-clamp: unset; /* Show full text */
         display: block;
     } 
     .hero-read-more { width: 100%; text-align: center; }
