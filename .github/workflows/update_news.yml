@@ -54,8 +54,17 @@ jobs:
                     except Exception as e:
                         print(f'Error processing {filename}: {e}')
 
+        # SORTING LOGIC:
+        # 1. Primary: Date (YYYY-MM-DD)
+        # 2. Secondary: Timestamp (Exact upload time). Defaults to 0 if missing.
         try:
-            articles_data.sort(key=lambda x: datetime.strptime(x.get('date', '2000-01-01'), '%Y-%m-%d'), reverse=True)
+            articles_data.sort(
+                key=lambda x: (
+                    x.get('date', '2000-01-01'), 
+                    x.get('timestamp', 0)
+                ), 
+                reverse=True
+            )
         except Exception as e:
             print(f'Warning: Date sorting issue: {e}')
 
