@@ -8,20 +8,21 @@
 }
 
 body {
-    /* Modern Font Stack */
+    /* MODERN FONT STACK */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     
-    /* INCREASED FONT SIZE for easy reading */
-    font-size: 20px; 
+    /* READABILITY: Larger base size */
+    font-size: 18px; 
     line-height: 1.6;
-    
     color: #333;
+    
+    /* Light Gray Background for depth */
     background-color: #f3f4f6; 
     overflow-x: hidden;
 }
 
 .container {
-    max-width: 1280px; /* Slightly wider to accommodate 70/30 split better */
+    max-width: 1280px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -30,7 +31,7 @@ body {
    2. BREAKING NEWS TICKER
    ========================================= */
 .breaking-news {
-    background: #b91c1c;
+    background: #b91c1c; /* Deep Red */
     color: white;
     padding: 8px 0;
     height: 44px;
@@ -45,7 +46,7 @@ body {
 }
 
 .ticker-label {
-    background: #7f1d1d;
+    background: #7f1d1d; /* Darkest Red */
     padding: 4px 16px;
     font-weight: 800;
     font-size: 13px;
@@ -163,14 +164,14 @@ body {
 
 .hero-card {
     display: flex;
-    /* Height is AUTO so it adapts to the image ratio, preventing cropping */
+    /* Height adapts to content/image ratio */
     height: auto; 
     border: 1px solid #d1d5db;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     overflow: hidden;
     background: #fff;
-    align-items: stretch; /* Forces text box to match image height */
+    align-items: stretch; 
 }
 
 .hero-card:hover { 
@@ -192,7 +193,6 @@ body {
 .hero-image {
     width: 100%;
     height: 100%;
-    /* Object Fit Cover ensures no white bars, but aspect-ratio keeps it uncropped */
     object-fit: cover; 
     position: absolute;
     top: 0; left: 0;
@@ -208,7 +208,6 @@ body {
     background: #fff;
     color: #111;
     z-index: 2;
-    /* Ensure text doesn't overflow if image is short */
     min-height: 100%;
 }
 
@@ -227,7 +226,7 @@ body {
 }
 
 .hero-title {
-    font-size: 1.6em; /* Optimized for 30% width */
+    font-size: 1.6em;
     margin-bottom: 12px;
     line-height: 1.25;
     cursor: pointer;
@@ -242,7 +241,6 @@ body {
     line-height: 1.5;
     margin-bottom: 15px;
     color: #4b5563; 
-    /* Limit lines to prevent layout breaking */
     display: -webkit-box;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
@@ -309,8 +307,7 @@ body {
     position: relative;
     background: #f3f4f6;
     overflow: hidden;
-    
-    /* THE STYLISH RED SEPARATOR LINE */
+    /* Red Separator Line */
     border-bottom: 4px solid #dc2626; 
 }
 
@@ -411,21 +408,22 @@ body {
 .toast.show { transform: translateX(0); }
 
 /* =========================================
-   7. TYPOGRAPHY (Larger Fonts)
+   7. TYPOGRAPHY & ARTICLE DETAILS
    ========================================= */
 .article-content { 
-    font-size: 21px; /* Increased for readability */
-    line-height: 1.8; 
+    font-size: 21px; 
+    line-height: 1.6; /* Tight spacing */
     color: #333; 
 }
 
-.article-content p { margin-bottom: 1.4em; }
+.article-content p { margin-bottom: 1.2em; margin-top: 0; }
 
+/* Red Sidebar Headers - Height Fixed */
 .article-content h2, 
 .article-content h3 {
     color: #b91c1c;
-    margin-top: 40px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 15px;
     border-left: 6px solid #dc2626;
     padding-left: 18px;
     line-height: 1.1; 
@@ -439,20 +437,65 @@ body {
 .article-content ul, .article-content ol { 
     padding-left: 30px; 
     margin-top: 0;
-    margin-bottom: 1.4em; 
+    margin-bottom: 1.2em; 
 }
-.article-content li { margin-bottom: 0.5em; }
+.article-content li { margin-bottom: 0.3em; }
+
+/* FIX: Table Full Width */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 30px;
+    padding-bottom: 5px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-sizing: border-box;
+    display: block;
+}
+
+table {
+    width: 100%; 
+    min-width: 600px;
+    border-collapse: collapse;
+    font-size: 17px; 
+    background: #fff;
+    table-layout: auto; 
+}
+
+th, td {
+    border: 1px solid #e5e7eb;
+    padding: 15px;
+    text-align: left;
+    vertical-align: top;
+    white-space: normal;
+}
+
+th {
+    background-color: #fef2f2; 
+    color: #991b1b;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+tr:nth-child(even) { background-color: #f9fafb; }
+
+/* --- FORCE TITLE COLOR CONSISTENCY --- */
+.article-content-header h1,
+h1 {
+    color: #111827 !important; /* Dark Charcoal */
+}
 
 /* =========================================
-   8. RESPONSIVE BREAKPOINTS (PC / Tablet / Mobile)
+   8. RESPONSIVE BREAKPOINTS
    ========================================= */
 
-/* TABLET & MOBILE STACKING LOGIC (< 1100px) */
-/* We stack sooner to prevent "Squashed" text on tablets */
+/* Tablet & Mobile (Stacking at 1100px) */
 @media (max-width: 1100px) {
     .container { padding: 0 20px; }
     
-    /* Header Stacking */
     .header .container { flex-direction: column; align-items: stretch; gap: 15px; }
     .logo { justify-content: center; }
     .logo-image img { height: 60px; }
@@ -460,16 +503,15 @@ body {
     .search-container { order: 3; margin-top: 10px; }
     .home-btn { width: 100%; justify-content: center; }
     
-    /* HERO CARD STACKING (Image Top / Text Bottom) */
+    /* STACKED HERO CARD */
     .hero-card { 
-        flex-direction: column; /* Stack vertically */
+        flex-direction: column; 
         height: auto; 
     }
     .hero-image-container {
         flex: none; 
         width: 100%; 
-        /* Maintain 16:9 on mobile/tablet */
-        aspect-ratio: 16/9;
+        aspect-ratio: 16/9; /* No Cropping */
         height: auto;
         border-right: none; 
         border-bottom: 1px solid #e5e7eb;
@@ -480,13 +522,10 @@ body {
         padding: 30px;
     }
     .hero-title { font-size: 2em; }
-    .hero-summary { 
-        -webkit-line-clamp: unset; /* Show full text */
-        display: block;
-    } 
+    .hero-summary { display: block; -webkit-line-clamp: unset; } 
     .hero-read-more { width: 100%; text-align: center; }
 
-    /* Grid becomes 1 column on small phones */
+    /* Single Column Grid on Phones */
     .grid-container { 
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 25px; 
