@@ -185,7 +185,7 @@ class FactPilgrim {
     updateTicker() {
         const tickerTrack = document.getElementById('tickerTrack');
         if (!tickerTrack) return;
-        let headlines = this.articles.length > 0 ? this.articles.slice(0, 5).map(a => a.title) : ['Stay tuned for the latest news'];
+        let headlines = this.articles.length > 0 ? this.articles.slice(0, 10).map(a => a.title) : ['Stay tuned for the latest news'];
         const tickerText = headlines.join(' • ');
         tickerTrack.innerHTML = '';
         const span1 = document.createElement('span'); span1.textContent = tickerText + ' • ';
