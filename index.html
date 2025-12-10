@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Oriya:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Oriya:wght@400;700&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -33,7 +33,9 @@
                 <input type="text" id="searchInput" class="search-input" placeholder="Search for articles...">
                 <button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
-            <nav class="main-nav"><button class="home-btn"><i class="fas fa-home"></i> Home</button></nav>
+            <nav class="main-nav">
+                <button class="home-btn"><i class="fas fa-home"></i> Home</button>
+            </nav>
         </div>
     </header>
 
@@ -48,13 +50,13 @@
             </div>
         </section>
         
-        <section class="follow-us-container" style="margin-top: 40px; margin-bottom: 20px; text-align: center;">
+        <section class="follow-us-container">
             <h3 style="color: #b91c1c; margin-bottom: 15px; font-weight: 700;">Follow Us</h3>
             <div class="social-sharing" style="display: flex; gap: 12px; justify-content: center;">
-                <button class="social-btn" style="background: #000; color: #fff;" onclick="openSocialApp('https://x.com/FactPilgrim', 'twitter://user?screen_name=FactPilgrim')"><i class="fab fa-x-twitter"></i></button>
-                <button class="social-btn" style="background: #1877f2; color: #fff;" onclick="openSocialApp('https://www.facebook.com/FactPilgrim', 'fb://facewebmodal/f?href=https://www.facebook.com/FactPilgrim')"><i class="fab fa-facebook-f"></i></button>
-                <button class="social-btn" style="background: #d62976; color: #fff;" onclick="openSocialApp('https://www.instagram.com/factpilgrim', 'instagram://user?username=factpilgrim')"><i class="fab fa-instagram"></i></button>
-                <button class="social-btn" style="background: #000; color: #fff;" onclick="openSocialApp('https://www.threads.com/@factpilgrim', 'threads://user?username=factpilgrim')"><i class="fab fa-threads"></i></button>
+                <button class="social-btn twitter" onclick="openSocialApp('https://x.com/FactPilgrim', 'twitter://user?screen_name=FactPilgrim')"><i class="fab fa-x-twitter"></i></button>
+                <button class="social-btn facebook" onclick="openSocialApp('https://www.facebook.com/FactPilgrim', 'fb://facewebmodal/f?href=https://www.facebook.com/FactPilgrim')"><i class="fab fa-facebook-f"></i></button>
+                <button class="social-btn instagram" onclick="openSocialApp('https://www.instagram.com/factpilgrim', 'instagram://user?username=factpilgrim')"><i class="fab fa-instagram"></i></button>
+                <button class="social-btn threads" onclick="openSocialApp('https://www.threads.net/@factpilgrim', 'barcelona://user?username=factpilgrim')"><i class="fab fa-threads"></i></button>
             </div>
         </section>
 
@@ -66,29 +68,25 @@
         </div>
     </footer>
 
-        <script src="js/script.js"></script>
+    <script src="js/script.js"></script>
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
         
-        // This function matches the one in script.js to ensure availability
+        // App Opener Helper for Follow Buttons
         function openSocialApp(webUrl, appUrl) {
-            const timeoutDuration = 2000; // 2 seconds wait for App response
+            const timeoutDuration = 2500; 
             let startTime = Date.now();
             
-            // Attempt to open the App
+            // Attempt to open App
             window.location.href = appUrl;
 
             setTimeout(() => {
-                // Check if user has switched away from this tab (meaning App opened)
                 if (document.hidden || document.webkitHidden) {
                     return; 
                 }
-
-                // Double check timing: if system dialog paused execution, time diff will be large
-                if (Date.now() - startTime > timeoutDuration + 500) {
+                if (Date.now() - startTime > timeoutDuration + 1000) {
                     return;
                 }
-
                 // Fallback to browser
                 window.open(webUrl, '_blank');
             }, timeoutDuration);
@@ -96,4 +94,3 @@
     </script>
 </body>
 </html>
-
