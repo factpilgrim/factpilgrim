@@ -66,20 +66,34 @@
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+        <script src="js/script.js"></script>
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
         
-        // Instruction 9: Helper to open App first, then Browser
+        // This function matches the one in script.js to ensure availability
         function openSocialApp(webUrl, appUrl) {
-            // Attempt to open app via custom scheme
-            window.location.href = appUrl;
+            const timeoutDuration = 2000; // 2 seconds wait for App response
+            let startTime = Date.now();
             
-            // Fallback to web URL if app doesn't open within 500ms
-            setTimeout(function() {
+            // Attempt to open the App
+            window.location.href = appUrl;
+
+            setTimeout(() => {
+                // Check if user has switched away from this tab (meaning App opened)
+                if (document.hidden || document.webkitHidden) {
+                    return; 
+                }
+
+                // Double check timing: if system dialog paused execution, time diff will be large
+                if (Date.now() - startTime > timeoutDuration + 500) {
+                    return;
+                }
+
+                // Fallback to browser
                 window.open(webUrl, '_blank');
-            }, 500);
+            }, timeoutDuration);
         }
     </script>
 </body>
 </html>
+
