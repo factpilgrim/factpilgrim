@@ -189,21 +189,15 @@ class FactPilgrim {
         const tickerTrack = document.getElementById('tickerTrack');
         if (!tickerTrack) return;
 
-        // Instruction 3: Scroll headlines for articles 10 to 20
-        // Slicing from index 9 (10th item) to 19 (20th item)
         let headlines = [];
+        // Show articles 10 to 20 (index 9 to 19)
         if (this.articles.length > 9) {
-            // Get articles 10-20 (or fewer if not enough exist)
             const targetArticles = this.articles.slice(9, 20);
-            
-            // Instruction 4: Clicking headline opens article
-            // Mapping to HTML anchor tags
             headlines = targetArticles.map(a => 
                 `<a href="./articles/${a.filename}" target="_blank" style="color: inherit; text-decoration: none; margin: 0 15px;">${a.title}</a>`
             );
         }
 
-        // Fallback if no articles in that range
         if (headlines.length === 0) {
             headlines = ['<span style="margin: 0 15px;">Stay tuned for more updates</span>'];
         }
@@ -213,7 +207,7 @@ class FactPilgrim {
         tickerTrack.innerHTML = '';
         
         const span1 = document.createElement('span');
-        span1.innerHTML = tickerHTML + ' • '; // Use innerHTML to render <a> tags
+        span1.innerHTML = tickerHTML + ' • '; 
         
         const span2 = document.createElement('span');
         span2.innerHTML = tickerHTML + ' • ';
@@ -221,15 +215,16 @@ class FactPilgrim {
         tickerTrack.appendChild(span1);
         tickerTrack.appendChild(span2);
 
-        // Adjust duration based on content width
         const width = span1.offsetWidth;
-        const duration = width / 50; // Adjust speed as necessary
+        const duration = width / 50; 
         tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
     }
 
     formatCategory(category) { return category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
 
     formatDate(dateString) { return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); }
+
+    // --- Sharing Logic ---
 
     static shareOnTwitter(title, url) {
         window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
@@ -270,6 +265,32 @@ class FactPilgrim {
             setTimeout(() => toast.remove(), 300);
         }, 3000);
     }
+}
+
+// Global helper for the "Follow Us" buttons in HTML
+// INCREASED TIMEOUT to 2000ms to allow popup confirmation
+// ADDED VISIBILITY CHECK to stop browser opening if App took focus
+function openSocialApp(webUrl, appUrl) {
+    const timeoutDuration = 2000; 
+    let startTime = Date.now();
+    
+    // Attempt to open the App
+    window.location.href = appUrl;
+
+    setTimeout(() => {
+        // If the document is hidden, the user likely switched to the app successfully
+        if (document.hidden || document.webkitHidden) {
+            return; 
+        }
+
+        // If time elapsed is significantly larger than timeout, it means the browser was paused (app opened dialog)
+        if (Date.now() - startTime > timeoutDuration + 500) {
+            return;
+        }
+
+        // Otherwise, open the fallback web URL
+        window.open(webUrl, '_blank');
+    }, timeoutDuration);
 }
 
 let factPilgrim;
