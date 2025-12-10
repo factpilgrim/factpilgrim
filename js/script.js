@@ -36,7 +36,7 @@ class FactPilgrim {
     setupEventListeners() {
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         if (loadMoreBtn) loadMoreBtn.addEventListener('click', () => this.loadMoreArticles());
-        
+
         const collapseBtn = document.getElementById('collapseBtn');
         if (collapseBtn) collapseBtn.addEventListener('click', () => this.collapseArticles());
 
@@ -65,7 +65,7 @@ class FactPilgrim {
             this.filteredArticles = [...this.articles];
         } else {
             const searchTerm = query.toLowerCase();
-            this.filteredArticles = this.articles.filter(article => 
+            this.filteredArticles = this.articles.filter(article =>
                 article.title.toLowerCase().includes(searchTerm) ||
                 article.summary.toLowerCase().includes(searchTerm) ||
                 article.category.toLowerCase().includes(searchTerm)
@@ -102,13 +102,14 @@ class FactPilgrim {
 
             const startIndex = 1;
             const endIndex = Math.min(startIndex + (this.currentPage * this.articlesPerPage), this.filteredArticles.length);
-            
+
             const articlesHTML = [];
             for (let i = startIndex; i < endIndex; i++) {
                 if (this.filteredArticles[i]) {
                     articlesHTML.push(this.createArticleCard(this.filteredArticles[i]));
                 }
             }
+
             articlesGrid.innerHTML = articlesHTML.join('');
 
             const hasMoreArticles = endIndex < this.filteredArticles.length;
@@ -122,6 +123,7 @@ class FactPilgrim {
     createHeroCard(article) {
         const baseUrl = this.getBaseUrl();
         const articleUrl = `${baseUrl}articles/${article.filename}`;
+        
         return `
             <article class="hero-card" data-filename="${article.filename}">
                 <div class="hero-image-container">
@@ -148,6 +150,7 @@ class FactPilgrim {
     createArticleCard(article) {
         const baseUrl = this.getBaseUrl();
         const articleUrl = `${baseUrl}articles/${article.filename}`;
+
         return `
             <article class="article-card" data-filename="${article.filename}">
                 <div class="article-image-container">
@@ -185,30 +188,89 @@ class FactPilgrim {
     updateTicker() {
         const tickerTrack = document.getElementById('tickerTrack');
         if (!tickerTrack) return;
-        let headlines = this.articles.length > 0 ? this.articles.slice(0, 10).map(a => a.title) : ['Stay tuned for the latest news'];
-        const tickerText = headlines.join(' • ');
+
+        // Instruction 3: Scroll headlines for articles 10 to 20
+        // Slicing from index 9 (10th item) to 19 (20th item)
+        let headlines = [];
+        if (this.articles.length > 9) {
+            // Get articles 10-20 (or fewer if not enough exist)
+            const targetArticles = this.articles.slice(9, 20);
+            
+            // Instruction 4: Clicking headline opens article
+            // Mapping to HTML anchor tags
+            headlines = targetArticles.map(a => 
+                `<a href="./articles/${a.filename}" target="_blank" style="color: inherit; text-decoration: none; margin: 0 15px;">${a.title}</a>`
+            );
+        }
+
+        // Fallback if no articles in that range
+        if (headlines.length === 0) {
+            headlines = ['<span style="margin: 0 15px;">Stay tuned for more updates</span>'];
+        }
+
+        const tickerHTML = headlines.join(' • ');
+
         tickerTrack.innerHTML = '';
-        const span1 = document.createElement('span'); span1.textContent = tickerText + ' • ';
-        const span2 = document.createElement('span'); span2.textContent = tickerText + ' • ';
-        tickerTrack.appendChild(span1); tickerTrack.appendChild(span2);
+        
+        const span1 = document.createElement('span');
+        span1.innerHTML = tickerHTML + ' • '; // Use innerHTML to render <a> tags
+        
+        const span2 = document.createElement('span');
+        span2.innerHTML = tickerHTML + ' • ';
+
+        tickerTrack.appendChild(span1);
+        tickerTrack.appendChild(span2);
+
+        // Adjust duration based on content width
         const width = span1.offsetWidth;
-        const duration = width / 50; 
+        const duration = width / 50; // Adjust speed as necessary
         tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
     }
 
     formatCategory(category) { return category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
+
     formatDate(dateString) { return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); }
-    static shareOnTwitter(title, url) { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400'); }
-    static shareOnFacebook(url) { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400'); }
-    static shareOnWhatsApp(title, url) { window.open(`https://wa.me/?text=${encodeURIComponent(title + ' - ' + url)}`, '_blank', 'width=600,height=400'); }
-    static async copyArticleLink(url) { try { await navigator.clipboard.writeText(url); FactPilgrim.showToast('Link copied!'); } catch (err) { const ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); FactPilgrim.showToast('Link copied!'); } }
+
+    static shareOnTwitter(title, url) {
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
+    }
+
+    static shareOnFacebook(url) {
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
+    }
+
+    static shareOnWhatsApp(title, url) {
+        window.open(`https://wa.me/?text=${encodeURIComponent(title + ' - ' + url)}`, '_blank', 'width=600,height=400');
+    }
+
+    static async copyArticleLink(url) {
+        try {
+            await navigator.clipboard.writeText(url);
+            FactPilgrim.showToast('Link copied!');
+        } catch (err) {
+            const ta = document.createElement('textarea');
+            ta.value = url;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            FactPilgrim.showToast('Link copied!');
+        }
+    }
+
     static showToast(message) {
-        const existing = document.querySelector('.toast'); if(existing) existing.remove();
-        const toast = document.createElement('div'); toast.className = 'toast'; toast.textContent = message;
+        const existing = document.querySelector('.toast'); if (existing) existing.remove();
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
         document.body.appendChild(toast);
         setTimeout(() => toast.classList.add('show'), 100);
-        setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
     }
 }
+
 let factPilgrim;
 document.addEventListener('DOMContentLoaded', () => { factPilgrim = new FactPilgrim(); });
