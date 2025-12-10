@@ -1,7 +1,6 @@
 /* =========================================
    1. IMPORTS & VARIABLES
    ========================================= */
-/* Importing Google Fonts for English (Roboto) + Hindi (Devanagari) + Odia (Oriya) [Instruction 7] */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Oriya:wght@400;700&family=Roboto:wght@300;400;500;700;900&display=swap');
 
 :root {
@@ -27,7 +26,6 @@
 }
 
 body {
-    /* Updated font stack to support Hindi and Odia [Instruction 7] */
     font-family: 'Roboto', 'Noto Sans Devanagari', 'Noto Sans Oriya', sans-serif;
     background-color: var(--light-bg);
     color: var(--text-dark);
@@ -57,7 +55,7 @@ img {
 }
 
 /* =========================================
-   3. TICKER SECTION (BREAKING NEWS)
+   3. TICKER SECTION (Black/Red/White)
    ========================================= */
 .breaking-news {
     background-color: var(--text-dark);
@@ -75,7 +73,6 @@ img {
     padding: 0; 
 }
 
-/* Red Label - Updated text handled in HTML/JS, style remains same [Instruction 5] */
 .ticker-label {
     background-color: var(--primary-red);
     color: var(--white);
@@ -119,7 +116,6 @@ img {
     padding-right: 50px; 
 }
 
-/* Ensure ticker links are styled clearly [Instruction 4] */
 .ticker-track a {
     color: var(--white);
     font-weight: 500;
@@ -127,7 +123,7 @@ img {
 }
 
 .ticker-track a:hover {
-    color: #fca5a5; /* Light red on hover */
+    color: #fca5a5; 
     text-decoration: underline;
 }
 
@@ -160,7 +156,7 @@ img {
 }
 
 .logo-image {
-    height: 40px;
+    height: 55px; 
     display: flex;
     align-items: center;
 }
@@ -171,10 +167,10 @@ img {
 }
 
 .logo-fallback {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 900;
     color: var(--primary-red);
-    display: none; /* Shown via JS onerror */
+    display: none; 
     text-transform: uppercase;
     letter-spacing: -1px;
 }
@@ -188,7 +184,7 @@ img {
 
 .search-input {
     width: 100%;
-    padding: 10px 15px;
+    padding: 12px 15px;
     border: 1px solid var(--border-color);
     border-radius: 4px 0 0 4px;
     outline: none;
@@ -201,7 +197,7 @@ img {
 }
 
 .search-btn {
-    padding: 0 20px;
+    padding: 0 25px;
     background-color: var(--primary-red);
     border: none;
     color: var(--white);
@@ -215,23 +211,25 @@ img {
     background-color: var(--dark-red);
 }
 
+[span_1](start_span)/* FIXED: Home Button Style to match PDF Red/Red Border[span_1](end_span) */
 .main-nav .home-btn {
     background: transparent;
-    border: 1px solid var(--text-dark);
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-weight: 600;
+    border: 2px solid var(--primary-red); /* Was black, now Red */
+    color: var(--primary-red); /* Was black, now Red */
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     transition: all 0.2s;
-    color: var(--text-dark);
-    font-family: inherit; /* Maintain font support */
+    font-size: 16px;
+    font-family: inherit;
 }
 
 .main-nav .home-btn:hover {
-    background-color: var(--text-dark);
+    background-color: var(--primary-red);
     color: var(--white);
 }
 
@@ -257,7 +255,7 @@ img {
 .hero-image-container {
     width: 100%;
     height: 100%;
-    min-height: 350px;
+    min-height: 380px;
     position: relative;
     background-color: #e5e7eb;
 }
@@ -274,7 +272,7 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    display: none; /* Flex via JS */
+    display: none; 
     align-items: center;
     justify-content: center;
     background: #e5e7eb;
@@ -292,22 +290,28 @@ img {
     justify-content: center;
 }
 
+/* Category Background - Tiny Square */
 .hero-category {
+    display: inline-block;
+    background-color: #fef2f2; 
     color: var(--primary-red);
+    padding: 4px 10px;
+    border-radius: 4px;
     font-weight: 700;
     text-transform: uppercase;
     font-size: 13px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     letter-spacing: 1px;
 }
 
 .hero-title {
-    font-size: 32px;
+    font-size: 34px;
     font-weight: 800;
     line-height: 1.2;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
     cursor: pointer;
     transition: color 0.2s;
+    color: var(--text-dark);
 }
 
 .hero-title:hover {
@@ -317,7 +321,7 @@ img {
 .hero-summary {
     color: var(--text-gray);
     margin-bottom: 20px;
-    font-size: 16px;
+    font-size: 17px;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
@@ -339,10 +343,6 @@ img {
     font-size: 15px;
 }
 
-.hero-read-more:hover {
-    text-decoration: underline;
-}
-
 /* =========================================
    6. ARTICLE GRID
    ========================================= */
@@ -353,7 +353,7 @@ img {
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
+    gap: 30px;
 }
 
 .article-card {
@@ -372,7 +372,7 @@ img {
 }
 
 .article-image-container {
-    height: 200px;
+    height: 220px;
     position: relative;
     background-color: #e5e7eb;
 }
@@ -389,7 +389,7 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    display: none; /* Flex via JS */
+    display: none; 
     align-items: center;
     justify-content: center;
     background: #e5e7eb;
@@ -406,23 +406,30 @@ img {
     flex-direction: column;
 }
 
+/* Category Background - Tiny Square */
 .article-category {
+    display: inline-block;
+    background-color: #fef2f2;
     color: var(--primary-red);
+    padding: 4px 8px;
+    border-radius: 4px;
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .article-title {
-    font-size: 18px;
+    font-size: 20px; 
     font-weight: 700;
-    line-height: 1.4;
-    margin-bottom: 10px;
+    line-height: 1.3;
+    margin-bottom: 12px;
     color: var(--text-dark);
     cursor: pointer;
+    
+    /* Allow up to 4 lines */
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 4; 
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -433,7 +440,7 @@ img {
 
 .article-summary {
     color: var(--text-gray);
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.5;
     margin-bottom: 15px;
     flex-grow: 1;
@@ -457,34 +464,28 @@ img {
     margin-bottom: 15px;
 }
 
-.article-read-more:hover {
-    text-decoration: underline;
-}
-
 /* =========================================
-   7. SOCIAL & FOLLOW BUTTONS
+   7. SOCIAL BUTTONS
    ========================================= */
-/* Shared Styles for both Share buttons and Follow buttons [Instruction 1] */
 .social-sharing {
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-/* Base button style (Red theme default) */
 .social-btn {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     transition: transform 0.2s, background-color 0.2s;
     color: white;
-    background-color: var(--primary-red); /* Default red base */
+    background-color: var(--primary-red); 
 }
 
 .social-btn:hover {
@@ -492,12 +493,13 @@ img {
     opacity: 0.9;
 }
 
-/* Specific Colors for Share/Follow functionality [Instruction 1 & 9] */
+/* Specific Colors */
 .social-btn.twitter { background-color: #000000; }
 .social-btn.facebook { background-color: #1877f2; }
 .social-btn.whatsapp { background-color: #25D366; }
-.social-btn.instagram { background-color: #d62976; } /* Added for follow */
+.social-btn.instagram { background-color: #d62976; }
 .social-btn.copy { background-color: #6b7280; }
+.social-btn.threads { background-color: #000000; } /* Added Threads Black */
 
 .article-social {
     display: flex;
@@ -507,7 +509,6 @@ img {
     border-top: 1px solid #f3f4f6;
 }
 
-/* Follow Us Container (Index Page) */
 .follow-us-container {
     text-align: center;
     padding: 30px;
@@ -515,10 +516,12 @@ img {
     border-radius: 8px;
     box-shadow: var(--shadow-sm);
     border-top: 4px solid var(--primary-red);
+    margin-top: 40px; 
+    margin-bottom: 20px;
 }
 
 /* =========================================
-   8. FOOTER & UI CONTROLS
+   8. FOOTER & MISC
    ========================================= */
 .load-more-container {
     display: flex;
@@ -554,7 +557,6 @@ img {
     margin-top: auto;
 }
 
-/* Toast Notification */
 .toast {
     position: fixed;
     bottom: 20px;
@@ -581,127 +583,14 @@ img {
 }
 
 /* =========================================
-   9. ARTICLE DETAIL PAGE STYLES (From Source 12-21)
-   ========================================= */
-/* These classes are used specifically on the article.html pages */
-
-.detail-image {
-    width: 100%;
-    height: auto;
-    max-height: 500px;
-    object-fit: contain;
-    background: #f0f0f0;
-    margin-bottom: 25px;
-    border-radius: 8px;
-    display: block;
-}
-
-.article-content {
-    font-size: 21px; /* Readability */
-    line-height: 1.8;
-    color: #333;
-    font-family: 'Georgia', 'Noto Sans Devanagari', 'Noto Sans Oriya', serif; /* Serif for reading */
-}
-
-.article-content p {
-    margin-bottom: 1.5em;
-    margin-top: 0;
-}
-
-.article-content ul, .article-content ol {
-    padding-left: 30px;
-    margin-top: 0;
-    margin-bottom: 1.5em;
-}
-
-.article-content li {
-    margin-bottom: 0.5em;
-}
-
-/* Red Bar styling for headings [Source 15-16] */
-.article-content h2 {
-    font-size: 32px;
-    color: var(--dark-red);
-    margin-top: 40px;
-    margin-bottom: 20px;
-    border-left: 6px solid var(--primary-red);
-    padding-left: 20px;
-    line-height: 1.2;
-    font-weight: 800;
-    font-family: 'Roboto', 'Noto Sans Devanagari', 'Noto Sans Oriya', sans-serif;
-}
-
-.article-content h3 {
-    font-size: 26px;
-    color: var(--dark-red);
-    margin-top: 35px;
-    margin-bottom: 15px;
-    border-left: 6px solid var(--primary-red);
-    padding-left: 20px;
-    line-height: 1.2;
-    font-weight: 700;
-    font-family: 'Roboto', 'Noto Sans Devanagari', 'Noto Sans Oriya', sans-serif;
-}
-
-/* Table Styling [Source 17-20] */
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    margin-bottom: 30px;
-    padding-bottom: 5px;
-}
-
-table {
-    width: 100%;
-    min-width: 600px;
-    border-collapse: collapse;
-    font-size: 16px;
-    background: var(--white);
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 12px 15px;
-    text-align: left;
-    vertical-align: top;
-}
-
-th {
-    background-color: #fef2f2; /* Light red tint */
-    color: #991b1b;
-    font-weight: bold;
-}
-
-tr:nth-child(even) {
-    background-color: #fafafa;
-}
-
-.back-link {
-    display: inline-block;
-    color: var(--primary-red);
-    text-decoration: none;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: 2px solid var(--primary-red);
-    border-radius: 4px;
-    transition: all 0.2s;
-}
-
-.back-link:hover {
-    background-color: var(--primary-red);
-    color: var(--white);
-}
-
-/* =========================================
-   10. RESPONSIVE DESIGN [Instruction 8]
+   9. RESPONSIVE DESIGN
    ========================================= */
 @media (max-width: 1024px) {
     .hero-card {
         grid-template-columns: 1fr;
     }
-    
     .hero-image-container {
-        min-height: 250px;
+        min-height: 280px;
     }
 }
 
@@ -710,25 +599,21 @@ tr:nth-child(even) {
         flex-direction: column;
         align-items: stretch;
     }
-    
     .search-container {
         max-width: 100%;
         order: 3;
     }
-    
     .main-nav {
         align-self: flex-end;
         position: absolute;
-        top: 20px;
+        top: 22px; 
         right: 20px;
     }
-    
+    .logo-image {
+        height: 45px; 
+    }
     .grid-container {
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    }
-
-    .hero-title {
-        font-size: 24px;
     }
 }
 
@@ -736,13 +621,12 @@ tr:nth-child(even) {
     .grid-container {
         grid-template-columns: 1fr;
     }
-    
     .hero-content {
         padding: 20px;
     }
-    
     .ticker-label {
         font-size: 11px;
         padding: 0 10px;
     }
 }
+
