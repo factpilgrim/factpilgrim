@@ -140,6 +140,7 @@ class FactPilgrim {
                         <button class="social-btn twitter" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-x-twitter"></i></button>
                         <button class="social-btn facebook" data-url="${articleUrl}"><i class="fab fa-facebook-f"></i></button>
                         <button class="social-btn whatsapp" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-whatsapp"></i></button>
+                        <button class="social-btn threads" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-threads"></i></button>
                         <button class="social-btn copy" data-url="${articleUrl}"><i class="fas fa-link"></i></button>
                     </div>
                 </div>
@@ -167,6 +168,7 @@ class FactPilgrim {
                         <button class="social-btn twitter" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-x-twitter"></i></button>
                         <button class="social-btn facebook" data-url="${articleUrl}"><i class="fab fa-facebook-f"></i></button>
                         <button class="social-btn whatsapp" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-whatsapp"></i></button>
+                        <button class="social-btn threads" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-threads"></i></button>
                         <button class="social-btn copy" data-url="${articleUrl}"><i class="fas fa-link"></i></button>
                     </div>
                 </div>
@@ -178,6 +180,7 @@ class FactPilgrim {
         document.querySelectorAll('.social-btn.twitter').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.shareOnTwitter(btn.dataset.title, btn.dataset.url); }));
         document.querySelectorAll('.social-btn.facebook').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.shareOnFacebook(btn.dataset.url); }));
         document.querySelectorAll('.social-btn.whatsapp').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.shareOnWhatsApp(btn.dataset.title, btn.dataset.url); }));
+        document.querySelectorAll('.social-btn.threads').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.shareOnThreads(btn.dataset.title, btn.dataset.url); }));
         document.querySelectorAll('.social-btn.copy').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.copyArticleLink(btn.dataset.url); }));
     }
 
@@ -190,7 +193,6 @@ class FactPilgrim {
         if (!tickerTrack) return;
 
         let headlines = [];
-        // Show articles 10 to 20 (index 9 to 19)
         if (this.articles.length > 9) {
             const targetArticles = this.articles.slice(9, 20);
             headlines = targetArticles.map(a => 
@@ -238,6 +240,11 @@ class FactPilgrim {
         window.open(`https://wa.me/?text=${encodeURIComponent(title + ' - ' + url)}`, '_blank', 'width=600,height=400');
     }
 
+    static shareOnThreads(title, url) {
+        // Threads Web Intent for Sharing
+        window.open(`https://www.threads.net/intent/post?text=${encodeURIComponent(title + ' - ' + url)}`, '_blank', 'width=600,height=400');
+    }
+
     static async copyArticleLink(url) {
         try {
             await navigator.clipboard.writeText(url);
@@ -267,28 +274,21 @@ class FactPilgrim {
     }
 }
 
-// Global helper for the "Follow Us" buttons in HTML
-// INCREASED TIMEOUT to 2000ms to allow popup confirmation
-// ADDED VISIBILITY CHECK to stop browser opening if App took focus
+// Global Helper to support Follow Us logic (same as index.html)
 function openSocialApp(webUrl, appUrl) {
-    const timeoutDuration = 2000; 
+    const timeoutDuration = 2500; 
     let startTime = Date.now();
     
     // Attempt to open the App
     window.location.href = appUrl;
 
     setTimeout(() => {
-        // If the document is hidden, the user likely switched to the app successfully
         if (document.hidden || document.webkitHidden) {
             return; 
         }
-
-        // If time elapsed is significantly larger than timeout, it means the browser was paused (app opened dialog)
-        if (Date.now() - startTime > timeoutDuration + 500) {
+        if (Date.now() - startTime > timeoutDuration + 1000) {
             return;
         }
-
-        // Otherwise, open the fallback web URL
         window.open(webUrl, '_blank');
     }, timeoutDuration);
 }
