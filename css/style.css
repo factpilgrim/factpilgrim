@@ -1,5 +1,24 @@
 /* =========================================
-   1. RESET & BASE STYLES
+   1. IMPORTS & VARIABLES
+   ========================================= */
+/* Importing Google Fonts for English (Roboto) + Hindi (Devanagari) + Odia (Oriya) [Instruction 7] */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Oriya:wght@400;700&family=Roboto:wght@300;400;500;700;900&display=swap');
+
+:root {
+    --primary-red: #dc2626;
+    --dark-red: #b91c1c;
+    --light-bg: #f9fafb;
+    --white: #ffffff;
+    --text-dark: #111827;
+    --text-gray: #4b5563;
+    --border-color: #e5e7eb;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================
+   2. GLOBAL RESET & TYPOGRAPHY
    ========================================= */
 * {
     margin: 0;
@@ -8,17 +27,27 @@
 }
 
 body {
-    /* MODERN FONT STACK */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    
-    /* READABILITY: Larger base size */
-    font-size: 18px; 
+    /* Updated font stack to support Hindi and Odia [Instruction 7] */
+    font-family: 'Roboto', 'Noto Sans Devanagari', 'Noto Sans Oriya', sans-serif;
+    background-color: var(--light-bg);
+    color: var(--text-dark);
     line-height: 1.6;
-    color: #333;
-    
-    /* Light Gray Background for depth */
-    background-color: #f3f4f6; 
-    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
 }
 
 .container {
@@ -28,37 +57,43 @@ body {
 }
 
 /* =========================================
-   2. BREAKING NEWS TICKER
+   3. TICKER SECTION (BREAKING NEWS)
    ========================================= */
 .breaking-news {
-    background: #b91c1c; /* Deep Red */
-    color: white;
-    padding: 8px 0;
-    height: 44px;
-    width: 100%;
+    background-color: var(--text-dark);
+    color: var(--white);
+    font-size: 14px;
+    position: relative;
     overflow: hidden;
+    z-index: 100;
 }
 
 .breaking-news .container {
     display: flex;
     align-items: center;
-    height: 100%;
+    height: 40px;
+    padding: 0; 
 }
 
+/* Red Label - Updated text handled in HTML/JS, style remains same [Instruction 5] */
 .ticker-label {
-    background: #7f1d1d; /* Darkest Red */
-    padding: 4px 16px;
-    font-weight: 800;
-    font-size: 13px;
+    background-color: var(--primary-red);
+    color: var(--white);
+    font-weight: 700;
     text-transform: uppercase;
-    z-index: 2;
-    white-space: nowrap;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    letter-spacing: 0.5px;
     flex-shrink: 0;
-    margin-right: 15px;
+    z-index: 2;
 }
 
 .ticker-mask {
-    flex: 1;
+    flex-grow: 1;
     overflow: hidden;
     position: relative;
     height: 100%;
@@ -71,470 +106,643 @@ body {
 .ticker-track {
     display: flex;
     white-space: nowrap;
-    animation: tickerScroll var(--ticker-duration, 30s) linear infinite;
-    font-size: 15px;
+    animation: ticker var(--ticker-duration, 30s) linear infinite;
+    padding-left: 20px;
+}
+
+.ticker-track:hover {
+    animation-play-state: paused;
 }
 
 .ticker-track span {
-    padding-right: 50px;
     display: inline-block;
+    padding-right: 50px; 
 }
 
-@keyframes tickerScroll {
+/* Ensure ticker links are styled clearly [Instruction 4] */
+.ticker-track a {
+    color: var(--white);
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.ticker-track a:hover {
+    color: #fca5a5; /* Light red on hover */
+    text-decoration: underline;
+}
+
+@keyframes ticker {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
 }
 
 /* =========================================
-   3. HEADER
+   4. HEADER & NAVIGATION
    ========================================= */
 .header {
-    background: #ffffff;
-    border-bottom: 1px solid #d1d5db;
-    padding: 15px 0;
+    background-color: var(--white);
+    box-shadow: var(--shadow-sm);
     position: sticky;
     top: 0;
-    z-index: 100;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    z-index: 99;
+    padding: 15px 0;
 }
 
 .header .container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     gap: 20px;
 }
 
-.logo { display: flex; align-items: center; }
-.logo-image { display: flex; align-items: center; gap: 15px; }
-.logo-image img { height: 65px; width: auto; display: block; }
-.logo-fallback { font-size: 28px; font-weight: 800; color: #dc2626; display: none; }
-.logo-image img[style*="display: none"] + .logo-fallback { display: block; }
+.logo {
+    flex-shrink: 0;
+}
+
+.logo-image {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.logo-image img {
+    height: 100%;
+    width: auto;
+}
+
+.logo-fallback {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--primary-red);
+    display: none; /* Shown via JS onerror */
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
 
 .search-container {
-    flex: 1;
+    flex-grow: 1;
     max-width: 500px;
     position: relative;
     display: flex;
-    align-items: center;
 }
 
 .search-input {
     width: 100%;
-    padding: 12px 45px 12px 15px;
-    border: 2px solid #e5e7eb;
-    font-size: 16px;
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px 0 0 4px;
     outline: none;
-    border-radius: 6px;
-    background: #f9fafb;
+    font-family: inherit;
+    font-size: 15px;
 }
-.search-input:focus { border-color: #dc2626; background: #fff; }
+
+.search-input:focus {
+    border-color: var(--primary-red);
+}
 
 .search-btn {
-    position: absolute;
-    right: 15px;
-    background: none;
+    padding: 0 20px;
+    background-color: var(--primary-red);
     border: none;
-    font-size: 18px;
+    color: var(--white);
+    border-radius: 0 4px 4px 0;
     cursor: pointer;
-    color: #6b7280;
+    font-size: 16px;
+    transition: background-color 0.2s;
 }
 
-.main-nav { display: flex; align-items: center; }
-.home-btn {
-    padding: 10px 20px;
-    background: #dc2626;
-    color: white;
-    text-decoration: none;
-    font-weight: 700;
-    border: none;
+.search-btn:hover {
+    background-color: var(--dark-red);
+}
+
+.main-nav .home-btn {
+    background: transparent;
+    border: 1px solid var(--text-dark);
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
-    border-radius: 6px;
-    font-size: 16px;
+    transition: all 0.2s;
+    color: var(--text-dark);
+    font-family: inherit; /* Maintain font support */
 }
-.home-btn:hover { background: #b91c1c; }
+
+.main-nav .home-btn:hover {
+    background-color: var(--text-dark);
+    color: var(--white);
+}
 
 /* =========================================
-   4. HERO SECTION (16:9 Perfect Fit)
+   5. HERO SECTION
    ========================================= */
-.hero-section { margin: 40px 0; }
-
-.hero-card {
-    display: flex;
-    /* Height adapts to content/image ratio */
-    height: auto; 
-    border: 1px solid #d1d5db;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    overflow: hidden;
-    background: #fff;
-    align-items: stretch; 
+.hero-section {
+    margin-top: 30px;
+    margin-bottom: 40px;
 }
 
-.hero-card:hover { 
-    transform: translateY(-2px); 
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+.hero-card {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+    background: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease;
 }
 
 .hero-image-container {
-    /* 70% Width */
-    flex: 0 0 70%; 
+    width: 100%;
+    height: 100%;
+    min-height: 350px;
     position: relative;
-    background: #e5e7eb;
-    border-right: 1px solid #e5e7eb;
-    /* Force 16:9 Ratio */
-    aspect-ratio: 16/9;
+    background-color: #e5e7eb;
 }
 
 .hero-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
+}
+
+.hero-image-fallback {
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* Flex via JS */
+    align-items: center;
+    justify-content: center;
+    background: #e5e7eb;
+    color: #6b7280;
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+    padding: 20px;
 }
 
 .hero-content {
-    /* 30% Width */
-    flex: 0 0 30%; 
-    padding: 25px;
+    padding: 40px 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: #fff;
-    color: #111;
-    z-index: 2;
-    min-height: 100%;
 }
 
 .hero-category {
-    display: inline-block;
-    background: #fee2e2; 
-    color: #991b1b;
-    padding: 5px 10px;
-    font-size: 11px;
+    color: var(--primary-red);
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 800;
-    border-radius: 4px;
-    align-self: flex-start;
-    margin-bottom: 12px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
 }
 
 .hero-title {
-    font-size: 1.6em;
-    margin-bottom: 12px;
-    line-height: 1.25;
-    cursor: pointer;
+    font-size: 32px;
     font-weight: 800;
-    color: #111827; 
-    text-shadow: none;
+    line-height: 1.2;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: color 0.2s;
 }
-.hero-title:hover { color: #dc2626; }
+
+.hero-title:hover {
+    color: var(--primary-red);
+}
 
 .hero-summary {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 15px;
-    color: #4b5563; 
+    color: var(--text-gray);
+    margin-bottom: 20px;
+    font-size: 16px;
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 .hero-date {
-    font-size: 0.85em;
-    color: #6b7280;
-    margin-bottom: 15px;
+    font-size: 13px;
+    color: #9ca3af;
+    margin-bottom: 20px;
     font-weight: 500;
 }
 
 .hero-read-more {
     display: inline-block;
-    background: #dc2626;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
+    color: var(--primary-red);
     font-weight: 700;
-    border-radius: 6px;
-    align-self: flex-start;
-    font-size: 14px;
+    margin-bottom: 25px;
+    font-size: 15px;
 }
-.hero-read-more:hover { background: #b91c1c; }
 
-.social-sharing { display: flex; gap: 8px; border-top: 1px solid #f3f4f6; padding-top: 15px; margin-top: auto; }
-.social-btn {
-    width: 32px; height: 32px; border-radius: 50%; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: transform 0.2s;
+.hero-read-more:hover {
+    text-decoration: underline;
 }
-.social-btn:hover { transform: scale(1.1); background-color: #dc2626 !important; }
-.social-btn.twitter { background: #000; }
-.social-btn.facebook { background: #1877f2; }
-.social-btn.whatsapp { background: #25d366; }
-.social-btn.copy { background: #6b7280; }
 
 /* =========================================
-   5. ARTICLES GRID
+   6. ARTICLE GRID
    ========================================= */
-.articles-grid { margin: 50px 0; }
+.articles-grid {
+    margin-bottom: 60px;
+}
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 30px;
-    margin-bottom: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
 }
 
 .article-card {
-    background: #ffffff;
+    background: var(--white);
+    border-radius: 8px;
     overflow: hidden;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
 }
-.article-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-color: #d1d5db; }
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
 
 .article-image-container {
-    width: 100%;
-    aspect-ratio: 16/9;
+    height: 200px;
     position: relative;
-    background: #f3f4f6;
-    overflow: hidden;
-    /* Red Separator Line */
-    border-bottom: 4px solid #dc2626; 
+    background-color: #e5e7eb;
 }
 
 .article-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    position: absolute;
-    top: 0; left: 0;
-    transition: transform 0.5s;
 }
-.article-card:hover .article-image { transform: scale(1.05); }
 
 .article-image-fallback {
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: linear-gradient(135deg, #ef4444, #b91c1c);
-    color: white; display: flex; align-items: center; justify-content: center;
-    padding: 20px; text-align: center;
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* Flex via JS */
+    align-items: center;
+    justify-content: center;
+    background: #e5e7eb;
+    color: #6b7280;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
 }
-.article-image[style*="display: none"] + .article-image-fallback { display: flex; }
 
-.article-content { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+.article-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
 
 .article-category {
-    display: inline-block;
-    background: #fee2e2;
-    color: #991b1b;
-    padding: 4px 12px;
-    font-size: 11px;
+    color: var(--primary-red);
+    font-size: 12px;
+    font-weight: 700;
     text-transform: uppercase;
-    font-weight: 800;
-    border-radius: 4px;
-    align-self: flex-start;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .article-title {
-    font-size: 1.5em;
-    margin-bottom: 12px;
-    color: #111827;
-    cursor: pointer;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 1.3; 
-    display: inline-block;
-    width: 100%;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+    cursor: pointer;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
-.article-title:hover { color: #dc2626; text-decoration: underline; }
+
+.article-title:hover {
+    color: var(--primary-red);
+}
 
 .article-summary {
-    color: #4b5563;
-    font-size: 1rem;
-    margin-bottom: auto; 
-    line-height: 1.6;
-    padding-bottom: 20px;
+    color: var(--text-gray);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
-.article-date { color: #9ca3af; font-size: 0.9em; margin-bottom: 15px; font-weight: 500;}
+.article-date {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 15px;
+}
 
 .article-read-more {
+    color: var(--primary-red);
+    font-weight: 600;
+    font-size: 14px;
     display: inline-block;
-    color: #dc2626;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 15px;
     margin-bottom: 15px;
 }
-.article-read-more:hover { text-decoration: underline; color: #b91c1c; }
 
-.article-social { display: flex; gap: 8px; }
-.article-social .social-btn { width: 34px; height: 34px; font-size: 14px; background: #9ca3af; }
-.article-social .social-btn:hover { background: #dc2626; }
-
-/* Load More */
-.load-more-container { text-align: center; margin: 50px 0; display: flex; justify-content: center; gap: 15px; }
-.load-more-btn, .collapse-btn {
-    color: white; border: none; padding: 14px 35px; font-size: 17px; cursor: pointer; border-radius: 6px; transition: background 0.3s; font-weight: 700;
+.article-read-more:hover {
+    text-decoration: underline;
 }
-.load-more-btn { background: #dc2626; }
-.load-more-btn:hover { background: #b91c1c; }
-.collapse-btn { background: #6b7280; }
-.load-more-btn:disabled { background: #ccc; }
-
-/* Footer */
-.footer {
-    background: #fff;
-    text-align: center;
-    padding: 50px 0;
-    margin-top: 80px;
-    border-top: 1px solid #e5e7eb;
-}
-.footer p { color: #6b7280; font-size: 16px; }
-.toast {
-    position: fixed; top: 20px; right: 20px; background: #059669; color: white; padding: 15px 25px; font-weight: bold;
-    border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); z-index: 2000;
-    transform: translateX(150%); transition: transform 0.3s ease;
-}
-.toast.show { transform: translateX(0); }
 
 /* =========================================
-   7. TYPOGRAPHY & ARTICLE DETAILS
+   7. SOCIAL & FOLLOW BUTTONS
    ========================================= */
-.article-content { 
-    font-size: 21px; 
-    line-height: 1.6; /* Tight spacing */
-    color: #333; 
+/* Shared Styles for both Share buttons and Follow buttons [Instruction 1] */
+.social-sharing {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
-.article-content p { margin-bottom: 1.2em; margin-top: 0; }
-
-/* Red Sidebar Headers - Height Fixed */
-.article-content h2, 
-.article-content h3 {
-    color: #b91c1c;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    border-left: 6px solid #dc2626;
-    padding-left: 18px;
-    line-height: 1.1; 
-    display: inline-block;
-    width: 100%;
+/* Base button style (Red theme default) */
+.social-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s, background-color 0.2s;
+    color: white;
+    background-color: var(--primary-red); /* Default red base */
 }
 
-.article-content h2 { font-size: 32px; font-weight: 800; }
-.article-content h3 { font-size: 26px; font-weight: 700; }
-
-.article-content ul, .article-content ol { 
-    padding-left: 30px; 
-    margin-top: 0;
-    margin-bottom: 1.2em; 
+.social-btn:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
 }
-.article-content li { margin-bottom: 0.3em; }
 
-/* FIX: Table Full Width */
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto; 
-    -webkit-overflow-scrolling: touch;
-    margin-bottom: 30px;
-    padding-bottom: 5px;
-    border: 1px solid #e5e7eb;
+/* Specific Colors for Share/Follow functionality [Instruction 1 & 9] */
+.social-btn.twitter { background-color: #000000; }
+.social-btn.facebook { background-color: #1877f2; }
+.social-btn.whatsapp { background-color: #25D366; }
+.social-btn.instagram { background-color: #d62976; } /* Added for follow */
+.social-btn.copy { background-color: #6b7280; }
+
+.article-social {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #f3f4f6;
+}
+
+/* Follow Us Container (Index Page) */
+.follow-us-container {
+    text-align: center;
+    padding: 30px;
+    background: var(--white);
     border-radius: 8px;
-    box-sizing: border-box;
+    box-shadow: var(--shadow-sm);
+    border-top: 4px solid var(--primary-red);
+}
+
+/* =========================================
+   8. FOOTER & UI CONTROLS
+   ========================================= */
+.load-more-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.load-more-btn, .collapse-btn {
+    padding: 12px 30px;
+    background-color: var(--white);
+    border: 2px solid var(--primary-red);
+    color: var(--primary-red);
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.load-more-btn:hover, .collapse-btn:hover {
+    background-color: var(--primary-red);
+    color: var(--white);
+}
+
+.footer {
+    background-color: #1f2937;
+    color: #9ca3af;
+    padding: 30px 0;
+    text-align: center;
+    font-size: 14px;
+    margin-top: auto;
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background-color: #333;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    font-size: 14px;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.no-articles {
+    text-align: center;
+    padding: 50px;
+    color: var(--text-gray);
+}
+
+/* =========================================
+   9. ARTICLE DETAIL PAGE STYLES (From Source 12-21)
+   ========================================= */
+/* These classes are used specifically on the article.html pages */
+
+.detail-image {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
+    background: #f0f0f0;
+    margin-bottom: 25px;
+    border-radius: 8px;
     display: block;
 }
 
+.article-content {
+    font-size: 21px; /* Readability */
+    line-height: 1.8;
+    color: #333;
+    font-family: 'Georgia', 'Noto Sans Devanagari', 'Noto Sans Oriya', serif; /* Serif for reading */
+}
+
+.article-content p {
+    margin-bottom: 1.5em;
+    margin-top: 0;
+}
+
+.article-content ul, .article-content ol {
+    padding-left: 30px;
+    margin-top: 0;
+    margin-bottom: 1.5em;
+}
+
+.article-content li {
+    margin-bottom: 0.5em;
+}
+
+/* Red Bar styling for headings [Source 15-16] */
+.article-content h2 {
+    font-size: 32px;
+    color: var(--dark-red);
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-left: 6px solid var(--primary-red);
+    padding-left: 20px;
+    line-height: 1.2;
+    font-weight: 800;
+    font-family: 'Roboto', 'Noto Sans Devanagari', 'Noto Sans Oriya', sans-serif;
+}
+
+.article-content h3 {
+    font-size: 26px;
+    color: var(--dark-red);
+    margin-top: 35px;
+    margin-bottom: 15px;
+    border-left: 6px solid var(--primary-red);
+    padding-left: 20px;
+    line-height: 1.2;
+    font-weight: 700;
+    font-family: 'Roboto', 'Noto Sans Devanagari', 'Noto Sans Oriya', sans-serif;
+}
+
+/* Table Styling [Source 17-20] */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 30px;
+    padding-bottom: 5px;
+}
+
 table {
-    width: 100%; 
+    width: 100%;
     min-width: 600px;
     border-collapse: collapse;
-    font-size: 17px; 
-    background: #fff;
-    table-layout: auto; 
+    font-size: 16px;
+    background: var(--white);
 }
 
 th, td {
-    border: 1px solid #e5e7eb;
-    padding: 15px;
+    border: 1px solid #ddd;
+    padding: 12px 15px;
     text-align: left;
     vertical-align: top;
-    white-space: normal;
 }
 
 th {
-    background-color: #fef2f2; 
+    background-color: #fef2f2; /* Light red tint */
     color: #991b1b;
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size: 14px;
-    letter-spacing: 0.5px;
+    font-weight: bold;
 }
 
-tr:nth-child(even) { background-color: #f9fafb; }
+tr:nth-child(even) {
+    background-color: #fafafa;
+}
 
-/* --- FORCE TITLE COLOR CONSISTENCY --- */
-.article-content-header h1,
-h1 {
-    color: #111827 !important; /* Dark Charcoal */
+.back-link {
+    display: inline-block;
+    color: var(--primary-red);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: 2px solid var(--primary-red);
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.back-link:hover {
+    background-color: var(--primary-red);
+    color: var(--white);
 }
 
 /* =========================================
-   8. RESPONSIVE BREAKPOINTS
+   10. RESPONSIVE DESIGN [Instruction 8]
    ========================================= */
-
-/* Tablet & Mobile (Stacking at 1100px) */
-@media (max-width: 1100px) {
-    .container { padding: 0 20px; }
-    
-    .header .container { flex-direction: column; align-items: stretch; gap: 15px; }
-    .logo { justify-content: center; }
-    .logo-image img { height: 60px; }
-    .main-nav { justify-content: center; }
-    .search-container { order: 3; margin-top: 10px; }
-    .home-btn { width: 100%; justify-content: center; }
-    
-    /* STACKED HERO CARD */
-    .hero-card { 
-        flex-direction: column; 
-        height: auto; 
+@media (max-width: 1024px) {
+    .hero-card {
+        grid-template-columns: 1fr;
     }
+    
     .hero-image-container {
-        flex: none; 
-        width: 100%; 
-        aspect-ratio: 16/9; /* No Cropping */
-        height: auto;
-        border-right: none; 
-        border-bottom: 1px solid #e5e7eb;
+        min-height: 250px;
     }
-    .hero-content {
-        flex: none; 
-        width: 100%; 
-        padding: 30px;
-    }
-    .hero-title { font-size: 2em; }
-    .hero-summary { display: block; -webkit-line-clamp: unset; } 
-    .hero-read-more { width: 100%; text-align: center; }
+}
 
-    /* Single Column Grid on Phones */
-    .grid-container { 
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 25px; 
+@media (max-width: 768px) {
+    .header .container {
+        flex-direction: column;
+        align-items: stretch;
     }
     
-    .table-wrapper::after {
-        content: 'Scroll →';
-        position: absolute; right: 10px; top: 10px;
-        font-size: 10px; color: #999;
-        display: none; 
+    .search-container {
+        max-width: 100%;
+        order: 3;
+    }
+    
+    .main-nav {
+        align-self: flex-end;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+    
+    .grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .hero-title {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-content {
+        padding: 20px;
+    }
+    
+    .ticker-label {
+        font-size: 11px;
+        padding: 0 10px;
     }
 }
