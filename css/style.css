@@ -8,15 +8,15 @@ body {
     background: #f9fafb;
     color: #333;
     line-height: 1.6;
+    overflow-x: hidden; /* Stops side-scroll glitches */
 }
 
-.container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+.container { max-width: 1400px; margin: 0 auto; padding: 0 20px; position: relative; }
 
-/* --- TICKER (Increased Size) --- */
+/* --- TICKER --- */
 .breaking-news {
     background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-    color: white;
-    padding: 10px 0;
+    color: white; padding: 10px 0;
 }
 .breaking-news .container { display: flex; align-items: center; gap: 15px; }
 .ticker-label {
@@ -26,28 +26,22 @@ body {
 .ticker-mask { flex: 1; overflow: hidden; position: relative; }
 .ticker-track { display: flex; animation: ticker-scroll 30s linear infinite; }
 .ticker-block { display: inline-flex; gap: 2em; padding-right: 2em; }
-/* Ticker Text Size Increased */
 .ticker-item { font-weight: 700; color: white; cursor: pointer; white-space: nowrap; font-size: 16px; } 
 @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
 /* --- HEADER --- */
 .header {
-    background: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    position: sticky; top: 0; z-index: 100;
+    background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    position: sticky; top: 0; z-index: 500;
     padding: 10px 0; border-bottom: 1px solid #f3f4f6;
 }
-.header .container {
-    display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap;
-}
+.header .container { display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
 
-/* Logo Fixes */
 .logo { display: flex; align-items: center; }
 .logo-image img { height: 55px; width: auto; object-fit: contain; }
-/* Hides the text fallback by default so it doesn't show under the logo */
-.logo-fallback { display: none; } 
+/* FORCE HIDE TEXT FALLBACK */
+.logo-fallback { display: none !important; } 
 
-/* Search */
 .search-container { display: flex; flex: 1; max-width: 500px; gap: 8px; }
 .search-input {
     flex: 1; padding: 8px 16px; border: 1px solid #e5e7eb;
@@ -57,8 +51,6 @@ body {
     padding: 8px 18px; background: #dc2626; color: white;
     border: none; border-radius: 50px; cursor: pointer;
 }
-
-/* Home Button */
 .home-btn {
     padding: 8px 20px; background: white; color: #dc2626;
     border: 1px solid #dc2626; border-radius: 50px;
@@ -66,14 +58,14 @@ body {
     text-decoration: none; display: flex; align-items: center; gap: 6px;
 }
 
-/* --- FOLLOW SECTION (Transparent & Clean) --- */
+/* --- FOLLOW SECTION (Transparent Fix) --- */
 .follow-us-section {
-    background: transparent; /* No white box */
-    padding: 10px 0;
-    margin: 10px 0 20px 0;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex; align-items: center; gap: 15px;
-    flex-wrap: wrap;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 10px 0; margin: 10px 0 20px 0;
+    border-bottom: 1px solid #e5e7eb !important;
+    display: flex; align-items: center; gap: 15px; flex-wrap: wrap;
 }
 .follow-us-section h3 {
     color: #6b7280; font-size: 12px; font-weight: 700;
@@ -91,90 +83,77 @@ body {
 .follow-btn.instagram { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
 .follow-btn.threads { background: #000; }
 
-
-/* --- HERO CARD (Big Card) --- */
-.hero-section { margin: 15px 0; }
+/* --- HERO CARD --- */
+.hero-section { margin: 15px 0 40px 0; }
 .hero-card {
     background: white; border-radius: 12px; overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-    border: 1px solid #e5e7eb;
-    display: grid; 
-    grid-template-columns: 1.4fr 0.6fr; /* Desktop Layout */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #e5e7eb;
+    display: grid; grid-template-columns: 1.4fr 0.6fr;
+    position: relative; z-index: 10;
 }
-
-.hero-image-container {
-    width: 100%; aspect-ratio: 16 / 9; /* Fixed Ratio */
-    overflow: hidden; background: #f3f4f6; position: relative;
-}
+.hero-image-container { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #f3f4f6; position: relative; }
 .hero-image { width: 100%; height: 100%; object-fit: cover; }
-
 .hero-content { padding: 25px; display: flex; flex-direction: column; justify-content: center; }
-
-/* Restored Red Pill Category */
 .hero-category {
     display: inline-block; background: #fef2f2; color: #dc2626;
     padding: 6px 12px; border-radius: 20px; font-size: 12px;
     font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
     margin-bottom: 12px; width: fit-content;
 }
-
-/* Large Hero Title (30px) */
 .hero-title { font-size: 30px; font-weight: 800; color: #111827; margin-bottom: 12px; line-height: 1.25; }
-
-/* Larger Hero Summary (18px) */
 .hero-summary { font-size: 18px; color: #4b5563; margin-bottom: 20px; line-height: 1.6; }
-
 .hero-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 15px; border-top: 1px solid #f3f4f6; }
 .hero-read-link { color: #dc2626; text-decoration: none; font-weight: 700; font-size: 14px; }
 
 
-/* --- GRID CARDS (Small Cards) --- */
-.articles-grid { margin: 20px 0; }
+/* --- GRID CARDS (FIXED OVERLAP & CLICK ISSUES) --- */
+.articles-grid { margin: 20px 0; position: relative; z-index: 5; }
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
 }
-.article-card {
-    background: white; border-radius: 12px; overflow: hidden;
-    border: 1px solid #e5e7eb; display: flex; flex-direction: column;
-}
-.article-image-container {
-    width: 100%; height: 200px; /* Fixed Height for alignment */
-    overflow: hidden; background: #f3f4f6;
-}
-.article-image { width: 100%; height: 100%; object-fit: cover; }
-.article-content { padding: 18px; flex: 1; display: flex; flex-direction: column; }
 
-/* Restored Red Pill Category */
+.article-card {
+    background: white; 
+    border-radius: 12px; 
+    /* FIX: Visible overflow lets popup float out */
+    overflow: visible; 
+    border: 1px solid #e5e7eb; 
+    display: flex; flex-direction: column;
+    /* FIX: Relative anchors the popup to THIS card */
+    position: relative; 
+    transition: transform 0.2s, box-shadow 0.2s, z-index 0s;
+}
+
+/* FIX: Boost Z-Index when menu is open so it sits on top of other cards */
+.article-card.menu-open {
+    z-index: 50; 
+    border-color: #dc2626;
+}
+
+.article-image-container { 
+    width: 100%; height: 200px; 
+    background: #f3f4f6; 
+    /* FIX: Rounded top corners because card overflow is visible */
+    border-radius: 12px 12px 0 0; 
+    overflow: hidden; 
+}
+
+.article-image { width: 100%; height: 100%; object-fit: cover; }
+.article-content { padding: 18px; flex: 1; display: flex; flex-direction: column; position: relative; }
 .article-category {
     display: inline-block; background: #fef2f2; color: #dc2626;
     padding: 4px 10px; border-radius: 16px; font-size: 11px;
     font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
     margin-bottom: 10px; width: fit-content;
 }
-
-/* Grid Title (20px) */
-.article-title { font-size: 20px; font-weight: 700; color: #111827; margin-bottom: 8px; line-height: 1.4; }
-
-/* Grid Summary (16px) */
+.article-title { font-size: 20px; font-weight: 700; color: #111827; margin-bottom: 8px; line-height: 1.4; cursor: pointer; }
 .article-summary { font-size: 16px; color: #6b7280; margin-bottom: 15px; line-height: 1.6; flex: 1; }
-
-/* Footer Alignment Fix */
-.article-footer-row { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding-top: 12px; 
-    border-top: 1px solid #f3f4f6; 
-    margin-top: auto; 
-}
+.article-footer-row { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid #f3f4f6; margin-top: auto; }
 .article-date { font-size: 12px; color: #9ca3af; font-weight: 500; }
-
-/* Fixed Actions Row (Side by Side) */
 .article-actions { display: flex; gap: 8px; align-items: center; }
 
-/* Ghost Buttons */
+/* Icons */
 .social-sharing { display: flex; gap: 8px; }
 .social-btn.ghost {
     width: 32px; height: 32px; border-radius: 50%; border: 1px solid #e5e7eb;
@@ -184,60 +163,73 @@ body {
 .icon-btn, .icon-link {
     width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
     border-radius: 50%; color: #6b7280; background: #f9fafb; border: 1px solid #f3f4f6; text-decoration: none;
+    z-index: 20;
 }
 
-/* --- TABLET FIX (Max Width 1024px) --- */
+/* --- SHARE OVERLAY (FIXED POSITIONING) --- */
+.article-social-overlay {
+    position: absolute; 
+    /* Anchors to bottom of card, floating up */
+    bottom: 50px; 
+    right: 10px; 
+    background: white; 
+    padding: 8px;
+    border-radius: 50px; 
+    box-shadow: 0 5px 20px rgba(0,0,0,0.25); 
+    display: flex; gap: 8px;
+    
+    /* Hidden State */
+    opacity: 0; 
+    pointer-events: none; 
+    visibility: hidden;
+    transform: translateY(10px); 
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    z-index: 100; 
+}
+.article-social-overlay.active { 
+    opacity: 1; 
+    pointer-events: auto; 
+    visibility: visible;
+    transform: translateY(0); 
+}
+.social-btn.mini { width: 28px; height: 28px; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; border: none; font-size: 12px; cursor: pointer; }
+.social-btn.mini.twitter { background: #000; }
+.social-btn.mini.facebook { background: #1877f2; }
+.social-btn.mini.whatsapp { background: #25d366; }
+.social-btn.mini.copy { background: #666; }
+
+
+/* --- TABLET FIX --- */
 @media (max-width: 1024px) {
-    /* Stack Grid to 1 Column for Tablet to prevent breaking */
     .hero-card { grid-template-columns: 1fr; } 
     .hero-image-container { height: auto; aspect-ratio: 16/9; }
-    
-    /* Header Fix for Tab */
     .header .container { flex-direction: row; }
     .logo-image img { height: 50px; }
 }
 
-/* --- MOBILE FIX (Max Width 768px) --- */
+/* --- MOBILE FIX --- */
 @media (max-width: 768px) {
-    /* Header: Row layout */
     .header .container { flex-direction: row; align-items: center; }
     .logo { flex: 1; }
     .logo-image img { height: 45px; }
     
-    /* Hide Text Fallback specifically on mobile too */
     .logo-fallback { display: none !important; }
 
     .home-btn { padding: 6px 14px; font-size: 13px; }
     .search-container { width: 100%; order: 3; margin-top: 5px; }
 
-    /* Follow Us: Force Transparent */
+    /* Fix Follow Us overflow */
     .follow-us-section {
-        background: transparent !important;
-        border: none;
-        box-shadow: none;
+        flex-direction: row; overflow-x: auto; padding-bottom: 5px; margin-bottom: 30px;
     }
     
-    .grid-container { grid-template-columns: 1fr; }
+    .grid-container { grid-template-columns: 1fr; gap: 30px; } 
     
     @media (orientation: landscape) {
         .grid-container { grid-template-columns: 1fr 1fr; }
     }
 }
 
-/* Footer & Load More */
 .footer { background: #111827; color: #9ca3af; padding: 30px 0; text-align: center; margin-top: 40px; }
 .load-more-container { text-align: center; margin: 30px 0; }
 .load-more-btn { padding: 10px 24px; background: white; border: 1px solid #d1d5db; border-radius: 6px; }
-
-/* Share Overlay */
-.article-social-overlay {
-    position: absolute; bottom: 50px; right: 10px; background: white; padding: 6px;
-    border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 5px;
-    opacity: 0; pointer-events: none; transform: translateY(10px); transition: all 0.2s; z-index: 10;
-}
-.article-social-overlay.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
-.social-btn.mini { width: 28px; height: 28px; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; border: none; font-size: 12px; }
-.social-btn.mini.twitter { background: #000; }
-.social-btn.mini.facebook { background: #1877f2; }
-.social-btn.mini.whatsapp { background: #25d366; }
-.social-btn.mini.copy { background: #666; }
