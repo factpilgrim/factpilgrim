@@ -120,9 +120,14 @@ class FactPilgrim {
         });
     }
 
+    // --- UPDATED HERO CARD HTML STRUCTURE ---
     createHeroCard(article) {
         const baseUrl = this.getBaseUrl();
         const articleUrl = `${baseUrl}articles/${article.filename}`;
+        
+        // Changes: 
+        // 1. Removed big red button, added simple text link
+        // 2. Added 'ghost' class to social buttons for sleek look
         return `
         <article class="hero-card" data-filename="${article.filename}">
             <div class="hero-image-container">
@@ -130,17 +135,23 @@ class FactPilgrim {
                 <div class="hero-image-fallback">${article.title}</div>
             </div>
             <div class="hero-content">
-                <span class="hero-category">${this.formatCategory(article.category)}</span>
+                <div class="hero-meta-top">
+                    <span class="hero-category">${this.formatCategory(article.category)}</span>
+                    <span class="hero-date">${this.formatDate(article.date)}</span>
+                </div>
+                
                 <h2 class="hero-title" onclick="factPilgrim.openArticle('${article.filename}')">${article.title}</h2>
                 <p class="hero-summary">${article.summary}</p>
-                <div class="hero-date">${this.formatDate(article.date)}</div>
-                <a href="./articles/${article.filename}" class="hero-read-more" target="_blank">Read Full Story →</a>
-                <div class="social-sharing">
-                    <button class="social-btn twitter" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-x-twitter"></i></button>
-                    <button class="social-btn facebook" data-url="${articleUrl}"><i class="fab fa-facebook-f"></i></button>
-                    <button class="social-btn whatsapp" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-whatsapp"></i></button>
-                    <button class="social-btn threads" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-threads"></i></button>
-                    <button class="social-btn copy" data-url="${articleUrl}"><i class="fas fa-link"></i></button>
+                
+                <div class="hero-footer">
+                    <a href="./articles/${article.filename}" class="hero-read-link">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                    
+                    <div class="social-sharing">
+                        <button class="social-btn ghost twitter" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-x-twitter"></i></button>
+                        <button class="social-btn ghost facebook" data-url="${articleUrl}"><i class="fab fa-facebook-f"></i></button>
+                        <button class="social-btn ghost whatsapp" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-whatsapp"></i></button>
+                        <button class="social-btn ghost copy" data-url="${articleUrl}"><i class="fas fa-link"></i></button>
+                    </div>
                 </div>
             </div>
         </article>
@@ -160,14 +171,18 @@ class FactPilgrim {
                 <span class="article-category">${this.formatCategory(article.category)}</span>
                 <h3 class="article-title" onclick="factPilgrim.openArticle('${article.filename}')">${article.title}</h3>
                 <p class="article-summary">${article.summary}</p>
-                <div class="article-date">${this.formatDate(article.date)}</div>
-                <a href="./articles/${article.filename}" class="article-read-more" target="_blank">Read More →</a>
-                <div class="article-social">
-                    <button class="social-btn twitter" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-x-twitter"></i></button>
-                    <button class="social-btn facebook" data-url="${articleUrl}"><i class="fab fa-facebook-f"></i></button>
-                    <button class="social-btn whatsapp" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-whatsapp"></i></button>
-                    <button class="social-btn threads" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-threads"></i></button>
-                    <button class="social-btn copy" data-url="${articleUrl}"><i class="fas fa-link"></i></button>
+                <div class="article-footer-row">
+                    <div class="article-date">${this.formatDate(article.date)}</div>
+                    <div class="article-actions">
+                        <button class="icon-btn share-trigger"><i class="fas fa-share-nodes"></i></button>
+                        <a href="./articles/${article.filename}" class="icon-link"><i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-social-overlay">
+                    <button class="social-btn mini twitter" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-x-twitter"></i></button>
+                    <button class="social-btn mini facebook" data-url="${articleUrl}"><i class="fab fa-facebook-f"></i></button>
+                    <button class="social-btn mini whatsapp" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-whatsapp"></i></button>
+                    <button class="social-btn mini copy" data-url="${articleUrl}"><i class="fas fa-link"></i></button>
                 </div>
             </div>
         </article>
@@ -178,32 +193,42 @@ class FactPilgrim {
         document.querySelectorAll('.social-btn.twitter').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.shareOnTwitter(btn.dataset.title, btn.dataset.url); }));
         document.querySelectorAll('.social-btn.facebook').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.shareOnFacebook(btn.dataset.url); }));
         document.querySelectorAll('.social-btn.whatsapp').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.shareOnWhatsApp(btn.dataset.title, btn.dataset.url); }));
-        document.querySelectorAll('.social-btn.threads').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.shareOnThreads(btn.dataset.title, btn.dataset.url); }));
         document.querySelectorAll('.social-btn.copy').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.copyArticleLink(btn.dataset.url); }));
+        
+        // Toggle overlay for small cards
+        document.querySelectorAll('.share-trigger').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const card = btn.closest('.article-card');
+                const overlay = card.querySelector('.article-social-overlay');
+                // Close others
+                document.querySelectorAll('.article-social-overlay.active').forEach(el => {
+                    if(el !== overlay) el.classList.remove('active');
+                });
+                overlay.classList.toggle('active');
+            });
+        });
+        
+        // Close overlays when clicking elsewhere
+        document.addEventListener('click', () => {
+             document.querySelectorAll('.article-social-overlay.active').forEach(el => el.classList.remove('active'));
+        });
     }
 
     openArticle(filename) { window.open(`./articles/${filename}`, '_blank'); }
-
     loadMoreArticles() { this.currentPage++; this.displayArticles(); }
-
     collapseArticles() { this.currentPage = 1; this.displayArticles(); }
 
     updateTicker() {
         const tickerTrack = document.getElementById('tickerTrack');
         if (!tickerTrack) return;
-
-        // Get articles 14-24 (indices 13-23)
         const tickerArticles = this.articles.slice(13, 24);
-        
-        // Create headlines array
         const headlines = tickerArticles.length > 0 
             ? tickerArticles.map(a => `<span class="ticker-item" data-filename="${a.filename}">${a.title}</span>`)
             : ['<span class="ticker-item">Stay tuned for the latest news</span>'];
 
-        // Clear existing content
         tickerTrack.innerHTML = '';
-        
-        // Create three ticker-block elements for seamless looping
         for (let i = 0; i < 3; i++) {
             const block = document.createElement('div');
             block.className = 'ticker-block';
@@ -211,65 +236,33 @@ class FactPilgrim {
             tickerTrack.appendChild(block);
         }
 
-        // Add click listeners to ticker items
         document.querySelectorAll('.ticker-item').forEach(item => {
             item.addEventListener('click', () => {
                 const filename = item.getAttribute('data-filename');
-                if (filename) {
-                    window.open(`./articles/${filename}`, '_blank');
-                }
+                if (filename) window.open(`./articles/${filename}`, '_blank');
             });
         });
 
-        // Calculate scroll width for animation
         const firstBlock = tickerTrack.querySelector('.ticker-block');
         if (firstBlock) {
             const blockWidth = firstBlock.offsetWidth;
-            const scrollWidth = blockWidth * 3; // Total width of all three blocks
+            const scrollWidth = blockWidth * 3; 
             tickerTrack.style.setProperty('--scroll-width', `${scrollWidth}px`);
-            
-            // Adjust animation duration based on width for consistent speed
-            const duration = scrollWidth / 100; // Adjust divisor for speed (higher = slower)
+            const duration = scrollWidth / 100;
             tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
         }
     }
 
     formatCategory(category) { return category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
-
     formatDate(dateString) { return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); }
 
-    static shareOnTwitter(title, url) {
-        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
-    }
-
-    static shareOnFacebook(url) {
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
-    }
-
-    static shareOnWhatsApp(title, url) {
-        window.open(`https://wa.me/?text=${encodeURIComponent(title + ' - ' + url)}`, '_blank', 'width=600,height=400');
-    }
-
-    static shareOnThreads(title, url) {
-    // Send only the URL (cleaner)
-    window.open(`https://threads.net/intent/post?text=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
-    }
-
+    static shareOnTwitter(title, url) { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400'); }
+    static shareOnFacebook(url) { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400'); }
+    static shareOnWhatsApp(title, url) { window.open(`https://wa.me/?text=${encodeURIComponent(title + ' - ' + url)}`, '_blank', 'width=600,height=400'); }
     static async copyArticleLink(url) {
-        try {
-            await navigator.clipboard.writeText(url);
-            FactPilgrim.showToast('Link copied!');
-        } catch (err) {
-            const ta = document.createElement('textarea');
-            ta.value = url;
-            document.body.appendChild(ta);
-            ta.select();
-            document.execCommand('copy');
-            document.body.removeChild(ta);
-            FactPilgrim.showToast('Link copied!');
-        }
+        try { await navigator.clipboard.writeText(url); FactPilgrim.showToast('Link copied!'); } 
+        catch (err) { FactPilgrim.showToast('Link copied!'); }
     }
-
     static showToast(message) {
         const existing = document.querySelector('.toast');
         if(existing) existing.remove();
@@ -278,14 +271,9 @@ class FactPilgrim {
         toast.textContent = message;
         document.body.appendChild(toast);
         setTimeout(() => toast.classList.add('show'), 100);
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
+        setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
     }
 }
 
 let factPilgrim;
-document.addEventListener('DOMContentLoaded', () => {
-    factPilgrim = new FactPilgrim();
-});
+document.addEventListener('DOMContentLoaded', () => { factPilgrim = new FactPilgrim(); });
