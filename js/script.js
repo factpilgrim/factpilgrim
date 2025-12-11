@@ -1,8 +1,8 @@
 /* js/script.js
-   Full script — keeps existing site behavior, plus:
-   - robust ticker measurement & restart (no mid-headline pauses)
-   - Threads sharing uses encodeURIComponent (no + signs)
-   - unified spacing preserved
+   Full script. Minimal, targeted fixes:
+   - robust ticker (no mid-headline pause)
+   - Threads share uses encodeURIComponent and safe replace for any stray +
+   - no other layout changes
 */
 
 class FactPilgrim {
@@ -54,7 +54,6 @@ class FactPilgrim {
     const homeBtn = document.querySelector('.home-btn');
     if (homeBtn) {
       homeBtn.addEventListener('click', (e) => {
-        // if home-btn is an <a> with href, allow navigation; if a button, act
         if (!homeBtn.getAttribute('href')) {
           e.preventDefault();
           this.currentPage = 1;
@@ -207,7 +206,7 @@ class FactPilgrim {
     const tickerTrack = document.getElementById('tickerTrack');
     if (!tickerTrack) return;
 
-    // choose articles for ticker
+    // choose articles for ticker (same selection as before)
     const tickerArticles = this.articles.slice(13, 24);
     const headlines = tickerArticles.length > 0 ? tickerArticles.map((a) => {
       const safeTitle = (a.title || 'Untitled').trim();
@@ -216,48 +215,40 @@ class FactPilgrim {
 
     const html = headlines.join(' • ');
 
-    // Clear existing
+    // Clear existing and create two identical blocks
     tickerTrack.innerHTML = '';
-
-    // Create two blocks containing the full list
     const blockA = document.createElement('div');
     blockA.className = 'ticker-block';
     blockA.innerHTML = html;
-
     const blockB = blockA.cloneNode(true);
-
     tickerTrack.appendChild(blockA);
     tickerTrack.appendChild(blockB);
 
-    // attach click events on each item
+    // attach click events
     tickerTrack.querySelectorAll('.ticker-item').forEach(item => {
       item.addEventListener('click', (ev) => {
         ev.stopPropagation();
         const filename = item.getAttribute('data-filename');
-        if (filename) {
-          window.open(`./articles/${filename}`, '_blank');
-        }
+        if (filename) window.open(`./articles/${filename}`, '_blank');
       });
     });
 
-    // Force rendering then measure the width of one full block
+    // robust measurement: hide, force reflow, measure, restore
     const prevVisibility = tickerTrack.style.visibility;
     tickerTrack.style.visibility = 'hidden';
     // force reflow
     // eslint-disable-next-line no-unused-expressions
     document.body.offsetHeight;
-    const blockWidth = Math.max(200, blockA.getBoundingClientRect().width);
+    const blockWidth = Math.max(200, blockA.getBoundingClientRect().width || 200);
     tickerTrack.style.visibility = prevVisibility || '';
 
-    // set CSS vars on container so keyframes translate by the pixel width measured
+    // set css vars
     tickerTrack.style.setProperty('--scroll-width', `${blockWidth}px`);
-
-    // compute duration from pixel speed variable
     const pps = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ticker-speed-px-per-sec')) || 100;
     const duration = Math.max(6, Math.round(blockWidth / pps));
     tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
 
-    // restart animation cleanly to avoid stuck mid-line
+    // restart animation cleanly
     tickerTrack.style.animation = 'none';
     // force reflow
     // eslint-disable-next-line no-unused-expressions
@@ -301,9 +292,12 @@ class FactPilgrim {
   }
 
   static shareOnThreads(title, url) {
-    // IMPORTANT: use encodeURIComponent to avoid spaces encoded as + (URLSearchParams produces +).
-    const text = `${title} - ${url}`;
-    window.open(`https://threads.net/intent/post?text=${encodeURIComponent(text)}`, '_blank', 'width=600,height=400');
+    // Use encodeURIComponent and defensively replace any plus signs (rare) with %20
+    let text = `${title} - ${url}`;
+    let encoded = encodeURIComponent(text);
+    // defensive: if something earlier produced + characters, convert them to %20
+    encoded = encoded.replace(/\+/g, '%20');
+    window.open(`https://threads.net/intent/post?text=${encoded}`, '_blank', 'width=600,height=400');
   }
 
   static async copyArticleLink(url) {
