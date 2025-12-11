@@ -273,26 +273,26 @@ class FactPilgrim {
     }
 }
 
-// UPDATED: Robust App Opener (Focus/Blur Check)
+// APP OPENER: Focus/Blur based detection
 function openSocialApp(webUrl, appUrl) {
-    var timeout = 2000;
+    var timeout = 2500;
     var start = Date.now();
-    var isBlur = false; // Track if window lost focus
-
-    window.addEventListener('blur', function() {
-        isBlur = true;
-    });
-
+    
+    // Attempt to open the App
     window.location.href = appUrl;
 
     setTimeout(function() {
-        window.removeEventListener('blur', function(){});
+        // If document is hidden, user switched to app -> do nothing
+        if (document.hidden || document.webkitHidden) {
+            return; 
+        }
         
-        // If the window lost focus, OR document is hidden, OR time diff is large (paused)
-        if (isBlur || document.hidden || document.webkitHidden || (Date.now() - start > timeout + 1000)) {
-            return; // App likely opened, do nothing
+        // If time elapsed is longer than timeout + buffer, system dialog paused script -> do nothing
+        if (Date.now() - start > timeout + 1000) {
+            return;
         }
 
+        // Fallback to browser
         window.open(webUrl, '_blank');
     }, timeout);
 }
