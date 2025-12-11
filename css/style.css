@@ -133,7 +133,7 @@ img {
 }
 
 /* =========================================
-   4. HEADER & NAVIGATION (RESIZED BY 50%)
+   4. HEADER & NAVIGATION (RESIZED +50%)
    ========================================= */
 .header {
     background-color: var(--white);
@@ -156,7 +156,7 @@ img {
 }
 
 .logo-image {
-    /* SCALED UP: 50px -> 75px (+50%) */
+    /* INCREASED HEIGHT: 50px -> 75px */
     height: 75px; 
     display: flex;
     align-items: center;
@@ -181,7 +181,6 @@ img {
     max-width: 500px;
     position: relative;
     display: flex;
-    /* Adjusted to match new button height */
 }
 
 .search-input {
@@ -228,7 +227,7 @@ img {
     align-items: center;
     gap: 10px;
     transition: all 0.2s;
-    font-size: 22px; /* Larger font (was 14px/16px) */
+    font-size: 22px; /* Larger font */
     font-family: inherit;
 }
 
@@ -493,7 +492,6 @@ img {
     opacity: 0.9;
 }
 
-/* Specific Colors */
 .social-btn.twitter { background-color: #000000; }
 .social-btn.facebook { background-color: #1877f2; }
 .social-btn.whatsapp { background-color: #25D366; }
@@ -614,7 +612,7 @@ img {
     }
     /* Mobile adjustments for new size */
     .logo-image {
-        height: 60px; /* Slightly smaller on mobile */
+        height: 60px; /* Slightly smaller on mobile but still larger than before */
     }
 }
 
