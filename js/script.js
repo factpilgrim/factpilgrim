@@ -20,9 +20,12 @@ class FactPilgrim {
         if (this.isLoading) return;
         this.isLoading = true;
         try {
-            const response = await fetch('./articles/data/news.json');
+            const response = await fetch(`./articles/data/news.json?v=${new Date().getTime()}`);
             if (!response.ok) throw new Error('Failed to load articles');
             this.articles = await response.json();
+            
+            this.articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
             this.filteredArticles = [...this.articles];
         } catch (error) {
             console.error('Error loading articles:', error);
@@ -191,11 +194,10 @@ class FactPilgrim {
         const tickerTrack = document.getElementById('tickerTrack');
         if (!tickerTrack) return;
         
-        // Change label from "NEXT 10" to "LATEST"
         const tickerLabel = document.querySelector('.ticker-label');
         if(tickerLabel) tickerLabel.textContent = 'LATEST';
 
-        // Get 10 LATEST articles (Index 0 to 10)
+        // LATEST 10
         const tickerArticles = this.articles.slice(0, 10);
         
         let headlines = tickerArticles.length > 0 ?
@@ -214,7 +216,6 @@ class FactPilgrim {
         tickerTrack.appendChild(span1);
         tickerTrack.appendChild(span2);
 
-        // Add click listeners to ticker items
         document.querySelectorAll('.ticker-item').forEach(item => {
             item.addEventListener('click', () => {
                 const filename = item.getAttribute('data-filename');
@@ -224,7 +225,8 @@ class FactPilgrim {
             });
         });
         const width = span1.offsetWidth;
-        const duration = width / 100;
+        // SPEED UPDATE: 4x Faster (divided by 400 instead of 100)
+        const duration = width / 400;
         tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
     }
 
@@ -246,10 +248,9 @@ class FactPilgrim {
     }
 
     static shareOnThreads(title, url) {
-        // Fix: encode title and url separately to prevent plus symbols
         const text = encodeURIComponent(title);
         const link = encodeURIComponent(url);
-        window.open(`https://threads.net/intent/post?text=${text}%20-%20${link}`, '_blank', 'width=600,height=400');
+        window.open(`https://threads.net/intent/post?text=${text}%20${link}`, '_blank', 'width=600,height=400');
     }
 
     static async copyArticleLink(url) {
