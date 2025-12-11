@@ -470,11 +470,11 @@ body {
 }
 
 .article-title {
-    font-size: 18px;
+    font-size: 20px; /* Increased from 18px */
     font-weight: 700;
     color: #111827;
     margin-bottom: 10px;
-    line-height: 1.35;
+    line-height: 1.4;
     cursor: pointer;
     transition: color 0.2s;
 }
@@ -484,10 +484,10 @@ body {
 }
 
 .article-summary {
-    font-size: 14px;
-    color: #6b7280;
+    font-size: 16px; /* Increased from 14px */
+    color: #4b5563; /* Slightly darker grey for better readability */
     margin-bottom: 15px;
-    line-height: 1.5;
+    line-height: 1.6;
     flex: 1;
 }
 
@@ -650,10 +650,24 @@ body {
 
 /* --- RESPONSIVE DESIGN --- */
 @media (max-width: 1024px) {
-    .hero-card { grid-template-columns: 1fr; }
-    .hero-image-container { height: 300px; }
-    .hero-content { padding: 25px; }
-    .hero-title { font-size: 26px; }
+    .hero-card { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .hero-image-container { 
+        /* REMOVED fixed height */
+        height: auto; 
+        /* ADDED aspect-ratio so it scales perfectly like a YouTube video */
+        aspect-ratio: 16 / 9; 
+    }
+    
+    .hero-content { 
+        padding: 25px; 
+    }
+    
+    .hero-title { 
+        font-size: 26px; 
+    }
 }
 
 @media (max-width: 768px) {
@@ -682,11 +696,15 @@ body {
 
 @media (max-width: 480px) {
     .container { padding: 0 15px; }
-    .hero-image-container { height: 220px; }
+    
+    /* REMOVE the .hero-image-container height rule from here entirely */
+    /* The 16/9 aspect ratio from the rule above will handle it */
+
     .hero-title { font-size: 22px; }
-    .hero-summary { font-size: 15px; }
+    .hero-summary { font-size: 16px; } /* Bumped up for mobile readability */
+    
     .article-content { padding: 15px; }
-    .article-title { font-size: 17px; }
+    .article-title { font-size: 19px; } /* Bumped up */
     
     .hero-footer { flex-wrap: wrap; gap: 15px; }
     .social-sharing { margin-left: auto; }
