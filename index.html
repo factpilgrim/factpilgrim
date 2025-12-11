@@ -72,26 +72,25 @@
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
         
-        // App Opener Helper
+        // App Opener Helper for Follow Buttons
         function openSocialApp(webUrl, appUrl) {
             const timeoutDuration = 2500; 
             let startTime = Date.now();
-            
-            // Attempt to open App
+            let appOpened = false;
+
+            const onBlur = () => { appOpened = true; };
+            window.addEventListener('blur', onBlur);
+            window.addEventListener('visibilitychange', () => { if (document.hidden) appOpened = true; });
+
             window.location.href = appUrl;
 
             setTimeout(() => {
-                if (document.hidden || document.webkitHidden) {
-                    return; 
-                }
-                if (Date.now() - startTime > timeoutDuration + 1000) {
-                    return;
-                }
-                // Fallback to browser
+                window.removeEventListener('blur', onBlur);
+                if (appOpened || document.hidden || document.webkitHidden) return; 
+                if (Date.now() - startTime > timeoutDuration + 1000) return;
                 window.open(webUrl, '_blank');
             }, timeoutDuration);
         }
     </script>
 </body>
 </html>
-
