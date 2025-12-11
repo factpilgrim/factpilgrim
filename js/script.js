@@ -218,7 +218,7 @@ window.open(`./articles/${filename}`, '_blank');
 });
 
 const width = span1.offsetWidth;
-const duration = width / 100; // Increased from 50 to 100 for faster speed
+const duration = width / 150; // Increased from 100 to 150 for even faster speed
 tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
 }
 
