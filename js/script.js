@@ -14,6 +14,8 @@ class FactPilgrim {
         this.setupEventListeners();
         this.displayArticles();
         this.updateTicker();
+        // Listener is added ONCE, but works for ALL future cards
+        this.addSocialSharingListeners(); 
     }
 
     async loadArticles() {
@@ -58,13 +60,6 @@ class FactPilgrim {
                 this.searchTimeout = setTimeout(() => this.searchArticles(e.target.value), 300);
             });
         }
-        
-        // Global listener to close share popups when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.share-trigger') && !e.target.closest('.article-social-overlay')) {
-                document.querySelectorAll('.article-social-overlay.active').forEach(el => el.classList.remove('active'));
-            }
-        });
     }
 
     searchArticles(query) {
@@ -122,8 +117,6 @@ class FactPilgrim {
             const hasMoreArticles = endIndex < this.filteredArticles.length;
             if (loadMoreBtn) loadMoreBtn.style.display = hasMoreArticles ? 'block' : 'none';
             if (collapseBtn) collapseBtn.style.display = this.currentPage > 1 ? 'block' : 'none';
-
-            this.addSocialSharingListeners();
         });
     }
 
@@ -191,29 +184,52 @@ class FactPilgrim {
     }
 
     addSocialSharingListeners() {
-        // 1. Logic to open the Share Menu on small cards
-        document.querySelectorAll('.share-trigger').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+        // GLOBAL EVENT DELEGATION
+        // This single listener handles ALL clicks for ALL cards (even ones loaded later)
+        
+        document.body.addEventListener('click', (e) => {
+            
+            // 1. Handle SHARE ICON Click
+            const trigger = e.target.closest('.share-trigger');
+            if (trigger) {
                 e.preventDefault();
                 e.stopPropagation();
-                const card = btn.closest('.article-card');
+                
+                const card = trigger.closest('.article-card');
                 const overlay = card.querySelector('.article-social-overlay');
                 
-                // Close all other open menus first
+                // Close other menus
                 document.querySelectorAll('.article-social-overlay.active').forEach(el => {
-                    if(el !== overlay) el.classList.remove('active');
+                    if(el !== overlay) {
+                        el.classList.remove('active');
+                        el.closest('.article-card').classList.remove('menu-open');
+                    }
                 });
                 
-                // Toggle this one
-                overlay.classList.toggle('active');
-            });
-        });
+                // Toggle current menu
+                const isOpen = overlay.classList.toggle('active');
+                
+                // Z-Index Boost prevents overlapping issue
+                if(isOpen) card.classList.add('menu-open');
+                else card.classList.remove('menu-open');
+                
+                return;
+            }
 
-        // 2. Logic for the actual Social Buttons (both Hero and Grid)
-        document.querySelectorAll('.social-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            // 2. Handle SOCIAL BUTTON Click
+            const btn = e.target.closest('.social-btn');
+            if (btn) {
+                e.preventDefault();
                 e.stopPropagation();
-                const network = btn.dataset.network;
+                
+                let network = btn.dataset.network;
+                if (!network) {
+                    if (btn.classList.contains('twitter')) network = 'twitter';
+                    else if (btn.classList.contains('facebook')) network = 'facebook';
+                    else if (btn.classList.contains('whatsapp')) network = 'whatsapp';
+                    else network = 'copy';
+                }
+                
                 const url = btn.dataset.url;
                 const title = btn.dataset.title || '';
 
@@ -221,7 +237,16 @@ class FactPilgrim {
                 else if (network === 'facebook') FactPilgrim.shareOnFacebook(url);
                 else if (network === 'whatsapp') FactPilgrim.shareOnWhatsApp(title, url);
                 else if (network === 'copy') FactPilgrim.copyArticleLink(url);
-            });
+                return;
+            }
+
+            // 3. Close menu if clicked outside
+            if (!e.target.closest('.article-social-overlay')) {
+                document.querySelectorAll('.article-social-overlay.active').forEach(el => {
+                    el.classList.remove('active');
+                    el.closest('.article-card').classList.remove('menu-open');
+                });
+            }
         });
     }
 
