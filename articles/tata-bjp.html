@@ -31,7 +31,7 @@
             max-height: 500px;
             object-fit: contain;
             background: #f0f0f0;
-            margin-bottom: 15px; /* Reduced spacing */
+            margin-bottom: 15px;
             border-radius: 8px;
             display: block;
         }
@@ -74,9 +74,8 @@
             font-weight: 700;
         }
         h1 {
-            color: #111827 !important; /* Changed to #111827 */
+            color: #111827 !important;
         }
-        /* TABLE FIX */
         .table-wrapper {
             width: 100%;
             overflow-x: auto;
@@ -105,15 +104,13 @@
         tr:nth-child(even) {
             background-color: #fafafa;
         }
-        /* Category color changed to #111827 */
         .article-category {
-            color: #111827 !important; /* Changed from #dc2626 */
+            color: #111827 !important;
         }
-        /* Follow Us Section - Moved below image with reduced spacing */
         .follow-us-section {
             background: #f8f9fa;
             padding: 15px 20px;
-            margin: 15px 0 25px 0; /* Reduced spacing */
+            margin: 15px 0 25px 0;
             text-align: center;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -196,7 +193,6 @@
 
         <img src="../images/tata-bjp.jpg" alt="Biggest Political Donation Ever Why ₹758 Crore Reached BJP Days Before Voting Began" class="detail-image" onerror="this.style.display='none'">
 
-        <!-- Follow Us Section moved right below the image -->
         <div class="follow-us-section">
             <h3>Follow Us</h3>
             <div class="follow-buttons">
@@ -281,9 +277,9 @@
         }
 
         function shareOnThreads() {
-            // FIXED: Proper Threads sharing without duplicate title and URL
-            const shareText = document.title.replace(' - Fact Pilgrim', ''); // Clean title
-            window.open('https://threads.net/intent/post?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(window.location.href), '_blank', 'width=600,height=400');
+            // FIXED: Threads sharing with same format as WhatsApp
+            const shareText = document.title + ' - ' + window.location.href;
+            window.open('https://threads.net/intent/post?text=' + encodeURIComponent(shareText), '_blank', 'width=600,height=400');
         }
 
         async function copyArticleLink() {
