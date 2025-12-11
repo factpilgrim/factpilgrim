@@ -35,7 +35,7 @@
         tr:nth-child(even) { background-color: #fafafa; }
         .article-category { color: #111827 !important; }
         
-        /* SLEEK FOLLOW SECTION */
+        /* SLEEK FOLLOW SECTION STYLE */
         .follow-us-section { 
             background: transparent; 
             padding: 10px 0; 
@@ -55,35 +55,19 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .follow-buttons { 
-            display: flex; 
-            gap: 10px; 
-            flex-wrap: wrap;
-        }
+        .follow-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
         .follow-btn { 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 6px; 
-            padding: 6px 14px; 
-            border-radius: 20px; 
-            text-decoration: none; 
-            color: white; 
-            font-weight: 600; 
-            transition: transform 0.2s, opacity 0.2s; 
-            font-size: 12px; 
+            display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; 
+            border-radius: 20px; text-decoration: none; color: white; font-weight: 600; 
+            transition: transform 0.2s, opacity 0.2s; font-size: 12px; 
         }
-        .follow-btn:hover { 
-            transform: translateY(-1px); 
-            opacity: 0.9;
-        }
+        .follow-btn:hover { transform: translateY(-1px); opacity: 0.9; }
         .follow-btn.twitter { background: #000000; }
         .follow-btn.facebook { background: #1877f2; }
         .follow-btn.instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
         .follow-btn.threads { background: #000000; }
         
-        @media (max-width: 480px) { 
-            .follow-us-section { flex-direction: column; align-items: flex-start; gap: 10px; }
-        }
+        @media (max-width: 480px) { .follow-us-section { flex-direction: column; align-items: flex-start; gap: 10px; } }
     </style>
 </head>
 <body>
@@ -120,34 +104,28 @@
 
         <div class="article-content">
             <p>The Shree Siddhivinayak Ganapati Mandir in Mumbai is one of the most beloved and powerful temples dedicated to Lord Ganesha. Known for granting wishes and answering prayers, it attracts thousands of devotees every day. Its unique idol and its long history have made it a landmark of Mumbai and a symbol of deep faith.</p>
-            
             <h3>A Glimpse Into Its History</h3>
             <p>The temple has a rich past that stretches back more than 200 years.</p>
-            
             <h3>Establishment in 1801</h3>
             <p>The original temple was built on November 19, 1801. It was a simple 3.6 x 3.6 meter brick structure constructed by a local contractor named Laxman Vithu Patil.</p>
-            
             <h3>A Motherly Purpose</h3>
             <p>The temple was funded by Deubai Patil, a wealthy but childless woman from the Agri Koli community. She believed Lord Ganesha would bless other childless women with children if they prayed at the temple. Her faith and compassion gave birth to what later became one of Mumbai's most powerful places of worship.</p>
-            
             <h3>Legends That Add to Its Power</h3>
             <p>Local stories say that a disciple of the saint Akkalkot Swami Samarth buried two sacred idols near the main deity. He predicted that after 21 years, a Mandar tree would grow there with a natural image of Ganesha on its branches. Devotees believe that this prophecy came true, and this miracle increased the temple's spiritual importance even more.</p>
-            
             <h3>From a Small Shrine to a Grand Temple</h3>
             <p>As more people began visiting, the temple underwent several renovations. The most significant transformation happened in the 1990s. The old shrine was expanded into a six-story structure made of marble and granite. The new temple features a gold-plated inner roof and beautifully designed domes, making it both spiritually powerful and visually stunning.</p>
-            
             <h3>A Place of Hope for Millions</h3>
             <p>Today, the Siddhivinayak Temple stands as a symbol of faith, hope, and blessings. People from all over India and the world visit to seek peace, guidance, and miracles. Whether it is to start a new journey, overcome challenges, or simply offer gratitude, devotees believe that Lord Ganesha at Siddhivinayak listens to every prayer.</p>
         </div>
 
-        <div class="article-sharing" style="margin: 30px 0; padding: 20px; background: #f8f9fa; text-align: center; border-radius: 8px;">
-            <h3 style="color: #b91c1c; margin-bottom: 20px; border-left: none; padding-left: 0;">Share this article</h3>
-            <div class="social-sharing" style="display: flex; gap: 12px; justify-content: center;">
-                <button class="social-btn twitter" onclick="shareOnTwitter()"><i class="fab fa-x-twitter"></i></button>
-                <button class="social-btn facebook" onclick="shareOnFacebook()"><i class="fab fa-facebook-f"></i></button>
-                <button class="social-btn whatsapp" onclick="shareOnWhatsApp()"><i class="fab fa-whatsapp"></i></button>
-                <button class="social-btn threads" onclick="shareOnThreads()"><i class="fab fa-threads"></i></button>
-                <button class="social-btn copy" onclick="copyArticleLink()"><i class="fas fa-link"></i></button>
+        <div class="follow-us-section" style="margin-top: 40px; border-top: 1px solid #eee; border-bottom: none;">
+            <h3 style="margin-right: 15px;">Share via:</h3>
+            <div class="social-sharing" style="display: flex; gap: 8px;">
+                <button class="social-btn ghost twitter" onclick="shareOnTwitter()"><i class="fab fa-x-twitter"></i></button>
+                <button class="social-btn ghost facebook" onclick="shareOnFacebook()"><i class="fab fa-facebook-f"></i></button>
+                <button class="social-btn ghost whatsapp" onclick="shareOnWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                <button class="social-btn ghost threads" onclick="shareOnThreads()"><i class="fab fa-threads"></i></button>
+                <button class="social-btn ghost copy" onclick="copyArticleLink()"><i class="fas fa-link"></i></button>
             </div>
         </div>
 
