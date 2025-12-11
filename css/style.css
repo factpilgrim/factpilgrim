@@ -24,7 +24,7 @@ body {
 .breaking-news {
   background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
   color: white;
-  padding: 12px 0;
+  padding: 8px 0; /* Reduced from 12px */
   position: relative;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -52,7 +52,6 @@ body {
   flex: 1;
   overflow: hidden;
   position: relative;
-  /* Mask edges for smooth fade out */
   mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
   -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
 }
@@ -60,7 +59,6 @@ body {
 .ticker-track {
   display: flex;
   white-space: nowrap;
-  /* Key change: 'linear' prevents the speed jump. 40s is the default speed if JS is removed. */
   animation: ticker-scroll var(--ticker-duration, 40s) linear infinite;
   will-change: transform;
 }
@@ -72,7 +70,6 @@ body {
   font-size: 18px;
 }
 
-/* Ticker Items: Bold & White */
 .ticker-track .ticker-item {
   cursor: pointer;
   transition: opacity 0.2s;
@@ -97,7 +94,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 15px 0;
+  padding: 5px 0; /* Reduced from 15px */
 }
 
 .header .container {
@@ -118,7 +115,7 @@ body {
 }
 
 .logo-image img {
-  height: 75px;
+  height: 60px; /* Reduced from 75px */
   width: auto;
   object-fit: contain;
 }
@@ -190,11 +187,11 @@ body {
   background: #b91c1c;
 }
 
-/* Follow Us Section (Index Page - Compact) */
+/* Follow Us Section */
 .follow-us-section {
   background: #f8f9fa;
-  padding: 10px 15px;
-  margin: 15px 0;
+  padding: 8px 10px; /* Reduced padding */
+  margin: 10px 0; /* Reduced margin */
   text-align: center;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -202,14 +199,14 @@ body {
 
 .follow-us-section h3 {
   color: #b91c1c;
-  margin-bottom: 8px;
-  font-size: 20px;
+  margin-bottom: 5px; /* Reduced margin */
+  font-size: 18px; /* Slightly smaller font */
   font-weight: 700;
 }
 
 .follow-buttons {
   display: flex;
-  gap: 15px;
+  gap: 10px; /* Reduced gap */
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -218,13 +215,13 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 24px;
+  padding: 8px 16px; /* Smaller padding */
   border-radius: 6px;
   text-decoration: none;
   color: white;
   font-weight: bold;
   transition: transform 0.2s, box-shadow 0.2s;
-  font-size: 15px;
+  font-size: 14px; /* Smaller font */
 }
 
 .follow-btn:hover {
@@ -250,7 +247,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-  margin: 25px 0;
+  margin: 10px 0; /* Reduced margin */
 }
 
 .hero-card {
@@ -260,7 +257,7 @@ body {
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   display: grid;
   grid-template-columns: 1.4fr 0.6fr;
-  gap: 20px;
+  gap: 10px; /* Reduced gap */
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
