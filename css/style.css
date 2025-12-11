@@ -12,50 +12,43 @@ body {
 
 .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
 
-/* --- TICKER --- */
+/* --- TICKER (Increased Size) --- */
 .breaking-news {
     background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
     color: white;
     padding: 10px 0;
-    font-size: 13px;
 }
 .breaking-news .container { display: flex; align-items: center; gap: 15px; }
 .ticker-label {
     background: white; color: #dc2626; padding: 4px 10px;
-    font-weight: 800; font-size: 12px; border-radius: 4px; white-space: nowrap;
+    font-weight: 800; font-size: 13px; border-radius: 4px; white-space: nowrap;
 }
 .ticker-mask { flex: 1; overflow: hidden; position: relative; }
 .ticker-track { display: flex; animation: ticker-scroll 30s linear infinite; }
 .ticker-block { display: inline-flex; gap: 2em; padding-right: 2em; }
-.ticker-item { font-weight: 700; color: white; cursor: pointer; white-space: nowrap; }
+/* Ticker Text Size Increased */
+.ticker-item { font-weight: 700; color: white; cursor: pointer; white-space: nowrap; font-size: 16px; } 
 @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-/* --- HEADER (FIXED LAYOUT) --- */
+/* --- HEADER --- */
 .header {
     background: white;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    padding: 10px 0;
-    border-bottom: 1px solid #f3f4f6;
+    position: sticky; top: 0; z-index: 100;
+    padding: 10px 0; border-bottom: 1px solid #f3f4f6;
 }
-
 .header .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    flex-wrap: wrap;
+    display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap;
 }
 
-/* Logo */
+/* Logo Fixes */
+.logo { display: flex; align-items: center; }
 .logo-image img { height: 55px; width: auto; object-fit: contain; }
+/* Hides the text fallback by default so it doesn't show under the logo */
+.logo-fallback { display: none; } 
 
 /* Search */
-.search-container {
-    display: flex; flex: 1; max-width: 500px; gap: 8px;
-}
+.search-container { display: flex; flex: 1; max-width: 500px; gap: 8px; }
 .search-input {
     flex: 1; padding: 8px 16px; border: 1px solid #e5e7eb;
     border-radius: 50px; font-size: 14px; background: #f9fafb;
@@ -73,16 +66,14 @@ body {
     text-decoration: none; display: flex; align-items: center; gap: 6px;
 }
 
-/* --- SLEEK FOLLOW SECTION (FIXED) --- */
+/* --- FOLLOW SECTION (Transparent & Clean) --- */
 .follow-us-section {
-    background: transparent;
+    background: transparent; /* No white box */
     padding: 10px 0;
     margin: 10px 0 20px 0;
     border-bottom: 1px solid #e5e7eb;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap; /* Allow wrapping on small screens */
+    display: flex; align-items: center; gap: 15px;
+    flex-wrap: wrap;
 }
 .follow-us-section h3 {
     color: #6b7280; font-size: 12px; font-weight: 700;
@@ -101,40 +92,46 @@ body {
 .follow-btn.threads { background: #000; }
 
 
-/* --- HERO CARD (FIXED IMAGES) --- */
+/* --- HERO CARD (Big Card) --- */
 .hero-section { margin: 15px 0; }
 .hero-card {
     background: white; border-radius: 12px; overflow: hidden;
     box-shadow: 0 4px 15px rgba(0,0,0,0.03);
     border: 1px solid #e5e7eb;
-    display: grid; grid-template-columns: 1.4fr 0.6fr;
+    display: grid; 
+    grid-template-columns: 1.4fr 0.6fr; /* Desktop Layout */
 }
 
 .hero-image-container {
-    width: 100%;
-    /* Key Fix: Aspect Ratio locks the shape */
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    background: #f3f4f6;
-    position: relative;
+    width: 100%; aspect-ratio: 16 / 9; /* Fixed Ratio */
+    overflow: hidden; background: #f3f4f6; position: relative;
 }
-.hero-image {
-    width: 100%; height: 100%; object-fit: cover;
-}
+.hero-image { width: 100%; height: 100%; object-fit: cover; }
 
 .hero-content { padding: 25px; display: flex; flex-direction: column; justify-content: center; }
+
+/* Restored Red Pill Category */
+.hero-category {
+    display: inline-block; background: #fef2f2; color: #dc2626;
+    padding: 6px 12px; border-radius: 20px; font-size: 12px;
+    font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 12px; width: fit-content;
+}
+
+/* Large Hero Title (30px) */
 .hero-title { font-size: 30px; font-weight: 800; color: #111827; margin-bottom: 12px; line-height: 1.25; }
-.hero-summary { font-size: 18px; color: #4b5563; margin-bottom: 20px; }
-.hero-category { color: #dc2626; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; display: block; }
-.hero-read-link { color: #dc2626; text-decoration: none; font-weight: 700; font-size: 14px; }
+
+/* Larger Hero Summary (18px) */
+.hero-summary { font-size: 18px; color: #4b5563; margin-bottom: 20px; line-height: 1.6; }
+
 .hero-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 15px; border-top: 1px solid #f3f4f6; }
+.hero-read-link { color: #dc2626; text-decoration: none; font-weight: 700; font-size: 14px; }
 
 
-/* --- GRID CARDS (FIXED IMAGES) --- */
+/* --- GRID CARDS (Small Cards) --- */
 .articles-grid { margin: 20px 0; }
 .grid-container {
     display: grid;
-    /* Smart grid that fits cards automatically */
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px;
 }
@@ -143,18 +140,41 @@ body {
     border: 1px solid #e5e7eb; display: flex; flex-direction: column;
 }
 .article-image-container {
-    width: 100%;
-    /* Key Fix: Consistent height for all grid cards */
-    height: 200px; 
+    width: 100%; height: 200px; /* Fixed Height for alignment */
     overflow: hidden; background: #f3f4f6;
 }
 .article-image { width: 100%; height: 100%; object-fit: cover; }
 .article-content { padding: 18px; flex: 1; display: flex; flex-direction: column; }
-.article-title { font-size: 20px; font-weight: 700; color: #111827; margin-bottom: 8px; line-height: 1.4; }
-.article-summary { font-size: 16px; color: #6b7280; margin-bottom: 15px; line-height: 1.5; flex: 1; }
-.article-footer-row { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid #f3f4f6; margin-top: auto; }
 
-/* Social Ghost Buttons */
+/* Restored Red Pill Category */
+.article-category {
+    display: inline-block; background: #fef2f2; color: #dc2626;
+    padding: 4px 10px; border-radius: 16px; font-size: 11px;
+    font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 10px; width: fit-content;
+}
+
+/* Grid Title (20px) */
+.article-title { font-size: 20px; font-weight: 700; color: #111827; margin-bottom: 8px; line-height: 1.4; }
+
+/* Grid Summary (16px) */
+.article-summary { font-size: 16px; color: #6b7280; margin-bottom: 15px; line-height: 1.6; flex: 1; }
+
+/* Footer Alignment Fix */
+.article-footer-row { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding-top: 12px; 
+    border-top: 1px solid #f3f4f6; 
+    margin-top: auto; 
+}
+.article-date { font-size: 12px; color: #9ca3af; font-weight: 500; }
+
+/* Fixed Actions Row (Side by Side) */
+.article-actions { display: flex; gap: 8px; align-items: center; }
+
+/* Ghost Buttons */
 .social-sharing { display: flex; gap: 8px; }
 .social-btn.ghost {
     width: 32px; height: 32px; border-radius: 50%; border: 1px solid #e5e7eb;
@@ -162,71 +182,45 @@ body {
     padding: 0; cursor: pointer; font-size: 13px;
 }
 .icon-btn, .icon-link {
-    width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
     border-radius: 50%; color: #6b7280; background: #f9fafb; border: 1px solid #f3f4f6; text-decoration: none;
 }
 
-/* --- MOBILE SPECIFIC FIXES --- */
+/* --- TABLET FIX (Max Width 1024px) --- */
+@media (max-width: 1024px) {
+    /* Stack Grid to 1 Column for Tablet to prevent breaking */
+    .hero-card { grid-template-columns: 1fr; } 
+    .hero-image-container { height: auto; aspect-ratio: 16/9; }
+    
+    /* Header Fix for Tab */
+    .header .container { flex-direction: row; }
+    .logo-image img { height: 50px; }
+}
+
+/* --- MOBILE FIX (Max Width 768px) --- */
 @media (max-width: 768px) {
-    /* Header Fix: Row layout instead of column stack */
-    .header .container {
-        flex-direction: row; /* Keep them in a line */
-        align-items: center;
-    }
+    /* Header: Row layout */
+    .header .container { flex-direction: row; align-items: center; }
+    .logo { flex: 1; }
+    .logo-image img { height: 45px; }
     
-    .logo { flex: 1; } /* Logo takes available space */
-    .logo-image img { height: 45px; } /* Smaller logo */
-    
-    .home-btn {
-        padding: 6px 14px;
-        font-size: 13px;
-    }
-    
-    .search-container {
-        width: 100%; /* Search bar drops to next line */
-        order: 3; /* Forces it below logo/home */
-        margin-top: 5px;
-    }
+    /* Hide Text Fallback specifically on mobile too */
+    .logo-fallback { display: none !important; }
 
-    /* Hero Card Fixes */
-    .hero-card { grid-template-columns: 1fr; }
-    .hero-image-container {
-        /* On mobile, standard 16:9 is best for both portrait and landscape */
-        aspect-ratio: 16 / 9;
-        height: auto; /* Allow auto height based on width */
-        max-height: 300px; /* Prevent it from getting too tall */
-    }
-    .hero-title { font-size: 22px; }
+    .home-btn { padding: 6px 14px; font-size: 13px; }
+    .search-container { width: 100%; order: 3; margin-top: 5px; }
 
-    /* Follow Us Fixes: REMOVED WHITE BOX */
+    /* Follow Us: Force Transparent */
     .follow-us-section {
-        background: transparent; /* No white box */
+        background: transparent !important;
         border: none;
-        border-bottom: 1px solid #e5e7eb;
-        padding: 10px 0;
-        margin-bottom: 20px;
-        flex-direction: row; /* Keep horizontal scroll if needed */
-        overflow-x: auto; /* Allow scrolling if buttons overflow */
-        padding-bottom: 15px; /* Space for scrollbar if needed */
-        gap: 10px;
+        box-shadow: none;
     }
     
-    /* Ensure buttons don't shrink */
-    .follow-btn { flex-shrink: 0; }
+    .grid-container { grid-template-columns: 1fr; }
     
-    /* Grid Card Fixes */
-    .grid-container {
-        grid-template-columns: 1fr; /* 1 column on portrait */
-    }
-    
-    /* Landscape Mode Mobile Fix */
     @media (orientation: landscape) {
-        .grid-container {
-            grid-template-columns: 1fr 1fr; /* 2 columns on landscape */
-        }
-        .hero-image-container {
-            max-height: 250px; /* Restrict hero height in landscape so it fits screen */
-        }
+        .grid-container { grid-template-columns: 1fr 1fr; }
     }
 }
 
