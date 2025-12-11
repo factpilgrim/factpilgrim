@@ -22,8 +22,12 @@ body {
     font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Oriya', sans-serif;
 }
 .header {
+    padding: 5px 0 !important;
     position: relative !important;
     top: auto !important;
+}
+.logo-image img {
+    height: 60px !important;
 }
 .detail-image {
     width: 100%;
@@ -31,7 +35,7 @@ body {
     max-height: 500px;
     object-fit: contain;
     background: #f0f0f0;
-    margin-bottom: 15px; /* Compact margin */
+    margin-bottom: 15px;
     border-radius: 8px;
     display: block;
 }
@@ -73,7 +77,6 @@ body {
     line-height: 1.1;
     font-weight: 700;
 }
-/* HEADLINE COLOR CHANGED */
 h1 {
     color: #111827 !important;
 }
@@ -109,21 +112,21 @@ tr:nth-child(even) {
 /* Follow Us Section - Compact Design */
 .follow-us-section {
     background: #f8f9fa;
-    padding: 10px 15px;
-    margin: 15px 0;
+    padding: 8px 10px;
+    margin: 10px 0;
     text-align: center;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 .follow-us-section h3 {
     color: #b91c1c;
-    margin-bottom: 8px;
-    font-size: 20px;
+    margin-bottom: 5px;
+    font-size: 18px;
     font-weight: 700;
 }
 .follow-buttons {
     display: flex;
-    gap: 15px;
+    gap: 10px;
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -131,13 +134,13 @@ tr:nth-child(even) {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 24px;
+    padding: 8px 16px;
     border-radius: 6px;
     text-decoration: none;
     color: white;
     font-weight: bold;
     transition: transform 0.2s, box-shadow 0.2s;
-    font-size: 15px;
+    font-size: 14px;
 }
 .follow-btn:hover {
     transform: translateY(-2px);
@@ -273,8 +276,11 @@ function shareOnWhatsApp() {
 window.open('https://wa.me/?text=' + encodeURIComponent(document.title + ' - ' + window.location.href), '_blank', 'width=600,height=400');
 }
 
+/* FIX: Strict encoding for Threads to avoid + symbols */
 function shareOnThreads() {
-window.open('https://threads.net/intent/post?text=' + encodeURIComponent(document.title + ' - ' + window.location.href), '_blank', 'width=600,height=400');
+    var text = encodeURIComponent(document.title);
+    var url = encodeURIComponent(window.location.href);
+    window.open('https://threads.net/intent/post?text=' + text + '%20-%20' + url, '_blank', 'width=600,height=400');
 }
 
 async function copyArticleLink() {
