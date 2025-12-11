@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fact Pilgrim - Discover. Decode. Deliver.</title>
+    
+    <meta property="og:title" content="Fact Pilgrim - Discover. Decode. Deliver.">
+    <meta property="og:description" content="Uncovering the truth behind the headlines. detailed analysis, fact-checks, and in-depth stories.">
+    <meta property="og:image" content="https://factpilgrim.github.io/factpilgrim/images/logo.png">
+    <meta property="og:url" content="https://factpilgrim.github.io/factpilgrim/">
+    <meta property="og:type" content="website">
+
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,24 +79,39 @@
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
         
-        // App Opener Helper for Follow Buttons
+        // FIXED APP OPENER LOGIC (PREVENTS BOTH OPENING)
         function openSocialApp(webUrl, appUrl) {
-            const timeoutDuration = 2500; 
-            let startTime = Date.now();
-            let appOpened = false;
+            var timeout = 2000;
+            var start = Date.now();
+            var isBlur = false; // Track if window lost focus (App opened)
 
-            const onBlur = () => { appOpened = true; };
-            window.addEventListener('blur', onBlur);
-            window.addEventListener('visibilitychange', () => { if (document.hidden) appOpened = true; });
+            // Listen for window blur (implies app took over)
+            window.addEventListener('blur', function() {
+                isBlur = true;
+            });
 
+            // Attempt to open App
             window.location.href = appUrl;
 
-            setTimeout(() => {
-                window.removeEventListener('blur', onBlur);
-                if (appOpened || document.hidden || document.webkitHidden) return; 
-                if (Date.now() - startTime > timeoutDuration + 1000) return;
+            setTimeout(function() {
+                // Remove listener to clean up
+                window.removeEventListener('blur', function(){});
+
+                // If window lost focus, OR document is hidden, the App likely opened.
+                // Do NOT open the browser link.
+                if (isBlur || document.hidden || document.webkitHidden) {
+                    return; 
+                }
+
+                // Double check timing: If system dialog paused the script, time diff will be large
+                // If so, assume success and do not open web.
+                if (Date.now() - start > timeout + 1000) {
+                    return;
+                }
+
+                // If we are here, App didn't open. Fallback to Web.
                 window.open(webUrl, '_blank');
-            }, timeoutDuration);
+            }, timeout);
         }
     </script>
 </body>
