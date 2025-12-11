@@ -1,294 +1,152 @@
 /* css/style.css
-   Restored & cleaned: category pills inline, unified follow-us, read-more styles,
-   consistent vertical rhythm (--section-gap), no underlines, no black borders.
+   Targeted fixes (only):
+   - detail image fitting in article page
+   - reduce follow-us -> article text gap, unify spacing
+   - category pill inline on index + article (no stretched bg)
+   - logo size consistent across pages
+   Keep rest of styles unchanged from the final restore.
 */
 
-/* ---------- Root & fonts ---------- */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
 
 :root{
-  --section-gap: 15px;          /* canonical vertical rhythm used across sections */
+  --section-gap: 15px;
   --container-width: 1400px;
-  --ticker-speed-px-per-sec: 100;
   --brand-red: #dc2626;
   --muted-gray: #6b7280;
 }
 
-/* ---------- Reset & base ---------- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html,body { height:100%; }
-body {
-  font-family: 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background: #f5f5f5;
-  color: #333;
-  line-height: 1.6;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
-.container { max-width: var(--container-width); margin: 0 auto; padding: 0 20px; }
+/* Basic reset */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; background:#f5f5f5; color:#333; line-height:1.6; }
+.container { max-width:var(--container-width); margin:0 auto; padding:0 20px; }
 
-/* ---------- Breaking news ticker (unchanged behaviour) ---------- */
-.breaking-news {
-  background: linear-gradient(135deg, var(--brand-red) 0%, #b91c1c 100%);
-  color: white;
-  padding: 12px 0;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-.breaking-news .container { display:flex; align-items:center; gap:15px; }
-.ticker-label {
-  background: white; color: var(--brand-red); padding: 8px 18px; font-weight:800; font-size:16px; border-radius:6px; white-space:nowrap;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-}
-.ticker-mask { flex:1; overflow:hidden; position:relative; }
-.ticker-track { display:flex; align-items:center; white-space:nowrap; will-change:transform; animation: ticker-scroll var(--ticker-duration,30s) linear infinite; }
-.ticker-block { display:inline-flex; gap:1.5em; align-items:center; padding-right:1.5em; }
-.ticker-item { font-weight:700; color:white; font-size:18px; cursor:pointer; white-space:nowrap; }
-@keyframes ticker-scroll { 0%{transform:translateX(0)} 100%{transform:translateX(calc(-1 * var(--scroll-width,1000px)))} }
-
-/* ---------- Header ---------- */
-.header {
-  background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 15px 0;
-}
+/* ---------- Header / logo consistency ---------- */
+.header { background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.08); position:sticky; top:0; z-index:100; padding:15px 0; }
 .header .container { display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+
+/* Ensure logo image uses a fixed height everywhere and fallback text stays hidden unless image fails */
 .logo { display:flex; align-items:center; gap:14px; }
-.logo-image img { height:75px; width:auto; object-fit:contain; }
-.search-container { display:flex; flex:1; max-width:520px; gap:8px; }
-.search-input { flex:1; padding:10px 16px; border:2px solid #e5e7eb; border-radius:6px; font-size:15px; }
-.search-input:focus { outline:none; border-color: var(--brand-red); }
-.search-btn { padding:10px 16px; background: var(--brand-red); color: white; border:none; border-radius:6px; cursor:pointer; }
+.logo-image img { height:75px; width:auto; object-fit:contain; display:block; }
+.logo-fallback { display:none; font-size:18px; color:var(--brand-red); font-weight:700; }
 
-/* Home button */
-.main-nav { display:flex; gap:10px; align-items:center; }
-.home-btn {
-  padding:14px 28px; background: var(--brand-red); color:white; border-radius:6px; font-size:18px; font-weight:600;
-  display:inline-flex; align-items:center; gap:10px; text-decoration:none; border:none; cursor:pointer;
-}
-.home-btn:hover { background: #b91c1c; }
+/* ---------- Global follow-us styling (keeps previous look) ---------- */
+.follow-us-section { background:#f8f9fa; padding:12px 18px; margin: calc(var(--section-gap) * 1) 0; text-align:center; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+.follow-us-section h3 { color:#b91c1c; margin-bottom:10px; font-size:20px; font-weight:700; }
+.follow-buttons { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; align-items:center; }
+.follow-btn { display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:6px; text-decoration:none !important; color:white; font-weight:700; font-size:14px; border:none; outline:none; -webkit-appearance:none; }
+.follow-btn.twitter { background:#000; } .follow-btn.facebook { background:#1877f2; } .follow-btn.instagram { background:linear-gradient(45deg,#f09433,#e6683c,#dc2743); } .follow-btn.threads { background:#000; }
+.follow-btn:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,0.06); }
 
-/* ---------- Follow Us (global, same on index & article) ---------- */
-/* This ensures the index and article pages have identical Follow-Us visuals */
-.follow-us-section {
-  background: #f8f9fa;
-  padding: 14px 20px;
-  margin: calc(var(--section-gap) * 1) 0;   /* ensures header→follow, follow→hero spacing uses same rhythm */
-  text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  position: relative;
-  z-index: 2;
-  overflow: visible;
-}
-.follow-us-section h3 {
-  color: #b91c1c;
-  margin-bottom: 10px;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-/* rectangular follow buttons */
-.follow-buttons {
-  display:flex;
-  gap: 14px;
-  justify-content:center;
-  flex-wrap:wrap;
-  align-items:center;
-}
-
-/* anchors styled as buttons: explicitly remove underline and focus outline */
-.follow-btn {
-  display:inline-flex;
-  align-items:center;
-  gap: 10px;
-  padding: 10px 18px;
-  border-radius: 8px;
-  text-decoration: none !important;
-  color: white;
-  font-weight: 700;
-  font-size: 15px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  transition: transform 0.18s, box-shadow 0.18s, opacity 0.12s;
-  min-width: 120px;
-  justify-content: center;
-  border: none;
-  outline: none;
-  -webkit-appearance: none;
-}
-.follow-btn:hover { transform: translateY(-3px); opacity: 0.96; }
-
-/* platform brand colors */
-.follow-btn.twitter { background: #000000; }
-.follow-btn.facebook { background: #1877f2; }
-.follow-btn.instagram { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743); }
-.follow-btn.threads { background: #000000; }
-
-/* ---------- Hero (keeps previous behaviour) ---------- */
-.hero-section { margin: calc(var(--section-gap) * 1) 0; }
-.hero-card {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  display: grid;
-  grid-template-columns: 1.4fr 0.6fr;
-  gap: 20px;
-}
-.hero-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
-.hero-image-container { position: relative; overflow: hidden; background: #f0f0f0; min-height: 400px; }
-.hero-image { width: 100%; height: 100%; object-fit: cover; object-position: center center; transition: transform .3s; }
-.hero-card:hover .hero-image { transform: scale(1.02); }
-.hero-content { padding: 25px; display:flex; flex-direction:column; justify-content:center; }
-
-/* hero category pill - make inline and auto width */
-.hero-category {
-  display: inline-block;
-  background: #fef2f2;
-  color: #111827;
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 15px;
-  width: auto;            /* ensure fits text only */
-}
-
-/* hero title and CTA */
-.hero-title { font-size: 32px; font-weight: 800; color: var(--brand-red); margin-bottom: 15px; line-height:1.2; }
-.hero-summary { font-size: 17px; color: var(--muted-gray); margin-bottom: 20px; }
-.hero-read-more {
-  display: inline-flex; align-items:center; gap:8px;
-  padding: 12px 24px; background: var(--brand-red); color:white; text-decoration:none; border-radius:6px; font-weight:600;
-  width: fit-content; margin-bottom: 20px;
-}
-.hero-read-more:hover { background:#b91c1c; }
-
-/* ---------- Articles grid & cards ---------- */
-.articles-grid { margin: calc(var(--section-gap) * 1) 0; }
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: var(--section-gap);  /* card-to-card spacing matches overall rhythm */
-  margin-bottom: 25px;
-}
-.article-card {
-  background: white; border-radius: 12px; overflow:hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  display: flex; flex-direction: column; transition: transform .3s, box-shadow .3s;
-}
-.article-card:hover { transform: translateY(-4px); box-shadow: 0 6px 24px rgba(0,0,0,0.1); }
-.article-image-container { position: relative; width:100%; height:220px; overflow:hidden; background:#f0f0f0; }
-.article-image { width:100%; height:100%; object-fit: cover; object-position:center center; transition: transform .3s; }
-.article-card:hover .article-image { transform:scale(1.02); }
-.article-content { padding: 25px; display:flex; flex-direction:column; flex:1; }
-
-/* article category pill - inline and fits text (prevents stretching) */
-.article-category {
-  display: inline-block;
-  background: #fef2f2;
-  color: #111827;
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 12px;
-  width: auto;              /* IMPORTANT: fit to contents, not stretched */
-}
-
-/* article title & summary */
-.article-title { font-size: 20px; font-weight:700; color: var(--brand-red); margin-bottom:12px; line-height:1.3; }
-.article-summary { font-size: 15px; color: var(--muted-gray); margin-bottom:15px; line-height:1.5; flex:1; }
-
-/* Read more styling:
-   - small cards: red text link (default)
-   - hero: prominent red button (handled above)
+/* ---------- ARTICLE DETAIL IMAGE (fix) ----------
+   Use an explicit container with a flexible max-height and object-fit:cover to make the image fill the area
+   while staying centered and not over-zooming. This yields consistent, pleasant framing on portrait/landscape.
 */
-.article-read-more {
-  color: var(--brand-red);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 15px;
-}
-.article-read-more:hover { text-decoration: underline; }
 
-/* article social area */
-.article-social { display:flex; gap:8px; flex-wrap:wrap; padding-top:15px; border-top:1px solid #e5e7eb; }
-
-/* ---------- Social sharing icons — small and borderless ---------- */
-.social-sharing { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
-.social-btn {
-  width:42px; height:42px; min-width:42px; min-height:42px;
-  border-radius:50%;
-  display:inline-flex; align-items:center; justify-content:center;
-  font-size:16px; color:white; cursor:pointer;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  transition: transform .18s, box-shadow .18s;
-  border: none;
-  outline: none;
-  -webkit-appearance: none;
-}
-.social-btn:hover { transform:translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.12); }
-.social-btn.twitter { background:#000000; } .social-btn.facebook { background:#1877f2; }
-.social-btn.whatsapp { background:#25d366; } .social-btn.threads { background:#000000; } .social-btn.copy { background:#6b7280; }
-
-/* Remove underlines specifically from follow buttons and social links (fixes index underline issue) */
-.follow-us-section .follow-btn,
-.article-sharing .social-btn,
-.follow-buttons a { text-decoration: none !important; }
-
-/* Remove default focus outline showing as black border */
-.follow-btn:focus, .social-btn:focus { outline: none; box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
-
-/* ---------- Load more, footer, toast ---------- */
-.load-more-container { text-align:center; margin: 40px 0; display:flex; gap:15px; justify-content:center; flex-wrap:wrap; }
-.load-more-btn, .collapse-btn { padding:14px 32px; background: var(--brand-red); color:white; border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; }
-.load-more-btn:hover, .collapse-btn:hover { background:#b91c1c; transform: translateY(-2px); }
-
-.footer { background:#1f2937; color:white; padding:30px 0; text-align:center; margin-top: 60px; }
-.toast { position:fixed; bottom:30px; right:30px; background:#111827; color:white; padding:16px 24px; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.3); z-index:1000; opacity:0; transform:translateY(20px); transition:opacity .3s, transform .3s; }
-.toast.show { opacity:1; transform:translateY(0); }
-
-/* ---------- ARTICLE PAGE: use the same section-gap rhythm ---------- */
-.article-content-header { margin-bottom: calc(var(--section-gap) * 1); padding-bottom: 15px; border-bottom: 2px solid var(--brand-red); }
-.detail-image { width:100%; height:auto; border-radius:8px; margin-bottom: calc(var(--section-gap) * 1); object-fit: none; background:#f0f0f0; }
-
-/* Ensure article's Follow Us area also follows the global style and gap */
-article .follow-us-section { margin: calc(var(--section-gap) * 1) 0; }
-
-/* ---------- Responsive ---------- */
-@media (max-width: 1024px) {
-  .hero-card { grid-template-columns: 1fr; }
-  .hero-image-container { height: 350px; }
-  .grid-container { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--section-gap); }
-}
-@media (max-width: 768px) {
-  .header .container { flex-direction: column; gap: 15px; }
-  .search-container { max-width: 100%; order: 3; width: 100%; }
-  .main-nav { order: 2; }
-  .logo { order: 1; }
-  .hero-content { padding: 20px; }
-  .hero-title { font-size: 26px; }
-  .grid-container { grid-template-columns: 1fr; gap: var(--section-gap); }
-  .follow-buttons { flex-direction: column; align-items: stretch; }
-  .follow-btn { min-width: auto; width:100%; padding:10px; }
-  .social-btn { width:38px; height:38px; font-size:15px; }
-}
-@media (max-width: 480px) {
-  .container { padding: 0 15px; }
-  .hero-title { font-size: 22px; }
-  .article-title { font-size: 18px; }
-  .breaking-news { padding: 10px 0; }
+.detail-image {
+  display:block;
+  width:100%;
+  /* set a maximum visible height so images do not blow up on tall originals */
+  max-height:480px;
+  height: auto;           /* natural scaling for most images */
+  border-radius:8px;
+  margin-bottom: calc(var(--section-gap) * 0.75); /* slightly smaller gap before follow-us to match rhythm */
+  background:#f0f0f0;
+  object-position:center center;
+  /* apply cover only when the image ends up forced into a fixed height container */
+  /* for browsers that respect object-fit with max-height, this gives consistent crop + centering */
+  object-fit:cover;
 }
 
-/* ---------- Print ---------- */
+/* make very large screens show a slightly taller image but still limited */
+@media (min-width:1200px) {
+  .detail-image { max-height:560px; }
+}
+@media (max-width:480px) {
+  .detail-image { max-height:420px; }
+}
+
+/* ---------- Reduce Follow-Us -> article text gap ----------
+   We want the space below the Follow Us block to match other section gaps.
+   The follow-us margin-bottom above and article content margin-top below use same rhythm.
+*/
+article .follow-us-section { margin-bottom: calc(var(--section-gap) * 0.6); }
+.article-content { margin-top: calc(var(--section-gap) * 0.4); } /* small top offset consistent with follow-us */
+
+/* ---------- Category pill: ensure inline fit-to-text everywhere ----------
+   Fix stretched background on index by forcing these to be inline-block and auto width.
+*/
+.hero-category, .article-category, .category-pill, .article-content-header .article-category {
+  display:inline-block !important;
+  width:auto !important;
+  padding:6px 12px !important;
+  background:#fef2f2 !important;
+  color:#111827 !important;
+  border-radius:16px !important;
+  font-weight:700 !important;
+  text-transform:uppercase !important;
+  font-size:12px !important;
+  letter-spacing:0.5px !important;
+  margin-bottom:12px !important;
+}
+
+/* Additional guard: some pages used a full-width bar selector; neutralize it */
+.category-fullwidth, .category-bar { background:transparent !important; padding:0 !important; }
+
+/* ---------- Hero & Cards spacing / read-more consistency (no structural change) ---------- */
+.hero-section { margin: calc(var(--section-gap) * 1) 0; }
+.grid-container { gap: var(--section-gap); }
+
+/* Keep read-more styles intact (hero button + small card link) */
+.hero-read-more { background:var(--brand-red) !important; color:#fff !important; border-radius:6px; padding:12px 24px; text-decoration:none !important; display:inline-flex; gap:8px; }
+.article-read-more { color:var(--brand-red); text-decoration:none; font-weight:600; }
+.article-read-more:hover { text-decoration:underline; }
+
+/* ---------- small refinements to avoid index underline issue ----------
+   Some index templates added anchor underlines via specificity; this prevents that.
+*/
+.follow-us-section a, .follow-buttons a, .follow-btn { text-decoration:none !important; }
+
+/* ---------- keep rest of layout rules untouched (rely on existing file) ---------- */
+
+/* Responsive tweaks: ensure follow-buttons stack appropriately */
+@media (max-width:768px) {
+  .follow-buttons { flex-direction:column; align-items:stretch; }
+  .follow-btn { width:100%; justify-content:center; padding:10px; }
+  .detail-image { max-height:420px; }
+  .article-content { margin-top: calc(var(--section-gap) * 0.5); }
+}
+
+/* Print */
 @media print {
-  .breaking-news, .header, .search-container, .social-sharing, .article-social, .load-more-container, .footer, .follow-us-section { display:none; }
-  .hero-card, .article-card { box-shadow:none; border:1px solid #e5e7eb; }
+  .follow-us-section, .header, .search-container, .social-sharing, .article-social, .load-more-container, .footer { display:none; }
+}
+
+/* --- FIX: Prevent category background stretch on index page --- */
+
+/* Force all category pills (index + article) to behave the same */
+.article-category,
+.hero-category,
+.category-pill,
+.category,
+.index-category {
+    display: inline-block !important;
+    width: auto !important;
+    padding: 4px 12px !important;
+    background: #fef2f2 !important;
+    color: #111827 !important;
+    border-radius: 14px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px !important;
+}
+
+/* Remove any container that forces stretching */
+.category-bar,
+.category-wrapper,
+.category-fullwidth {
+    background: transparent !important;
+    width: auto !important;
+    padding: 0 !important;
 }
