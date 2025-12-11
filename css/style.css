@@ -277,19 +277,25 @@ body {
     overflow: hidden;
     background: #f0f0f0;
     min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero-image {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s;
+    height: auto;
+    max-height: none;
+    object-fit: none;
+    object-position: center center;
+    display: block;
+    border-radius: 8px;
+    transition: transform .3s;
 }
 
 .hero-card:hover .hero-image {
     transform: scale(1.05);
 }
-
 .hero-image-fallback {
     display: none;
     width: 100%;
