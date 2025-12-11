@@ -10,7 +10,68 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Oriya:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* very small page-specific tweaks only: keep sizes unchanged */
+    /* Page-specific overrides for the new sleek look */
+    
+    /* Sleek Follow Section (Matches Article Page) */
+    .follow-us-section { 
+        background: transparent; 
+        padding: 15px 0; 
+        margin: 0 0 20px 0; 
+        text-align: left; 
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .follow-us-section h3 { 
+        color: #6b7280; 
+        margin: 0; 
+        font-size: 13px; 
+        font-weight: 700; 
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .follow-buttons { 
+        display: flex; 
+        gap: 10px; 
+        flex-wrap: wrap;
+    }
+    .follow-btn { 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 6px; 
+        padding: 6px 16px; 
+        border-radius: 20px; 
+        text-decoration: none; 
+        color: white; 
+        font-weight: 600; 
+        transition: transform 0.2s, opacity 0.2s; 
+        font-size: 13px; 
+        box-shadow: none !important; /* Remove old shadow */
+    }
+    .follow-btn:hover { 
+        transform: translateY(-1px); 
+        opacity: 0.9;
+    }
+    /* Button Colors */
+    .follow-btn.twitter { background: #000000; }
+    .follow-btn.facebook { background: #1877f2; }
+    .follow-btn.instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+    .follow-btn.threads { background: #000000; }
+
+    /* Mobile adjustments */
+    @media (max-width: 600px) {
+        .follow-us-section {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            background: #f9fafb; /* Slight bg for mobile separation */
+            padding: 15px;
+            border-radius: 8px;
+        }
+    }
+    
+    /* Ticker Tweaks */
     .ticker-track .ticker-item { cursor: pointer; display: inline; }
     .ticker-track .ticker-item:hover { text-decoration: underline; }
   </style>
@@ -44,12 +105,11 @@
   </header>
 
   <main class="container">
-    <!-- Follow Us Section (uses global CSS spacing now) -->
     <section class="follow-us-section">
-      <h3>Follow Us</h3>
+      <h3>Follow Us:</h3>
       <div class="follow-buttons">
         <a href="https://x.com/FactPilgrim" target="_blank" rel="noopener noreferrer" class="follow-btn twitter">
-          <i class="fab fa-x-twitter"></i> X (Twitter)
+          <i class="fab fa-x-twitter"></i> X
         </a>
 
         <a href="https://www.facebook.com/FactPilgrim" target="_blank" rel="noopener noreferrer" class="follow-btn facebook">
@@ -66,10 +126,8 @@
       </div>
     </section>
 
-    <!-- Hero Section -->
     <section class="hero-section" id="heroSection"></section>
 
-    <!-- Articles Grid -->
     <section class="articles-grid">
       <div class="grid-container" id="articlesGrid"></div>
 
