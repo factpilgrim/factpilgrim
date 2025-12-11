@@ -194,19 +194,21 @@ class FactPilgrim {
 
         // Get articles 14-24 (indices 13-23)
         const tickerArticles = this.articles.slice(13, 24);
-        let headlines = tickerArticles.length > 0 ? tickerArticles.map((a) => {
-            return `<span class="ticker-item" data-filename="${a.filename}">${a.title}</span>`;
-        }) : ['<span>Stay tuned for the latest news</span>'];
+        
+        // Create headlines array
+        const headlines = tickerArticles.length > 0 
+            ? tickerArticles.map(a => `<span class="ticker-item" data-filename="${a.filename}">${a.title}</span>`)
+            : ['<span class="ticker-item">Stay tuned for the latest news</span>'];
 
-        // Create seamless looping by duplicating content
-        const tickerHTML = headlines.join(' • ') + ' • ';
+        // Clear existing content
         tickerTrack.innerHTML = '';
         
-        // Create three copies for seamless loop (original, duplicate 1, duplicate 2)
+        // Create three ticker-block elements for seamless looping
         for (let i = 0; i < 3; i++) {
-            const span = document.createElement('span');
-            span.innerHTML = tickerHTML;
-            tickerTrack.appendChild(span);
+            const block = document.createElement('div');
+            block.className = 'ticker-block';
+            block.innerHTML = headlines.join('<span style="padding:0 1em">•</span>');
+            tickerTrack.appendChild(block);
         }
 
         // Add click listeners to ticker items
@@ -219,10 +221,17 @@ class FactPilgrim {
             });
         });
 
-        // Calculate duration for smooth animation
-        const totalWidth = tickerTrack.scrollWidth / 3; // Width of one segment
-        const duration = totalWidth / 50; // Smoother speed calculation
-        tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
+        // Calculate scroll width for animation
+        const firstBlock = tickerTrack.querySelector('.ticker-block');
+        if (firstBlock) {
+            const blockWidth = firstBlock.offsetWidth;
+            const scrollWidth = blockWidth * 3; // Total width of all three blocks
+            tickerTrack.style.setProperty('--scroll-width', `${scrollWidth}px`);
+            
+            // Adjust animation duration based on width for consistent speed
+            const duration = scrollWidth / 100; // Adjust divisor for speed (higher = slower)
+            tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
+        }
     }
 
     formatCategory(category) { return category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
