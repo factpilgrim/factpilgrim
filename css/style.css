@@ -24,7 +24,7 @@ body {
 .breaking-news {
   background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
   color: white;
-  padding: 8px 0; /* Reduced from 12px */
+  padding: 8px 0;
   position: relative;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -94,7 +94,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 5px 0; /* Reduced from 15px */
+  padding: 5px 0;
 }
 
 .header .container {
@@ -115,7 +115,7 @@ body {
 }
 
 .logo-image img {
-  height: 60px; /* Reduced from 75px */
+  height: 60px;
   width: auto;
   object-fit: contain;
 }
@@ -187,11 +187,14 @@ body {
   background: #b91c1c;
 }
 
+/* --- STANDARDIZED SPACING (15px) --- */
+
 /* Follow Us Section */
 .follow-us-section {
   background: #f8f9fa;
-  padding: 8px 10px; /* Reduced padding */
-  margin: 10px 0; /* Reduced margin */
+  padding: 10px;
+  /* 15px gap Top (to header) and Bottom (to Hero) */
+  margin: 15px 0 15px 0; 
   text-align: center;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -199,14 +202,14 @@ body {
 
 .follow-us-section h3 {
   color: #b91c1c;
-  margin-bottom: 5px; /* Reduced margin */
-  font-size: 18px; /* Slightly smaller font */
+  margin-bottom: 5px;
+  font-size: 18px;
   font-weight: 700;
 }
 
 .follow-buttons {
   display: flex;
-  gap: 10px; /* Reduced gap */
+  gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -215,13 +218,13 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px; /* Smaller padding */
+  padding: 8px 16px;
   border-radius: 6px;
   text-decoration: none;
   color: white;
   font-weight: bold;
   transition: transform 0.2s, box-shadow 0.2s;
-  font-size: 14px; /* Smaller font */
+  font-size: 14px;
 }
 
 .follow-btn:hover {
@@ -247,7 +250,9 @@ body {
 
 /* Hero Section */
 .hero-section {
-  margin: 10px 0; /* Reduced margin */
+  /* 0 Top (Gap handled by Follow Us bottom margin)
+     15px Bottom (Gap to Articles Grid) */
+  margin: 0 0 15px 0;
 }
 
 .hero-card {
@@ -257,7 +262,7 @@ body {
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   display: grid;
   grid-template-columns: 1.4fr 0.6fr;
-  gap: 10px; /* Reduced gap */
+  gap: 15px; /* Internal card gap */
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -417,13 +422,13 @@ body {
 
 /* Articles Grid */
 .articles-grid {
-  margin: 40px 0;
+  margin: 0; /* Margin handled by grid gap */
 }
 
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 15px;
+  gap: 15px; /* The Standard Gap */
   margin-bottom: 25px;
 }
 
