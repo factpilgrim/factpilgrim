@@ -79,37 +79,26 @@
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
         
-        // FIXED APP OPENER LOGIC (PREVENTS BOTH OPENING)
+        // REVISED APP OPENER LOGIC
         function openSocialApp(webUrl, appUrl) {
-            var timeout = 2000;
+            var timeout = 2500;
             var start = Date.now();
-            var isBlur = false; // Track if window lost focus (App opened)
-
-            // Listen for window blur (implies app took over)
-            window.addEventListener('blur', function() {
-                isBlur = true;
-            });
-
-            // Attempt to open App
+            
+            // Try opening the App
             window.location.href = appUrl;
 
             setTimeout(function() {
-                // Remove listener to clean up
-                window.removeEventListener('blur', function(){});
-
-                // If window lost focus, OR document is hidden, the App likely opened.
-                // Do NOT open the browser link.
-                if (isBlur || document.hidden || document.webkitHidden) {
-                    return; 
+                // Check if the page is hidden (meaning the user switched to the app)
+                if (document.hidden || document.webkitHidden) {
+                    return; // App opened successfully
                 }
-
-                // Double check timing: If system dialog paused the script, time diff will be large
-                // If so, assume success and do not open web.
+                
+                // Check if a system dialog paused execution (time elapsed is much larger than timeout)
                 if (Date.now() - start > timeout + 1000) {
-                    return;
+                   return; // App dialog likely appeared
                 }
 
-                // If we are here, App didn't open. Fallback to Web.
+                // If neither happened, open the Web URL
                 window.open(webUrl, '_blank');
             }, timeout);
         }
