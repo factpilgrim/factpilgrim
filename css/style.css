@@ -5,7 +5,7 @@
 
 :root {
     --primary-red: #dc2626;
-    --dark-red: #b91c1c; /* Matches PDF Source 15 */
+    --dark-red: #b91c1c;
     --light-bg: #f9fafb;
     --white: #ffffff;
     --text-dark: #111827;
@@ -133,7 +133,7 @@ img {
 }
 
 /* =========================================
-   4. HEADER & NAVIGATION
+   4. HEADER & NAVIGATION (RESIZED BY 50%)
    ========================================= */
 .header {
     background-color: var(--white);
@@ -156,8 +156,8 @@ img {
 }
 
 .logo-image {
-    /* UPDATED: Increased size based on user feedback */
-    height: 50px; 
+    /* SCALED UP: 50px -> 75px (+50%) */
+    height: 75px; 
     display: flex;
     align-items: center;
 }
@@ -168,7 +168,7 @@ img {
 }
 
 .logo-fallback {
-    font-size: 24px;
+    font-size: 32px; /* Scaled up */
     font-weight: 900;
     color: var(--primary-red);
     display: none; 
@@ -181,16 +181,18 @@ img {
     max-width: 500px;
     position: relative;
     display: flex;
+    /* Adjusted to match new button height */
 }
 
 .search-input {
     width: 100%;
-    padding: 10px 15px;
+    /* SCALED UP: Larger padding and font */
+    padding: 15px 20px;
     border: 1px solid var(--border-color);
-    border-radius: 4px 0 0 4px;
+    border-radius: 6px 0 0 6px;
     outline: none;
     font-family: inherit;
-    font-size: 15px;
+    font-size: 18px; /* Larger font */
 }
 
 .search-input:focus {
@@ -198,13 +200,14 @@ img {
 }
 
 .search-btn {
-    padding: 0 20px;
+    /* SCALED UP */
+    padding: 0 30px;
     background-color: var(--primary-red);
     border: none;
     color: var(--white);
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 6px 6px 0;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 20px; /* Larger icon */
     transition: background-color 0.2s;
 }
 
@@ -212,26 +215,26 @@ img {
     background-color: var(--dark-red);
 }
 
-/* UPDATED: Home Button matches PDF Source 31 "Back to Home" style */
+/* SCALED UP: Home Button (+50% size) */
 .main-nav .home-btn {
     background: transparent;
-    border: 2px solid #dc2626; /* Red Border */
-    color: #dc2626; /* Red Text */
-    padding: 10px 20px; /* Larger Padding */
-    border-radius: 4px;
-    font-weight: 700; /* Bold */
+    border: 2px solid var(--text-dark); /* Slightly thicker border for scale */
+    color: var(--text-dark);
+    padding: 12px 25px; /* Scaled up padding */
+    border-radius: 6px;
+    font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     transition: all 0.2s;
-    font-size: 16px;
+    font-size: 22px; /* Larger font (was 14px/16px) */
     font-family: inherit;
 }
 
 .main-nav .home-btn:hover {
-    background-color: #dc2626; 
-    color: var(--white); 
+    background-color: var(--text-dark);
+    color: var(--white);
 }
 
 /* =========================================
@@ -239,7 +242,7 @@ img {
    ========================================= */
 .hero-section {
     margin-top: 30px;
-    margin-bottom: 30px; /* Reduced bottom margin */
+    margin-bottom: 30px;
 }
 
 .hero-card {
@@ -285,13 +288,12 @@ img {
 }
 
 .hero-content {
-    padding: 30px; /* Slightly reduced padding */
+    padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-/* Category styling */
 .hero-category {
     align-self: flex-start; 
     background-color: #fef2f2; 
@@ -305,7 +307,6 @@ img {
     letter-spacing: 1px;
 }
 
-/* UPDATED: Headline Color Red (Source 15) */
 .hero-title {
     font-size: 32px;
     font-weight: 800;
@@ -313,7 +314,7 @@ img {
     margin-bottom: 15px;
     cursor: pointer;
     transition: color 0.2s;
-    color: var(--dark-red); /* #b91c1c */
+    color: var(--dark-red);
 }
 
 .hero-title:hover {
@@ -352,11 +353,10 @@ img {
     margin-bottom: 60px;
 }
 
-/* UPDATED: Reduced vertical gap */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px; /* Reduced from 25/30px */
+    gap: 20px;
 }
 
 .article-card {
@@ -403,15 +403,14 @@ img {
 }
 
 .article-content {
-    padding: 15px 20px; /* Reduced top/bottom padding */
+    padding: 15px 20px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-/* Category styling */
 .article-category {
-    align-self: flex-start; 
+    align-self: flex-start;
     background-color: #fef2f2;
     color: var(--primary-red);
     padding: 4px 8px;
@@ -419,16 +418,15 @@ img {
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
-    margin-bottom: 8px; /* Reduced margin */
+    margin-bottom: 8px;
 }
 
-/* UPDATED: Headline Color Red (Source 15) */
 .article-title {
     font-size: 18px; 
     font-weight: 700;
     line-height: 1.4;
     margin-bottom: 10px;
-    color: var(--dark-red); /* #b91c1c */
+    color: var(--dark-red);
     cursor: pointer;
     display: -webkit-box;
     -webkit-line-clamp: 4; 
@@ -613,6 +611,10 @@ img {
     }
     .grid-container {
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    /* Mobile adjustments for new size */
+    .logo-image {
+        height: 60px; /* Slightly smaller on mobile */
     }
 }
 
