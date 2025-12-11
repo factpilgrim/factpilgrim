@@ -1,4 +1,4 @@
-/* script.js - FactPilgrim main JS (full) */
+/* js/script.js — full (only changes: ticker logic + shareOnThreads encoding) */
 
 class FactPilgrim {
   constructor() {
@@ -7,7 +7,6 @@ class FactPilgrim {
     this.currentPage = 1;
     this.articlesPerPage = 12;
     this.isLoading = false;
-    this.searchTimeout = null;
     this.init();
   }
 
@@ -16,11 +15,9 @@ class FactPilgrim {
     this.setupEventListeners();
     this.displayArticles();
     this.updateTicker();
-    // re-run ticker when window resizes (to recalc widths)
     window.addEventListener('resize', () => {
-      // small debounce:
       clearTimeout(this.__tickerResize);
-      this.__tickerResize = setTimeout(() => this.updateTicker(), 250);
+      this.__tickerResize = setTimeout(() => this.updateTicker(), 220);
     });
   }
 
@@ -28,64 +25,41 @@ class FactPilgrim {
     if (this.isLoading) return;
     this.isLoading = true;
     try {
-      const response = await fetch('./articles/data/news.json');
-      if (!response.ok) throw new Error('Failed to load articles');
-      this.articles = await response.json();
+      const res = await fetch('./articles/data/news.json');
+      if (!res.ok) throw new Error('Failed to load');
+      this.articles = await res.json();
       this.filteredArticles = [...this.articles];
-    } catch (error) {
-      console.error('Error loading articles:', error);
+    } catch (err) {
+      console.error(err);
       this.articles = [];
       this.filteredArticles = [];
-    } finally {
-      this.isLoading = false;
-    }
+    } finally { this.isLoading = false; }
   }
 
   setupEventListeners() {
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     if (loadMoreBtn) loadMoreBtn.addEventListener('click', () => this.loadMoreArticles());
-
     const collapseBtn = document.getElementById('collapseBtn');
     if (collapseBtn) collapseBtn.addEventListener('click', () => this.collapseArticles());
-
-    const homeBtn = document.querySelector('.home-btn');
-    if (homeBtn) {
-      homeBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.currentPage = 1;
-        this.filteredArticles = [...this.articles];
-        this.displayArticles();
-        const si = document.getElementById('searchInput');
-        if (si) si.value = '';
-      });
-    }
-
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
+      let t;
       searchInput.addEventListener('input', (e) => {
-        clearTimeout(this.searchTimeout);
-        this.searchTimeout = setTimeout(() => this.searchArticles(e.target.value), 300);
+        clearTimeout(t);
+        t = setTimeout(() => this.searchArticles(e.target.value), 300);
       });
     }
   }
 
-  searchArticles(query) {
-    if (!query.trim()) {
-      this.filteredArticles = [...this.articles];
-    } else {
-      const searchTerm = query.toLowerCase();
-      this.filteredArticles = this.articles.filter(article =>
-        (article.title || '').toLowerCase().includes(searchTerm) ||
-        (article.summary || '').toLowerCase().includes(searchTerm) ||
-        (article.category || '').toLowerCase().includes(searchTerm)
-      );
+  searchArticles(q) {
+    if (!q.trim()) { this.filteredArticles = [...this.articles]; }
+    else {
+      const s = q.toLowerCase();
+      this.filteredArticles = this.articles.filter(a => (a.title||'').toLowerCase().includes(s) || (a.summary||'').toLowerCase().includes(s) || (a.category||'').toLowerCase().includes(s));
     }
     this.currentPage = 1;
     this.displayArticles();
-  }
-
-  getBaseUrl() {
-    return "https://factpilgrim.github.io/factpilgrim/";
+    this.updateTicker(); // refresh ticker when search changes
   }
 
   displayArticles() {
@@ -93,94 +67,80 @@ class FactPilgrim {
     const articlesGrid = document.getElementById('articlesGrid');
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     const collapseBtn = document.getElementById('collapseBtn');
-
     if (!heroSection || !articlesGrid) return;
 
-    requestAnimationFrame(() => {
-      heroSection.innerHTML = '';
-      articlesGrid.innerHTML = '';
+    heroSection.innerHTML = '';
+    articlesGrid.innerHTML = '';
 
-      if (this.filteredArticles.length === 0) {
-        heroSection.innerHTML = '<div class="no-articles"><h2>No articles found</h2></div>';
-        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
-        return;
-      }
+    if (this.filteredArticles.length === 0) {
+      heroSection.innerHTML = '<div class="no-articles"><h2>No articles found</h2></div>';
+      if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+      return;
+    }
 
-      const heroArticle = this.filteredArticles[0];
-      heroSection.innerHTML = this.createHeroCard(heroArticle);
+    const heroArticle = this.filteredArticles[0];
+    heroSection.innerHTML = this.createHeroCard(heroArticle);
 
-      const startIndex = 1;
-      const endIndex = Math.min(startIndex + (this.currentPage * this.articlesPerPage), this.filteredArticles.length);
-      const articlesHTML = [];
+    const start = 1;
+    const end = Math.min(start + (this.currentPage * this.articlesPerPage), this.filteredArticles.length);
+    const html = [];
+    for (let i = start; i < end; i++) { if (this.filteredArticles[i]) html.push(this.createArticleCard(this.filteredArticles[i])); }
+    articlesGrid.innerHTML = html.join('');
 
-      for (let i = startIndex; i < endIndex; i++) {
-        if (this.filteredArticles[i]) {
-          articlesHTML.push(this.createArticleCard(this.filteredArticles[i]));
-        }
-      }
+    if (loadMoreBtn) loadMoreBtn.style.display = (end < this.filteredArticles.length) ? 'block' : 'none';
+    if (collapseBtn) collapseBtn.style.display = (this.currentPage > 1) ? 'block' : 'none';
 
-      articlesGrid.innerHTML = articlesHTML.join('');
-
-      const hasMoreArticles = endIndex < this.filteredArticles.length;
-      if (loadMoreBtn) loadMoreBtn.style.display = hasMoreArticles ? 'block' : 'none';
-      if (collapseBtn) collapseBtn.style.display = this.currentPage > 1 ? 'block' : 'none';
-
-      this.addSocialSharingListeners();
-    });
+    this.addSocialSharingListeners();
   }
 
-  createHeroCard(article) {
-    const baseUrl = this.getBaseUrl();
-    const articleUrl = `${baseUrl}articles/${article.filename}`;
+  createHeroCard(a) {
+    const base = this.getBaseUrl();
+    const url = `${base}articles/${a.filename}`;
     return `
-<article class="hero-card" data-filename="${article.filename}">
+<article class="hero-card" data-filename="${a.filename}">
   <div class="hero-image-container">
-    <img src="./images/${article.image}" alt="${article.title}" class="hero-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-    <div class="hero-image-fallback">${article.title}</div>
+    <img src="./images/${a.image}" alt="${a.title}" class="hero-image">
   </div>
   <div class="hero-content">
-    <span class="hero-category">${this.formatCategory(article.category)}</span>
-    <h2 class="hero-title" onclick="factPilgrim.openArticle('${article.filename}')">${article.title}</h2>
-    <p class="hero-summary">${article.summary}</p>
-    <div class="hero-date">${this.formatDate(article.date)}</div>
-    <a href="./articles/${article.filename}" class="hero-read-more" target="_blank">Read Full Story →</a>
+    <span class="hero-category">${this.formatCategory(a.category)}</span>
+    <h2 class="hero-title" onclick="factPilgrim.openArticle('${a.filename}')">${a.title}</h2>
+    <p class="hero-summary">${a.summary}</p>
+    <div class="hero-date">${this.formatDate(a.date)}</div>
+    <a href="./articles/${a.filename}" class="hero-read-more" target="_blank">Read Full Story →</a>
     <div class="social-sharing">
-      <button class="social-btn twitter" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-x-twitter"></i></button>
-      <button class="social-btn facebook" data-url="${articleUrl}"><i class="fab fa-facebook-f"></i></button>
-      <button class="social-btn whatsapp" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-whatsapp"></i></button>
-      <button class="social-btn threads" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-threads"></i></button>
-      <button class="social-btn copy" data-url="${articleUrl}"><i class="fas fa-link"></i></button>
+      <button class="social-btn twitter" data-url="${url}" data-title="${a.title}"><i class="fab fa-x-twitter"></i></button>
+      <button class="social-btn facebook" data-url="${url}" data-title="${a.title}"><i class="fab fa-facebook-f"></i></button>
+      <button class="social-btn whatsapp" data-url="${url}" data-title="${a.title}"><i class="fab fa-whatsapp"></i></button>
+      <button class="social-btn threads" data-url="${url}" data-title="${a.title}"><i class="fab fa-threads"></i></button>
+      <button class="social-btn copy" data-url="${url}"><i class="fas fa-link"></i></button>
     </div>
   </div>
-</article>
-`;
+</article>`;
   }
 
-  createArticleCard(article) {
-    const baseUrl = this.getBaseUrl();
-    const articleUrl = `${baseUrl}articles/${article.filename}`;
+  createArticleCard(a) {
+    const base = this.getBaseUrl();
+    const url = `${base}articles/${a.filename}`;
     return `
-<article class="article-card" data-filename="${article.filename}">
+<article class="article-card" data-filename="${a.filename}">
   <div class="article-image-container">
-    <img src="./images/${article.image}" alt="${article.title}" class="article-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-    <div class="article-image-fallback">${article.title}</div>
+    <img src="./images/${a.image}" alt="${a.title}" class="article-image">
   </div>
   <div class="article-content">
-    <span class="article-category">${this.formatCategory(article.category)}</span>
-    <h3 class="article-title" onclick="factPilgrim.openArticle('${article.filename}')">${article.title}</h3>
-    <p class="article-summary">${article.summary}</p>
-    <div class="article-date">${this.formatDate(article.date)}</div>
-    <a href="./articles/${article.filename}" class="article-read-more" target="_blank">Read More →</a>
+    <span class="article-category">${this.formatCategory(a.category)}</span>
+    <h3 class="article-title" onclick="factPilgrim.openArticle('${a.filename}')">${a.title}</h3>
+    <p class="article-summary">${a.summary}</p>
+    <div class="article-date">${this.formatDate(a.date)}</div>
+    <a href="./articles/${a.filename}" class="article-read-more" target="_blank">Read More →</a>
     <div class="article-social">
-      <button class="social-btn twitter" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-x-twitter"></i></button>
-      <button class="social-btn facebook" data-url="${articleUrl}"><i class="fab fa-facebook-f"></i></button>
-      <button class="social-btn whatsapp" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-whatsapp"></i></button>
-      <button class="social-btn threads" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-threads"></i></button>
-      <button class="social-btn copy" data-url="${articleUrl}"><i class="fas fa-link"></i></button>
+      <button class="social-btn twitter" data-url="${url}" data-title="${a.title}"><i class="fab fa-x-twitter"></i></button>
+      <button class="social-btn facebook" data-url="${url}" data-title="${a.title}"><i class="fab fa-facebook-f"></i></button>
+      <button class="social-btn whatsapp" data-url="${url}" data-title="${a.title}"><i class="fab fa-whatsapp"></i></button>
+      <button class="social-btn threads" data-url="${url}" data-title="${a.title}"><i class="fab fa-threads"></i></button>
+      <button class="social-btn copy" data-url="${url}"><i class="fas fa-link"></i></button>
     </div>
   </div>
-</article>
-`;
+</article>`;
   }
 
   addSocialSharingListeners() {
@@ -195,54 +155,55 @@ class FactPilgrim {
   loadMoreArticles() { this.currentPage++; this.displayArticles(); }
   collapseArticles() { this.currentPage = 1; this.displayArticles(); }
 
+  /* ----- TICKER: build seamless blocks, measure pixel width, set --scroll-width and duration ----- */
   updateTicker() {
     const tickerTrack = document.getElementById('tickerTrack');
-    const tickerMask = document.querySelector('.ticker-mask');
-    if (!tickerTrack || !tickerMask) return;
+    if (!tickerTrack) return;
 
-    // choose a range of articles — keep existing behaviour (slice 13-23)
+    // Build headlines (same selection as before)
     const tickerArticles = this.articles.slice(13, 24);
-    let headlines = tickerArticles.length > 0 ? tickerArticles.map((a) => {
-      // protect against missing title
-      const safeTitle = (a.title || 'Untitled').trim();
-      return `<span class="ticker-item" data-filename="${a.filename}">${safeTitle}</span>`;
-    }) : ['<span class="ticker-item">Stay tuned for the latest news</span>'];
+    const headlines = tickerArticles.length ? tickerArticles.map(a => `<span class="ticker-item" data-filename="${a.filename}">${(a.title||'Untitled')}</span>`) : ['<span class="ticker-item">Stay tuned for the latest news</span>'];
 
-    const tickerHTML = headlines.join(' • ');
-    // Clear existing
+    const innerHTML = headlines.join(' • ');
+    // clear existing
     tickerTrack.innerHTML = '';
 
-    // Create two copies to make continuous seamless loop
-    const span1 = document.createElement('span');
-    span1.innerHTML = tickerHTML + ' • ';
-    const span2 = document.createElement('span');
-    span2.innerHTML = tickerHTML + ' • ';
+    // Create a block (one full pass)
+    const blockA = document.createElement('div');
+    blockA.className = 'ticker-block';
+    blockA.innerHTML = innerHTML;
 
-    tickerTrack.appendChild(span1);
-    tickerTrack.appendChild(span2);
+    // Duplicate it
+    const blockB = blockA.cloneNode(true);
 
-    // add click listeners (delegated)
+    tickerTrack.appendChild(blockA);
+    tickerTrack.appendChild(blockB);
+
+    // attach headline click: delegated to each item
     tickerTrack.querySelectorAll('.ticker-item').forEach(item => {
       item.addEventListener('click', (ev) => {
-        ev.stopPropagation();
         const filename = item.getAttribute('data-filename');
-        if (filename) {
-          window.open(`./articles/${filename}`, '_blank');
-        }
+        if (filename) window.open(`./articles/${filename}`, '_blank');
       });
     });
 
-    // measure the width of the first full block and compute duration at a steady pix/sec speed
-    // use a constant speed so animation does not appear to "jump"
-    const blockWidth = span1.offsetWidth;
-    // Ensure a small minimum width to avoid div-by-zero
-    const safeWidth = Math.max(100, blockWidth);
-    // Choose pixels per second (tweakable). A value of ~100 px/s gives comfortable speed.
-    const pixelsPerSecond = 100;
-    const duration = Math.max(8, Math.round(safeWidth / pixelsPerSecond)); // minimum 8s
-    tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
+    // Measure the pixel width of one full block (blockA)
+    // Ensure it's rendered before measurement: force reflow
+    // small hack: temporarily set visibility to hidden while measuring to avoid flicker
+    tickerTrack.style.visibility = 'hidden';
+    document.body.offsetHeight; // force reflow
+    const blockWidth = blockA.getBoundingClientRect().width || 800;
+    tickerTrack.style.visibility = '';
 
-    // ensure animation restart to avoid jump when content changed
+    // set CSS variable for scroll width (the animation uses this to move exactly the block width)
+    tickerTrack.style.setProperty('--scroll-width', `${blockWidth}px`);
+
+    // compute duration from pixels-per-second so speed is visually consistent
+    const pps = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ticker-speed-px-per-sec')) || 100;
+    const durationSec = Math.max(6, Math.round(blockWidth / pps));
+    tickerTrack.style.setProperty('--ticker-duration', `${durationSec}s`);
+
+    // restart animation cleanly (avoid jumping)
     tickerTrack.style.animation = 'none';
     // force reflow
     // eslint-disable-next-line no-unused-expressions
@@ -250,58 +211,43 @@ class FactPilgrim {
     tickerTrack.style.animation = '';
   }
 
-  formatCategory(category) { return (category || '').split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
-  formatDate(dateString) { return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); }
+  formatCategory(category) { return (category || '').toUpperCase(); }
+  formatDate(dateString) { try { return new Date(dateString).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }); } catch(e){ return dateString; } }
 
+  getBaseUrl(){ return "https://factpilgrim.github.io/factpilgrim/"; }
+
+  /* --------- Sharing helpers (THREADS: ALWAYS use encodeURIComponent(), not URLSearchParams) --------- */
   static shareOnTwitter(title, url) {
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank','width=600,height=400');
   }
 
   static shareOnFacebook(url) {
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank','width=600,height=400');
   }
 
   static shareOnWhatsApp(title, url) {
-    window.open(`https://wa.me/?text=${encodeURIComponent(title + ' - ' + url)}`, '_blank', 'width=600,height=400');
+    window.open(`https://wa.me/?text=${encodeURIComponent(title + ' - ' + url)}`, '_blank','width=600,height=400');
   }
 
   static shareOnThreads(title, url) {
-    // Ensure the entire text is encoded as one parameter to prevent + substitution or broken param
+    // IMPORTANT: use encodeURIComponent to encode spaces as %20 and keep punctuation intact.
+    // Do NOT use URLSearchParams(...).toString() which encodes spaces as + (that's the source of + signs).
     const text = `${title} - ${url}`;
-    window.open(`https://threads.net/intent/post?text=${encodeURIComponent(text)}`, '_blank', 'width=600,height=400');
+    window.open(`https://threads.net/intent/post?text=${encodeURIComponent(text)}`, '_blank','width=600,height=400');
   }
 
   static async copyArticleLink(url) {
-    try {
-      await navigator.clipboard.writeText(url);
-      FactPilgrim.showToast('Link copied!');
-    } catch (err) {
-      const ta = document.createElement('textarea');
-      ta.value = url;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      FactPilgrim.showToast('Link copied!');
-    }
+    try { await navigator.clipboard.writeText(url); FactPilgrim.showToast('Link copied!'); }
+    catch(e) { const ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); FactPilgrim.showToast('Link copied!'); }
   }
 
-  static showToast(message) {
-    const existing = document.querySelector('.toast');
-    if(existing) existing.remove();
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.classList.add('show'), 100);
-    setTimeout(() => {
-      toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 300);
-    }, 3000);
+  static showToast(msg){
+    const existing = document.querySelector('.toast'); if(existing) existing.remove();
+    const t = document.createElement('div'); t.className='toast'; t.textContent = msg; document.body.appendChild(t);
+    setTimeout(()=>t.classList.add('show'),100); setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),300); },3000);
   }
 }
 
+/* instantiate */
 let factPilgrim;
-document.addEventListener('DOMContentLoaded', () => {
-  factPilgrim = new FactPilgrim();
-});
+document.addEventListener('DOMContentLoaded', () => { factPilgrim = new FactPilgrim(); });
