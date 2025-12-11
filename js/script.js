@@ -58,6 +58,13 @@ class FactPilgrim {
                 this.searchTimeout = setTimeout(() => this.searchArticles(e.target.value), 300);
             });
         }
+        
+        // Global listener to close share popups when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.share-trigger') && !e.target.closest('.article-social-overlay')) {
+                document.querySelectorAll('.article-social-overlay.active').forEach(el => el.classList.remove('active'));
+            }
+        });
     }
 
     searchArticles(query) {
@@ -120,14 +127,10 @@ class FactPilgrim {
         });
     }
 
-    // --- UPDATED HERO CARD HTML STRUCTURE ---
     createHeroCard(article) {
         const baseUrl = this.getBaseUrl();
         const articleUrl = `${baseUrl}articles/${article.filename}`;
         
-        // Changes: 
-        // 1. Removed big red button, added simple text link
-        // 2. Added 'ghost' class to social buttons for sleek look
         return `
         <article class="hero-card" data-filename="${article.filename}">
             <div class="hero-image-container">
@@ -139,18 +142,15 @@ class FactPilgrim {
                     <span class="hero-category">${this.formatCategory(article.category)}</span>
                     <span class="hero-date">${this.formatDate(article.date)}</span>
                 </div>
-                
                 <h2 class="hero-title" onclick="factPilgrim.openArticle('${article.filename}')">${article.title}</h2>
                 <p class="hero-summary">${article.summary}</p>
-                
                 <div class="hero-footer">
                     <a href="./articles/${article.filename}" class="hero-read-link">Read Full Story <i class="fas fa-arrow-right"></i></a>
-                    
                     <div class="social-sharing">
-                        <button class="social-btn ghost twitter" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-x-twitter"></i></button>
-                        <button class="social-btn ghost facebook" data-url="${articleUrl}"><i class="fab fa-facebook-f"></i></button>
-                        <button class="social-btn ghost whatsapp" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-whatsapp"></i></button>
-                        <button class="social-btn ghost copy" data-url="${articleUrl}"><i class="fas fa-link"></i></button>
+                        <button class="social-btn ghost twitter" data-network="twitter" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-x-twitter"></i></button>
+                        <button class="social-btn ghost facebook" data-network="facebook" data-url="${articleUrl}"><i class="fab fa-facebook-f"></i></button>
+                        <button class="social-btn ghost whatsapp" data-network="whatsapp" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-whatsapp"></i></button>
+                        <button class="social-btn ghost copy" data-network="copy" data-url="${articleUrl}"><i class="fas fa-link"></i></button>
                     </div>
                 </div>
             </div>
@@ -161,6 +161,7 @@ class FactPilgrim {
     createArticleCard(article) {
         const baseUrl = this.getBaseUrl();
         const articleUrl = `${baseUrl}articles/${article.filename}`;
+        
         return `
         <article class="article-card" data-filename="${article.filename}">
             <div class="article-image-container">
@@ -179,10 +180,10 @@ class FactPilgrim {
                     </div>
                 </div>
                 <div class="article-social-overlay">
-                    <button class="social-btn mini twitter" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-x-twitter"></i></button>
-                    <button class="social-btn mini facebook" data-url="${articleUrl}"><i class="fab fa-facebook-f"></i></button>
-                    <button class="social-btn mini whatsapp" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-whatsapp"></i></button>
-                    <button class="social-btn mini copy" data-url="${articleUrl}"><i class="fas fa-link"></i></button>
+                    <button class="social-btn mini twitter" data-network="twitter" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-x-twitter"></i></button>
+                    <button class="social-btn mini facebook" data-network="facebook" data-url="${articleUrl}"><i class="fab fa-facebook-f"></i></button>
+                    <button class="social-btn mini whatsapp" data-network="whatsapp" data-url="${articleUrl}" data-title="${article.title}"><i class="fab fa-whatsapp"></i></button>
+                    <button class="social-btn mini copy" data-network="copy" data-url="${articleUrl}"><i class="fas fa-link"></i></button>
                 </div>
             </div>
         </article>
@@ -190,29 +191,37 @@ class FactPilgrim {
     }
 
     addSocialSharingListeners() {
-        document.querySelectorAll('.social-btn.twitter').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.shareOnTwitter(btn.dataset.title, btn.dataset.url); }));
-        document.querySelectorAll('.social-btn.facebook').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.shareOnFacebook(btn.dataset.url); }));
-        document.querySelectorAll('.social-btn.whatsapp').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.shareOnWhatsApp(btn.dataset.title, btn.dataset.url); }));
-        document.querySelectorAll('.social-btn.copy').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); FactPilgrim.copyArticleLink(btn.dataset.url); }));
-        
-        // Toggle overlay for small cards
+        // 1. Logic to open the Share Menu on small cards
         document.querySelectorAll('.share-trigger').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 const card = btn.closest('.article-card');
                 const overlay = card.querySelector('.article-social-overlay');
-                // Close others
+                
+                // Close all other open menus first
                 document.querySelectorAll('.article-social-overlay.active').forEach(el => {
                     if(el !== overlay) el.classList.remove('active');
                 });
+                
+                // Toggle this one
                 overlay.classList.toggle('active');
             });
         });
-        
-        // Close overlays when clicking elsewhere
-        document.addEventListener('click', () => {
-             document.querySelectorAll('.article-social-overlay.active').forEach(el => el.classList.remove('active'));
+
+        // 2. Logic for the actual Social Buttons (both Hero and Grid)
+        document.querySelectorAll('.social-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const network = btn.dataset.network;
+                const url = btn.dataset.url;
+                const title = btn.dataset.title || '';
+
+                if (network === 'twitter') FactPilgrim.shareOnTwitter(title, url);
+                else if (network === 'facebook') FactPilgrim.shareOnFacebook(url);
+                else if (network === 'whatsapp') FactPilgrim.shareOnWhatsApp(title, url);
+                else if (network === 'copy') FactPilgrim.copyArticleLink(url);
+            });
         });
     }
 
