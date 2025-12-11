@@ -1,130 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fact Pilgrim - Discover. Decode. Deliver.</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Oriya:wght@400;700&display=swap" rel="stylesheet">
-<style>
-body {
-font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Oriya', sans-serif;
-}
-.follow-us-section {
-background: #f8f9fa;
-padding: 30px 20px;
-margin: 40px 0;
-text-align: center;
-border-radius: 8px;
-}
-.follow-us-section h3 {
-color: #b91c1c;
-margin-bottom: 20px;
-font-size: 24px;
-}
-.follow-buttons {
-display: flex;
-gap: 15px;
-justify-content: center;
-flex-wrap: wrap;
-}
-.follow-btn {
-display: inline-flex;
-align-items: center;
-gap: 8px;
-padding: 12px 24px;
-border-radius: 6px;
-text-decoration: none;
-color: white;
-font-weight: bold;
-transition: transform 0.2s, box-shadow 0.2s;
-}
-.follow-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-.follow-btn.twitter {
-background: #000000;
-}
-.follow-btn.facebook {
-background: #1877f2;
-}
-.follow-btn.instagram {
-background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-}
-.follow-btn.threads {
-background: #000000;
-}
-.ticker-track .ticker-item {
-cursor: pointer;
-display: inline;
-}
-.ticker-track .ticker-item:hover {
-text-decoration: underline;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fact Pilgrim - Discover. Decode. Deliver.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Oriya:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* very small page-specific tweaks only: keep sizes unchanged */
+    .ticker-track .ticker-item { cursor: pointer; display: inline; }
+    .ticker-track .ticker-item:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-<div class="breaking-news">
-<div class="container">
-<div class="ticker-label">NEXT 10</div>
-<div class="ticker-mask">
-<div class="ticker-track" id="tickerTrack"><span>Loading latest headlines...</span></div>
-</div>
-</div>
-</div>
-<header class="header">
-<div class="container">
-<div class="logo">
-<div class="logo-image">
-<img src="./images/logo.png" alt="Fact Pilgrim Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-<div class="logo-fallback">Fact Pilgrim</div>
-</div>
-</div>
-<div class="search-container">
-<input type="text" id="searchInput" class="search-input" placeholder="Search for articles...">
-<button class="search-btn"><i class="fas fa-search"></i></button>
-</div>
-<nav class="main-nav"><button class="home-btn"><i class="fas fa-home"></i> Home</button></nav>
-</div>
-</header>
-<main class="container">
-<!-- Follow Us Section -->
-<section class="follow-us-section">
-<h3>Follow Us</h3>
-<div class="follow-buttons">
-<a href="https://x.com/FactPilgrim" target="_blank" rel="noopener noreferrer" class="follow-btn twitter">
-<i class="fab fa-x-twitter"></i> X (Twitter)
-</a>
-<a href="https://www.facebook.com/FactPilgrim" target="_blank" rel="noopener noreferrer" class="follow-btn facebook">
-<i class="fab fa-facebook-f"></i> Facebook
-</a>
-<a href="https://www.instagram.com/factpilgrim" target="_blank" rel="noopener noreferrer" class="follow-btn instagram">
-<i class="fab fa-instagram"></i> Instagram
-</a>
-<a href="https://www.threads.com/@factpilgrim" target="_blank" rel="noopener noreferrer" class="follow-btn threads">
-<i class="fab fa-threads"></i> Threads
-</a>
-</div>
-</section>
+  <div class="breaking-news">
+    <div class="container">
+      <div class="ticker-label">NEXT 10</div>
+      <div class="ticker-mask">
+        <div class="ticker-track" id="tickerTrack"><span>Loading latest headlines...</span></div>
+      </div>
+    </div>
+  </div>
 
-<!-- Hero Section -->
-<section class="hero-section" id="heroSection"></section>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <div class="logo-image">
+          <img src="./images/logo.png" alt="Fact Pilgrim Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+          <div class="logo-fallback">Fact Pilgrim</div>
+        </div>
+      </div>
 
-<!-- Articles Grid -->
-<section class="articles-grid">
-<div class="grid-container" id="articlesGrid"></div>
-<div class="load-more-container">
-<button id="loadMoreBtn" class="load-more-btn">Load More Articles</button>
-<button id="collapseBtn" class="collapse-btn" style="display: none;">Show Less</button>
-</div>
-</section>
-</main>
-<footer class="footer"><div class="container"><p>&copy; <span id="year"></span> Fact Pilgrim. All rights reserved.</p></div></footer>
-<script src="js/script.js"></script>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+      <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search for articles...">
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+      </div>
+
+      <nav class="main-nav"><button class="home-btn"><i class="fas fa-home"></i> Home</button></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Follow Us Section (uses global CSS spacing now) -->
+    <section class="follow-us-section">
+      <h3>Follow Us</h3>
+      <div class="follow-buttons">
+        <a href="https://x.com/FactPilgrim" target="_blank" rel="noopener noreferrer" class="follow-btn twitter">
+          <i class="fab fa-x-twitter"></i> X (Twitter)
+        </a>
+
+        <a href="https://www.facebook.com/FactPilgrim" target="_blank" rel="noopener noreferrer" class="follow-btn facebook">
+          <i class="fab fa-facebook-f"></i> Facebook
+        </a>
+
+        <a href="https://www.instagram.com/factpilgrim" target="_blank" rel="noopener noreferrer" class="follow-btn instagram">
+          <i class="fab fa-instagram"></i> Instagram
+        </a>
+
+        <a href="https://www.threads.com/@factpilgrim" target="_blank" rel="noopener noreferrer" class="follow-btn threads">
+          <i class="fab fa-threads"></i> Threads
+        </a>
+      </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="heroSection"></section>
+
+    <!-- Articles Grid -->
+    <section class="articles-grid">
+      <div class="grid-container" id="articlesGrid"></div>
+
+      <div class="load-more-container">
+        <button id="loadMoreBtn" class="load-more-btn">Load More Articles</button>
+        <button id="collapseBtn" class="collapse-btn" style="display: none;">Show Less</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container"><p>&copy; <span id="year"></span> Fact Pilgrim. All rights reserved.</p></div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
