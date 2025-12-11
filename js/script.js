@@ -273,43 +273,28 @@ class FactPilgrim {
     }
 }
 
-// UPDATED: Logic to prevent double opening
-// Checks for window blur/visibility change to confirm app opened
+// UPDATED: Robust App Opener (Focus/Blur Check)
 function openSocialApp(webUrl, appUrl) {
-    const timeoutDuration = 2500; 
-    let startTime = Date.now();
-    let appOpened = false;
+    var timeout = 2000;
+    var start = Date.now();
+    var isBlur = false; // Track if window lost focus
 
-    // Detect if the app was successfully opened (window lost focus)
-    const onBlur = () => {
-        appOpened = true;
-    };
-    
-    // Listen for blur event
-    window.addEventListener('blur', onBlur);
-    window.addEventListener('visibilitychange', () => {
-        if (document.hidden) appOpened = true;
+    window.addEventListener('blur', function() {
+        isBlur = true;
     });
 
-    // Attempt to open the App
     window.location.href = appUrl;
 
-    setTimeout(() => {
-        window.removeEventListener('blur', onBlur);
-
-        // If appOpened is true (or document hidden), do nothing (App likely opened)
-        if (appOpened || document.hidden || document.webkitHidden) {
-            return; 
+    setTimeout(function() {
+        window.removeEventListener('blur', function(){});
+        
+        // If the window lost focus, OR document is hidden, OR time diff is large (paused)
+        if (isBlur || document.hidden || document.webkitHidden || (Date.now() - start > timeout + 1000)) {
+            return; // App likely opened, do nothing
         }
 
-        // If time elapsed is unexpectedly long (e.g. user stared at "Open in App?" dialog), avoid fallback
-        if (Date.now() - startTime > timeoutDuration + 1000) {
-            return;
-        }
-
-        // Fallback to Web URL
         window.open(webUrl, '_blank');
-    }, timeoutDuration);
+    }, timeout);
 }
 
 let factPilgrim;
