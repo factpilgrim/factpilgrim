@@ -5,7 +5,7 @@
 
 :root {
     --primary-red: #dc2626;
-    --dark-red: #b91c1c;
+    --dark-red: #b91c1c; /* Matches PDF Source 15 */
     --light-bg: #f9fafb;
     --white: #ffffff;
     --text-dark: #111827;
@@ -55,7 +55,7 @@ img {
 }
 
 /* =========================================
-   3. TICKER SECTION (Black/Red/White)
+   3. TICKER SECTION
    ========================================= */
 .breaking-news {
     background-color: var(--text-dark);
@@ -156,7 +156,8 @@ img {
 }
 
 .logo-image {
-    height: 40px; 
+    /* UPDATED: Increased size based on user feedback */
+    height: 50px; 
     display: flex;
     align-items: center;
 }
@@ -211,26 +212,26 @@ img {
     background-color: var(--dark-red);
 }
 
-/* FIXED: Reverted Home Button to Black Text/Border (Original Style) */
+/* UPDATED: Home Button matches PDF Source 31 "Back to Home" style */
 .main-nav .home-btn {
     background: transparent;
-    border: 1px solid var(--text-dark); /* Black border */
-    color: var(--text-dark); /* Black text */
-    padding: 8px 16px; /* Original smaller padding */
+    border: 2px solid #dc2626; /* Red Border */
+    color: #dc2626; /* Red Text */
+    padding: 10px 20px; /* Larger Padding */
     border-radius: 4px;
-    font-weight: 600;
+    font-weight: 700; /* Bold */
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
     transition: all 0.2s;
-    font-size: 14px;
+    font-size: 16px;
     font-family: inherit;
 }
 
 .main-nav .home-btn:hover {
-    background-color: var(--text-dark); /* Fill Black on hover */
-    color: var(--white); /* White text */
+    background-color: #dc2626; 
+    color: var(--white); 
 }
 
 /* =========================================
@@ -238,7 +239,7 @@ img {
    ========================================= */
 .hero-section {
     margin-top: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 30px; /* Reduced bottom margin */
 }
 
 .hero-card {
@@ -284,15 +285,15 @@ img {
 }
 
 .hero-content {
-    padding: 40px 30px;
+    padding: 30px; /* Slightly reduced padding */
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-/* FIXED: Added align-self to shrink-wrap background to text */
+/* Category styling */
 .hero-category {
-    align-self: flex-start; /* CRITICAL FIX: prevents stretching */
+    align-self: flex-start; 
     background-color: #fef2f2; 
     color: var(--primary-red);
     padding: 4px 10px;
@@ -304,6 +305,7 @@ img {
     letter-spacing: 1px;
 }
 
+/* UPDATED: Headline Color Red (Source 15) */
 .hero-title {
     font-size: 32px;
     font-weight: 800;
@@ -311,7 +313,7 @@ img {
     margin-bottom: 15px;
     cursor: pointer;
     transition: color 0.2s;
-    color: var(--text-dark);
+    color: var(--dark-red); /* #b91c1c */
 }
 
 .hero-title:hover {
@@ -350,10 +352,11 @@ img {
     margin-bottom: 60px;
 }
 
+/* UPDATED: Reduced vertical gap */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
+    gap: 20px; /* Reduced from 25/30px */
 }
 
 .article-card {
@@ -400,15 +403,15 @@ img {
 }
 
 .article-content {
-    padding: 20px;
+    padding: 15px 20px; /* Reduced top/bottom padding */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-/* FIXED: Added align-self to shrink-wrap background to text */
+/* Category styling */
 .article-category {
-    align-self: flex-start; /* CRITICAL FIX: prevents stretching */
+    align-self: flex-start; 
     background-color: #fef2f2;
     color: var(--primary-red);
     padding: 4px 8px;
@@ -416,18 +419,17 @@ img {
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom: 8px; /* Reduced margin */
 }
 
+/* UPDATED: Headline Color Red (Source 15) */
 .article-title {
     font-size: 18px; 
     font-weight: 700;
     line-height: 1.4;
     margin-bottom: 10px;
-    color: var(--text-dark);
+    color: var(--dark-red); /* #b91c1c */
     cursor: pointer;
-    
-    /* Allow up to 4 lines */
     display: -webkit-box;
     -webkit-line-clamp: 4; 
     -webkit-box-orient: vertical;
@@ -442,7 +444,7 @@ img {
     color: var(--text-gray);
     font-size: 14px;
     line-height: 1.5;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     flex-grow: 1;
     display: -webkit-box;
     -webkit-line-clamp: 3;
