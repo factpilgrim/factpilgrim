@@ -193,6 +193,7 @@ class FactPilgrim {
         if (!tickerTrack) return;
 
         let headlines = [];
+        // Ensure articles 10 to 20 are selected
         if (this.articles.length > 9) {
             const targetArticles = this.articles.slice(9, 20);
             headlines = targetArticles.map(a => 
@@ -241,7 +242,6 @@ class FactPilgrim {
     }
 
     static shareOnThreads(title, url) {
-        // Threads Web Intent for Sharing
         window.open(`https://www.threads.net/intent/post?text=${encodeURIComponent(title + ' - ' + url)}`, '_blank', 'width=600,height=400');
     }
 
@@ -274,12 +274,10 @@ class FactPilgrim {
     }
 }
 
-// Global Helper to support Follow Us logic (same as index.html)
 function openSocialApp(webUrl, appUrl) {
     const timeoutDuration = 2500; 
     let startTime = Date.now();
     
-    // Attempt to open the App
     window.location.href = appUrl;
 
     setTimeout(() => {
