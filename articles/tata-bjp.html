@@ -277,9 +277,8 @@
         }
 
         function shareOnThreads() {
-            // FIXED: Threads sharing with same format as WhatsApp
-            const shareText = document.title + ' - ' + window.location.href;
-            window.open('https://threads.net/intent/post?text=' + encodeURIComponent(shareText), '_blank', 'width=600,height=400');
+    const url = window.location.href;
+    window.open('https://threads.net/intent/post?text=' + encodeURIComponent(url), '_blank', 'width=600,height=400');
         }
 
         async function copyArticleLink() {
