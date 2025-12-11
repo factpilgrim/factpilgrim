@@ -52,6 +52,7 @@ body {
   flex: 1;
   overflow: hidden;
   position: relative;
+  /* Mask edges for smooth fade out */
   mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
   -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
 }
@@ -59,7 +60,8 @@ body {
 .ticker-track {
   display: flex;
   white-space: nowrap;
-  animation: ticker-scroll var(--ticker-duration, 30s) linear infinite;
+  /* Key change: 'linear' prevents the speed jump. 40s is the default speed if JS is removed. */
+  animation: ticker-scroll var(--ticker-duration, 40s) linear infinite;
   will-change: transform;
 }
 
@@ -70,9 +72,12 @@ body {
   font-size: 18px;
 }
 
+/* Ticker Items: Bold & White */
 .ticker-track .ticker-item {
   cursor: pointer;
   transition: opacity 0.2s;
+  color: #ffffff;
+  font-weight: 800;
 }
 
 .ticker-track .ticker-item:hover {
@@ -185,11 +190,11 @@ body {
   background: #b91c1c;
 }
 
-/* Follow Us Section */
+/* Follow Us Section (Index Page - Compact) */
 .follow-us-section {
   background: #f8f9fa;
-  padding: 15px 20px;
-  margin: 20px 0;
+  padding: 10px 15px;
+  margin: 15px 0;
   text-align: center;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -197,8 +202,8 @@ body {
 
 .follow-us-section h3 {
   color: #b91c1c;
-  margin-bottom: 12px;
-  font-size: 22px;
+  margin-bottom: 8px;
+  font-size: 20px;
   font-weight: 700;
 }
 
@@ -764,4 +769,4 @@ body {
     box-shadow: none;
     border: 1px solid #e5e7eb;
   }
-  }
+}
