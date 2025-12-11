@@ -251,9 +251,8 @@ class FactPilgrim {
     }
 
     static shareOnThreads(title, url) {
-        // FIXED: Threads sharing with same format as WhatsApp
-        const shareText = `${title} - ${url}`;
-        window.open(`https://threads.net/intent/post?text=${encodeURIComponent(shareText)}`, '_blank', 'width=600,height=400');
+    // Send only the URL (cleaner)
+    window.open(`https://threads.net/intent/post?text=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
     }
 
     static async copyArticleLink(url) {
