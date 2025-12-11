@@ -193,7 +193,6 @@ class FactPilgrim {
         if (!tickerTrack) return;
 
         let headlines = [];
-        // Ensure articles 10 to 20 are selected
         if (this.articles.length > 9) {
             const targetArticles = this.articles.slice(9, 20);
             headlines = targetArticles.map(a => 
@@ -274,19 +273,41 @@ class FactPilgrim {
     }
 }
 
+// UPDATED: Logic to prevent double opening
+// Checks for window blur/visibility change to confirm app opened
 function openSocialApp(webUrl, appUrl) {
     const timeoutDuration = 2500; 
     let startTime = Date.now();
+    let appOpened = false;
+
+    // Detect if the app was successfully opened (window lost focus)
+    const onBlur = () => {
+        appOpened = true;
+    };
     
+    // Listen for blur event
+    window.addEventListener('blur', onBlur);
+    window.addEventListener('visibilitychange', () => {
+        if (document.hidden) appOpened = true;
+    });
+
+    // Attempt to open the App
     window.location.href = appUrl;
 
     setTimeout(() => {
-        if (document.hidden || document.webkitHidden) {
+        window.removeEventListener('blur', onBlur);
+
+        // If appOpened is true (or document hidden), do nothing (App likely opened)
+        if (appOpened || document.hidden || document.webkitHidden) {
             return; 
         }
+
+        // If time elapsed is unexpectedly long (e.g. user stared at "Open in App?" dialog), avoid fallback
         if (Date.now() - startTime > timeoutDuration + 1000) {
             return;
         }
+
+        // Fallback to Web URL
         window.open(webUrl, '_blank');
     }, timeoutDuration);
 }
