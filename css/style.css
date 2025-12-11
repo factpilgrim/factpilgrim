@@ -67,7 +67,7 @@ body {
   display: inline-block;
   padding-right: 3em;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .ticker-track .ticker-item {
@@ -113,14 +113,14 @@ body {
 }
 
 .logo-image img {
-  height: 50px;
+  height: 75px;
   width: auto;
   object-fit: contain;
 }
 
 .logo-fallback {
   display: none;
-  font-size: 28px;
+  font-size: 42px;
   font-weight: 800;
   color: #dc2626;
   letter-spacing: -0.5px;
@@ -167,18 +167,18 @@ body {
 }
 
 .home-btn {
-  padding: 10px 20px;
+  padding: 14px 28px;
   background: #dc2626;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   transition: background 0.2s;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .home-btn:hover {
@@ -188,8 +188,8 @@ body {
 /* Follow Us Section */
 .follow-us-section {
   background: #f8f9fa;
-  padding: 30px 20px;
-  margin: 40px 0;
+  padding: 20px;
+  margin: 20px 0;
   text-align: center;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -197,8 +197,8 @@ body {
 
 .follow-us-section h3 {
   color: #b91c1c;
-  margin-bottom: 20px;
-  font-size: 24px;
+  margin-bottom: 15px;
+  font-size: 22px;
   font-weight: 700;
 }
 
@@ -245,7 +245,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-  margin: 40px 0;
+  margin: 25px 0;
 }
 
 .hero-card {
@@ -255,7 +255,7 @@ body {
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
+  gap: 20px;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -296,7 +296,7 @@ body {
 }
 
 .hero-content {
-  padding: 40px;
+  padding: 25px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -319,7 +319,7 @@ body {
 .hero-title {
   font-size: 32px;
   font-weight: 800;
-  color: #111827;
+  color: #dc2626;
   margin-bottom: 15px;
   line-height: 1.2;
   cursor: pointer;
@@ -327,7 +327,7 @@ body {
 }
 
 .hero-title:hover {
-  color: #dc2626;
+  color: #b91c1c;
 }
 
 .hero-summary {
@@ -420,8 +420,8 @@ body {
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 30px;
-  margin-bottom: 40px;
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
 .article-card {
@@ -496,7 +496,7 @@ body {
 .article-title {
   font-size: 20px;
   font-weight: 700;
-  color: #111827;
+  color: #dc2626;
   margin-bottom: 12px;
   line-height: 1.3;
   cursor: pointer;
@@ -504,7 +504,7 @@ body {
 }
 
 .article-title:hover {
-  color: #dc2626;
+  color: #b91c1c;
 }
 
 .article-summary {
@@ -763,4 +763,4 @@ body {
     box-shadow: none;
     border: 1px solid #e5e7eb;
   }
-}
+    }
