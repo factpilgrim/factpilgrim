@@ -19,20 +19,37 @@ class FactPilgrim {
     }
 
     async loadArticles() {
-        if (this.isLoading) return;
-        this.isLoading = true;
+    if (this.isLoading) return;
+    this.isLoading = true;
+    
+    // Try multiple possible paths
+    const paths = [
+        './news.json',
+        './data/news.json',
+        './articles/data/news.json',
+        'news.json'
+    ];
+    
+    for (const path of paths) {
         try {
-            const response = await fetch('./articles/data/news.json');
-            if (!response.ok) throw new Error('Failed to load articles');
-            this.articles = await response.json();
-            this.filteredArticles = [...this.articles];
+            console.log(`Trying to load from: ${path}`);
+            const response = await fetch(path);
+            if (response.ok) {
+                this.articles = await response.json();
+                console.log(`✓ Successfully loaded ${this.articles.length} articles from ${path}`);
+                this.filteredArticles = [...this.articles];
+                this.isLoading = false;
+                return;
+            }
         } catch (error) {
-            console.error('Error loading articles:', error);
-            this.articles = [];
-            this.filteredArticles = [];
-        } finally {
-            this.isLoading = false;
+            console.log(`Failed to load from ${path}:`, error.message);
         }
+    }
+    
+    console.error('All paths failed - could not load articles');
+    this.articles = [];
+    this.filteredArticles = [];
+    this.isLoading = false;
     }
 
     setupEventListeners() {
@@ -255,38 +272,59 @@ class FactPilgrim {
     collapseArticles() { this.currentPage = 1; this.displayArticles(); }
 
     updateTicker() {
-        const tickerTrack = document.getElementById('tickerTrack');
-        if (!tickerTrack) return;
-        const tickerArticles = this.articles.slice(13, 24);
-        const headlines = tickerArticles.length > 0 
-            ? tickerArticles.map(a => `<span class="ticker-item" data-filename="${a.filename}">${a.title}</span>`)
-            : ['<span class="ticker-item">Stay tuned for the latest news</span>'];
+    const tickerTrack = document.getElementById('tickerTrack');
+    if (!tickerTrack) return;
+    
+    const tickerArticles = this.articles.slice(0, 10);
+    const headlines = tickerArticles.length > 0 
+        ? tickerArticles.map(a => `<span class="ticker-item" data-filename="${a.filename}">${a.title}</span>`)
+        : ['<span class="ticker-item">Stay tuned for the latest news</span>'];
 
-        tickerTrack.innerHTML = '';
-        for (let i = 0; i < 3; i++) {
-            const block = document.createElement('div');
-            block.className = 'ticker-block';
-            block.innerHTML = headlines.join('<span style="padding:0 1em">•</span>');
-            tickerTrack.appendChild(block);
-        }
-
-        document.querySelectorAll('.ticker-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const filename = item.getAttribute('data-filename');
-                if (filename) window.open(`./articles/${filename}`, '_blank');
-            });
-        });
-
-        const firstBlock = tickerTrack.querySelector('.ticker-block');
-        if (firstBlock) {
-            const blockWidth = firstBlock.offsetWidth;
-            const scrollWidth = blockWidth * 3; 
-            tickerTrack.style.setProperty('--scroll-width', `${scrollWidth}px`);
-            const duration = scrollWidth / 100;
-            tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
-        }
+    tickerTrack.innerHTML = '';
+    
+    // Create 2 identical blocks for seamless loop
+    for (let i = 0; i < 2; i++) {
+        const block = document.createElement('div');
+        block.className = 'ticker-block';
+        block.innerHTML = headlines.join('<span style="padding:0 1em">•</span>');
+        tickerTrack.appendChild(block);
     }
 
+    // Add click handlers
+    document.querySelectorAll('.ticker-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const filename = item.getAttribute('data-filename');
+            if (filename) window.open(`./articles/${filename}`, '_blank');
+        });
+    });
+
+    // Calculate width and create dynamic animation
+    requestAnimationFrame(() => {
+        const firstBlock = tickerTrack.querySelector('.ticker-block');
+        if (!firstBlock) return;
+        
+        const blockWidth = firstBlock.offsetWidth;
+        
+        // Remove existing animation style
+        const existingStyle = document.getElementById('ticker-animation-style');
+        if (existingStyle) existingStyle.remove();
+        
+        // Create new animation
+        const style = document.createElement('style');
+        style.id = 'ticker-animation-style';
+        const duration = Math.max(20, blockWidth / 50); // Minimum 20s
+        style.textContent = `
+            @keyframes ticker-scroll {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-${blockWidth}px); }
+            }
+            .ticker-track {
+                animation: ticker-scroll ${duration}s linear infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    });
+}
     formatCategory(category) { return category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
     formatDate(dateString) { return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); }
 
