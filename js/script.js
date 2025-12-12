@@ -264,16 +264,13 @@ class FactPilgrim {
 
     tickerTrack.innerHTML = '';
     
-    // Create enough repetitions to fill the ticker smoothly
-    const repeatedHeadlines = [];
-    for (let i = 0; i < 3; i++) {
-        repeatedHeadlines.push(...headlines);
+    // Create TWO identical blocks for seamless loop
+    for (let i = 0; i < 2; i++) {
+        const block = document.createElement('div');
+        block.className = 'ticker-block';
+        block.innerHTML = headlines.join('<span style="padding:0 1em">•</span>');
+        tickerTrack.appendChild(block);
     }
-    
-    const block = document.createElement('div');
-    block.className = 'ticker-block';
-    block.innerHTML = repeatedHeadlines.join('<span style="padding:0 1em">•</span>');
-    tickerTrack.appendChild(block);
 
     document.querySelectorAll('.ticker-item').forEach(item => {
         item.addEventListener('click', () => {
@@ -282,11 +279,15 @@ class FactPilgrim {
         });
     });
 
-    const blockWidth = block.offsetWidth;
-    const duration = blockWidth / 100;
-    tickerTrack.style.setProperty('--scroll-width', `${blockWidth}px`);
-    tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
-}
+    const firstBlock = tickerTrack.querySelector('.ticker-block');
+    if (firstBlock) {
+        const blockWidth = firstBlock.offsetWidth;
+        // Animate by exactly ONE block width, not total width
+        tickerTrack.style.setProperty('--scroll-width', `${blockWidth}px`);
+        const duration = blockWidth / 100;
+        tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
+    }
+    }
 
     formatCategory(category) { return category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
     formatDate(dateString) { return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); }
