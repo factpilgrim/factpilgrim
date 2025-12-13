@@ -255,37 +255,41 @@ class FactPilgrim {
     collapseArticles() { this.currentPage = 1; this.displayArticles(); }
 
     updateTicker() {
-        const tickerTrack = document.getElementById('tickerTrack');
-        if (!tickerTrack) return;
-        const tickerArticles = this.articles.slice(13, 24);
-        const headlines = tickerArticles.length > 0 
-            ? tickerArticles.map(a => `<span class="ticker-item" data-filename="${a.filename}">${a.title}</span>`)
-            : ['<span class="ticker-item">Stay tuned for the latest news</span>'];
+    const tickerTrack = document.getElementById('tickerTrack');
+    if (!tickerTrack || this.articles.length < 14) return;
 
-        tickerTrack.innerHTML = '';
-        for (let i = 0; i < 3; i++) {
-            const block = document.createElement('div');
-            block.className = 'ticker-block';
-            block.innerHTML = headlines.join('<span style="padding:0 1em">•</span>');
-            tickerTrack.appendChild(block);
-        }
+    // Articles 14 onwards (index 13+)
+    const tickerArticles = this.articles.slice(13);
 
-        document.querySelectorAll('.ticker-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const filename = item.getAttribute('data-filename');
-                if (filename) window.open(`./articles/${filename}`, '_blank');
-            });
-        });
+    // Build headline links
+    const headlines = tickerArticles.map(article => `
+        <a class="ticker-item"
+           href="./articles/${article.filename}"
+           target="_blank"
+           rel="noopener">
+           ${article.title}
+        </a>
+    `);
 
-        const firstBlock = tickerTrack.querySelector('.ticker-block');
-        if (firstBlock) {
-            const blockWidth = firstBlock.offsetWidth;
-            const scrollWidth = blockWidth * 3; 
-            tickerTrack.style.setProperty('--scroll-width', `${scrollWidth}px`);
-            const duration = scrollWidth / 100;
-            tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
-        }
+    // If nothing beyond 14, show wait message
+    if (headlines.length === 0) {
+        tickerTrack.innerHTML =
+            `<span class="ticker-item">More articles coming soon…</span>`;
+        return;
     }
+
+    // One continuous strip duplicated ONCE
+    const content = headlines.join('<span class="sep">•</span>');
+
+    tickerTrack.innerHTML = content + content;
+
+    // Dynamically set animation duration (smooth speed)
+    requestAnimationFrame(() => {
+        const width = tickerTrack.scrollWidth / 2;
+        const speed = Math.max(20, width / 80); // px-based speed
+        tickerTrack.style.animationDuration = `${speed}s`;
+    });
+}
 
     formatCategory(category) { return category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
     formatDate(dateString) { return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); }
