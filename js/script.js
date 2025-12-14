@@ -257,13 +257,13 @@ class FactPilgrim {
     updateTicker() {
         const tickerTrack = document.getElementById('tickerTrack');
         if (!tickerTrack) return;
-        const tickerArticles = this.articles.slice(13, 24);
+        const tickerArticles = this.articles.slice(13, 23);
         const headlines = tickerArticles.length > 0 
             ? tickerArticles.map(a => `<span class="ticker-item" data-filename="${a.filename}">${a.title}</span>`)
             : ['<span class="ticker-item">Stay tuned for the latest news</span>'];
 
         tickerTrack.innerHTML = '';
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 1; i++) {
             const block = document.createElement('div');
             block.className = 'ticker-block';
             block.innerHTML = headlines.join('<span style="padding:0 1em">•</span>');
