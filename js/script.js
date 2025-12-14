@@ -255,61 +255,36 @@ class FactPilgrim {
     collapseArticles() { this.currentPage = 1; this.displayArticles(); }
 
     updateTicker() {
-    const track = document.getElementById('tickerTrack');
-    if (!track) return;
+        const tickerTrack = document.getElementById('tickerTrack');
+        if (!tickerTrack) return;
+        const tickerArticles = this.articles.slice(13, 24);
+        const headlines = tickerArticles.length > 0 
+            ? tickerArticles.map(a => `<span class="ticker-item" data-filename="${a.filename}">${a.title}</span>`)
+            : ['<span class="ticker-item">Stay tuned for the latest news</span>'];
 
-    const START = 13;
-    const COUNT = 10;
-    const items = this.articles.slice(START, START + COUNT);
+        tickerTrack.innerHTML = '';
+        for (let i = 0; i < 3; i++) {
+            const block = document.createElement('div');
+            block.className = 'ticker-block';
+            block.innerHTML = headlines.join('<span style="padding:0 1em">•</span>');
+            tickerTrack.appendChild(block);
+        }
 
-    const headlines = items.length
-        ? items.map(a =>
-            `<span class="ticker-item" data-filename="${a.filename}">${a.title}</span>`
-          )
-        : [`<span class="ticker-item">Stay tuned for the latest news</span>`];
+        document.querySelectorAll('.ticker-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const filename = item.getAttribute('data-filename');
+                if (filename) window.open(`./articles/${filename}`, '_blank');
+            });
+        });
 
-    track.textContent = '';
-
-    // Build enough content to overflow
-    while (track.scrollWidth < track.offsetWidth * 2) {
-        const block = document.createElement('div');
-        block.className = 'ticker-block';
-        block.innerHTML = headlines.join('<span class="ticker-separator">•</span>');
-        track.appendChild(block);
-    }
-
-    // Delegated click
-    track.onclick = e => {
-        const item = e.target.closest('.ticker-item');
-        if (!item) return;
-        const filename = item.dataset.filename;
-        if (filename) window.open(`./articles/${filename}`, '_blank');
-    };
-
-    // CRITICAL: measure the SAME element that is animated
-    requestAnimationFrame(() => {
-        const scrollWidth = track.scrollWidth;
-        const visibleWidth = track.offsetWidth;
-
-        const distance = scrollWidth - visibleWidth;
-
-        const SPEED = 80; // px/sec
-
-        track.style.setProperty(
-            '--scroll-width',
-            `${distance}px`,
-            'important'
-        );
-
-        track.style.setProperty(
-            '--ticker-duration',
-            `${distance / SPEED}s`,
-            'important'
-        );
-
-        track.style.animationPlayState = 'running';
-        track.style.willChange = 'transform';
-    });
+        const firstBlock = tickerTrack.querySelector('.ticker-block');
+        if (firstBlock) {
+            const blockWidth = firstBlock.offsetWidth;
+            const scrollWidth = blockWidth * 3; 
+            tickerTrack.style.setProperty('--scroll-width', `${scrollWidth}px`);
+            const duration = scrollWidth / 100;
+            tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
+        }
     }
 
     formatCategory(category) { return category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
