@@ -270,23 +270,15 @@ class FactPilgrim {
 
     track.textContent = '';
 
-    // Create first block
-    const block = document.createElement('div');
-    block.className = 'ticker-block';
-    block.innerHTML = headlines.join('<span class="ticker-separator">•</span>');
-    track.appendChild(block);
-
-    // Duplicate until scroll width exceeds container width
-    let totalWidth = block.scrollWidth;
-    const containerWidth = track.offsetWidth;
-
-    while (totalWidth < containerWidth * 1.5) {
-        const clone = block.cloneNode(true);
-        track.appendChild(clone);
-        totalWidth += clone.scrollWidth;
+    // Build enough content to overflow
+    while (track.scrollWidth < track.offsetWidth * 2) {
+        const block = document.createElement('div');
+        block.className = 'ticker-block';
+        block.innerHTML = headlines.join('<span class="ticker-separator">•</span>');
+        track.appendChild(block);
     }
 
-    // Single delegated click handler
+    // Delegated click
     track.onclick = e => {
         const item = e.target.closest('.ticker-item');
         if (!item) return;
@@ -294,23 +286,29 @@ class FactPilgrim {
         if (filename) window.open(`./articles/${filename}`, '_blank');
     };
 
-    // Apply scroll variables AFTER width is guaranteed
+    // CRITICAL: measure the SAME element that is animated
     requestAnimationFrame(() => {
-        track.style.setProperty(
-            '--scroll-width',
-            `${block.scrollWidth}px`,
-            'important'
-        );
+        const scrollWidth = track.scrollWidth;
+        const visibleWidth = track.offsetWidth;
+
+        const distance = scrollWidth - visibleWidth;
 
         const SPEED = 80; // px/sec
+
         track.style.setProperty(
-            '--ticker-duration',
-            `${block.scrollWidth / SPEED}s`,
+            '--scroll-width',
+            `${distance}px`,
             'important'
         );
 
-        track.style.willChange = 'transform';
+        track.style.setProperty(
+            '--ticker-duration',
+            `${distance / SPEED}s`,
+            'important'
+        );
+
         track.style.animationPlayState = 'running';
+        track.style.willChange = 'transform';
     });
     }
 
