@@ -255,36 +255,62 @@ class FactPilgrim {
     collapseArticles() { this.currentPage = 1; this.displayArticles(); }
 
     updateTicker() {
-        const tickerTrack = document.getElementById('tickerTrack');
-        if (!tickerTrack) return;
-        const tickerArticles = this.articles.slice(13, 23);
-        const headlines = tickerArticles.length > 0 
-            ? tickerArticles.map(a => `<span class="ticker-item" data-filename="${a.filename}">${a.title}</span>`)
-            : ['<span class="ticker-item">Stay tuned for the latest news</span>'];
+    const track = document.getElementById('tickerTrack');
+    if (!track) return;
 
-        tickerTrack.innerHTML = '';
-        for (let i = 0; i < 1; i++) {
-            const block = document.createElement('div');
-            block.className = 'ticker-block';
-            block.innerHTML = headlines.join('<span style="padding:0 1em">•</span>');
-            tickerTrack.appendChild(block);
-        }
+    // Explicit slice: articles 13 to 22
+    const START = 13;
+    const COUNT = 10;
+    const tickerArticles = this.articles.slice(START, START + COUNT);
 
-        document.querySelectorAll('.ticker-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const filename = item.getAttribute('data-filename');
-                if (filename) window.open(`./articles/${filename}`, '_blank');
-            });
-        });
+    // Build headline HTML
+    const headlines = tickerArticles.length
+        ? tickerArticles.map(a =>
+            `<span class="ticker-item" data-filename="${a.filename}">${a.title}</span>`
+          )
+        : [`<span class="ticker-item">Stay tuned for the latest news</span>`];
 
-        const firstBlock = tickerTrack.querySelector('.ticker-block');
-        if (firstBlock) {
-            const blockWidth = firstBlock.offsetWidth;
-            const scrollWidth = blockWidth * 3; 
-            tickerTrack.style.setProperty('--scroll-width', `${scrollWidth}px`);
-            const duration = scrollWidth / 100;
-            tickerTrack.style.setProperty('--ticker-duration', `${duration}s`);
-        }
+    // Reset track safely (no layout changes)
+    track.textContent = '';
+
+    // Duplicate blocks for seamless scroll
+    for (let i = 0; i < 2; i++) {
+        const block = document.createElement('div');
+        block.className = 'ticker-block';
+        block.innerHTML = headlines.join('<span class="ticker-separator">•</span>');
+        track.appendChild(block);
+    }
+
+    // Event delegation (prevents duplicate listeners)
+    track.onclick = e => {
+        const item = e.target.closest('.ticker-item');
+        if (!item || !track.contains(item)) return;
+
+        const filename = item.dataset.filename;
+        if (filename) window.open(`./articles/${filename}`, '_blank');
+    };
+
+    // Force scroll-related CSS only (no design impact)
+    requestAnimationFrame(() => {
+        const block = track.querySelector('.ticker-block');
+        if (!block) return;
+
+        const width = block.scrollWidth;
+
+        // Override ONLY animation variables
+        track.style.setProperty('--scroll-width', `${width}px`, 'important');
+
+        const SPEED = 80; // px per second, stable across screens
+        track.style.setProperty(
+            '--ticker-duration',
+            `${width / SPEED}s`,
+            'important'
+        );
+
+        // Neutralise CSS interference without touching layout
+        track.style.animationPlayState = 'running';
+        track.style.willChange = 'transform';
+    });
     }
 
     formatCategory(category) { return category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); }
