@@ -258,58 +258,59 @@ class FactPilgrim {
     const track = document.getElementById('tickerTrack');
     if (!track) return;
 
-    // Explicit slice: articles 13 to 22
     const START = 13;
     const COUNT = 10;
-    const tickerArticles = this.articles.slice(START, START + COUNT);
+    const items = this.articles.slice(START, START + COUNT);
 
-    // Build headline HTML
-    const headlines = tickerArticles.length
-        ? tickerArticles.map(a =>
+    const headlines = items.length
+        ? items.map(a =>
             `<span class="ticker-item" data-filename="${a.filename}">${a.title}</span>`
           )
         : [`<span class="ticker-item">Stay tuned for the latest news</span>`];
 
-    // Reset track safely (no layout changes)
     track.textContent = '';
 
-    // Duplicate blocks for seamless scroll
-    for (let i = 0; i < 2; i++) {
-        const block = document.createElement('div');
-        block.className = 'ticker-block';
-        block.innerHTML = headlines.join('<span class="ticker-separator">•</span>');
-        track.appendChild(block);
+    // Create first block
+    const block = document.createElement('div');
+    block.className = 'ticker-block';
+    block.innerHTML = headlines.join('<span class="ticker-separator">•</span>');
+    track.appendChild(block);
+
+    // Duplicate until scroll width exceeds container width
+    let totalWidth = block.scrollWidth;
+    const containerWidth = track.offsetWidth;
+
+    while (totalWidth < containerWidth * 1.5) {
+        const clone = block.cloneNode(true);
+        track.appendChild(clone);
+        totalWidth += clone.scrollWidth;
     }
 
-    // Event delegation (prevents duplicate listeners)
+    // Single delegated click handler
     track.onclick = e => {
         const item = e.target.closest('.ticker-item');
-        if (!item || !track.contains(item)) return;
-
+        if (!item) return;
         const filename = item.dataset.filename;
         if (filename) window.open(`./articles/${filename}`, '_blank');
     };
 
-    // Force scroll-related CSS only (no design impact)
+    // Apply scroll variables AFTER width is guaranteed
     requestAnimationFrame(() => {
-        const block = track.querySelector('.ticker-block');
-        if (!block) return;
-
-        const width = block.scrollWidth;
-
-        // Override ONLY animation variables
-        track.style.setProperty('--scroll-width', `${width}px`, 'important');
-
-        const SPEED = 80; // px per second, stable across screens
         track.style.setProperty(
-            '--ticker-duration',
-            `${width / SPEED}s`,
+            '--scroll-width',
+            `${block.scrollWidth}px`,
             'important'
         );
 
-        // Neutralise CSS interference without touching layout
-        track.style.animationPlayState = 'running';
+        const SPEED = 80; // px/sec
+        track.style.setProperty(
+            '--ticker-duration',
+            `${block.scrollWidth / SPEED}s`,
+            'important'
+        );
+
         track.style.willChange = 'transform';
+        track.style.animationPlayState = 'running';
     });
     }
 
